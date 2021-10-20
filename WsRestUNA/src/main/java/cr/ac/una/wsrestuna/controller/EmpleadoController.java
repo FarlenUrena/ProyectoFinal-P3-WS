@@ -8,7 +8,9 @@ package cr.ac.una.wsrestuna.controller;
 import cr.ac.una.wsrestuna.dto.EmpleadoDto;
 import cr.ac.una.wsrestuna.service.EmpleadoService;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
+import cr.ac.una.wsrestuna.util.JwTokenHelper;
 import cr.ac.una.wsrestuna.util.Respuesta;
+import cr.ac.una.wsrestuna.util.Secure;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,21 +22,25 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 /**
  *
  * @author Farlen
  */
-//@Secure
+@Secure
 @Path("/EmpleadoController")
 public class EmpleadoController {
     
     @EJB
     EmpleadoService empleadoService;
     
+        @Context
+    SecurityContext securityContext;
     
     @GET
     @Path("/usuario/{usuario}/{clave}")
@@ -49,7 +55,7 @@ public class EmpleadoController {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             EmpleadoDto empleadoDto = (EmpleadoDto) res.getResultado("Empleado");
-//            empleadoDto.setToken(JwTokenHelper.getInstance().generatePrivateKey(usuario));
+            empleadoDto.setToken(JwTokenHelper.getInstance().generatePrivateKey(usuario));
             
             return Response.ok(empleadoDto).build(); 
         }
@@ -110,7 +116,7 @@ public class EmpleadoController {
     
     //Falta probar desde el cliente si funciona
     @POST
-    @Path("/empleado/{empleado}")
+    @Path("/empleado")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response guardarEmpleado(EmpleadoDto empleado)
@@ -152,4 +158,24 @@ public class EmpleadoController {
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el empleado ").build();
         }
     }
+    
+    @GET
+    @Path("/renovar")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response renovarToken(){
+        try{
+            String usuarioRequest = securityContext.getUserPrincipal().getName();
+            if(usuarioRequest != null && !usuarioRequest.isBlank()){
+                return Response.ok(JwTokenHelper.getInstance().generatePrivateKey(usuarioRequest)).build();
+            }else{
+             return Response.status(CodigoRespuesta.ERROR_PERMISOS.getValue()).entity("Error renovando el token.").build();
+            }
+            
+        }catch(Exception ex){
+            Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE , null , ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error renovando el token.").build();
+        
+                }
+    }
+    
 }

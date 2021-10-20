@@ -58,17 +58,17 @@ public class Producto implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "GRUPO")
-    private float grupo;
+    private int grupo;
     @Column(name = "ES_ACCESO_RAPIDO")
-    private float esAccesoRapido;
+    private int esAccesoRapido;
     @Column(name = "VENTAS_TOTALES")
-    private float ventasTotales;
+    private int ventasTotales;
 
     
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "PRECIO")
-    private double precio;
+    private float precio;
     @OneToMany(mappedBy = "idProducto", fetch = FetchType.LAZY)
     private List<Productopororden> productoporordenList;
 
@@ -79,7 +79,7 @@ public class Producto implements Serializable {
         this.idProducto = idProducto;
     }
 
-    public Producto(Long idProducto, String nombre, String nombreCorto, double precio, float grupo) {
+    public Producto(Long idProducto, String nombre, String nombreCorto, float precio, int grupo) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.nombreCorto = nombreCorto;
@@ -120,28 +120,28 @@ public class Producto implements Serializable {
         this.nombreCorto = nombreCorto;
     }
 
-    public double getPrecio() {
+    public float getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(float precio) {
         this.precio = precio;
     }
 
 
-    public float getEsAccesoRapido() {
+    public int getEsAccesoRapido() {
         return esAccesoRapido;
     }
 
-    public void setEsAccesoRapido(float esAccesoRapido) {
+    public void setEsAccesoRapido(int esAccesoRapido) {
         this.esAccesoRapido = esAccesoRapido;
     }
 
-    public float getVentasTotales() {
+    public int getVentasTotales() {
         return ventasTotales;
     }
 
-    public void setVentasTotales(float ventasTotales) {
+    public void setVentasTotales(int ventasTotales) {
         this.ventasTotales = ventasTotales;
     }
 
@@ -186,11 +186,11 @@ public class Producto implements Serializable {
         this.nombre = nombre;
     }    
 
-    public float getGrupo() {
+    public int getGrupo() {
         return grupo;
     }
 
-    public void setGrupo(float grupo) {
+    public void setGrupo(int grupo) {
         this.grupo = grupo;
     }
 

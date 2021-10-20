@@ -9,6 +9,7 @@ import cr.ac.una.wsrestuna.dto.OrdenDto;
 import cr.ac.una.wsrestuna.service.OrdenService;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
 import cr.ac.una.wsrestuna.util.Respuesta;
+import cr.ac.una.wsrestuna.util.Secure;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +29,7 @@ import javax.ws.rs.core.Response;
  *
  * @author Farlen
  */
+@Secure
 @Path("/OrdenController")
 public class OrdenController {
     

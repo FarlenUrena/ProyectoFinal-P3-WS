@@ -17,7 +17,7 @@ public class ProductoporordenDto {
 
     private Long idProductoPorOrden;
     private int cantidad;
-    private Double precioProducto;
+    private float precioProducto;
     private Orden idOrden;
     private Producto idProducto;
 
@@ -48,11 +48,11 @@ public class ProductoporordenDto {
         this.cantidad = cantidad;
     }
 
-    public Double getPrecioProducto() {
+    public float getPrecioProducto() {
         return precioProducto;
     }
 
-    public void setPrecioProducto(Double precioProducto) {
+    public void setPrecioProducto(float precioProducto) {
         this.precioProducto = precioProducto;
     }
 

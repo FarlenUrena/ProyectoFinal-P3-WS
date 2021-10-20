@@ -43,7 +43,7 @@ public class Productopororden implements Serializable {
     @Column(name = "ID_PRODUCTO_POR_ORDEN")
     private Long idProductoPorOrden;
     @Column(name = "PRECIO_PRODUCTO")
-    private Double precioProducto;
+    private float precioProducto;
     @JoinColumn(name = "ID_ORDEN", referencedColumnName = "ID_ORDEN")
     @ManyToOne(fetch = FetchType.LAZY)
     private Orden idOrden;
@@ -79,11 +79,11 @@ public class Productopororden implements Serializable {
     }
 
 
-    public Double getPrecioProducto() {
+    public float getPrecioProducto() {
         return precioProducto;
     }
 
-    public void setPrecioProducto(Double precioProducto) {
+    public void setPrecioProducto(float precioProducto) {
         this.precioProducto = precioProducto;
     }
 

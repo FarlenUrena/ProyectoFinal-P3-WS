@@ -5,10 +5,7 @@
  */
 package cr.ac.una.wsrestuna.dto;
 
-import cr.ac.una.wsrestuna.model.Caja;
 import cr.ac.una.wsrestuna.model.Empleado;
-import cr.ac.una.wsrestuna.model.Seccion;
-import java.util.List;
 
 /**
  *
@@ -22,11 +19,16 @@ public class EmpleadoDto {
     private String cedula;
     private String nombreUsuario;
     private String password;
-    private int rol;
-    private List<Seccion> seccionList;
-    private List<Caja> cajaList;
+    private Long rol;
+    private Boolean modificado;
+    private String token;
 
+        public EmpleadoDto() {
+        this.modificado = false;
+    }
+    
     public EmpleadoDto(Empleado empleado) {
+        this();
         this.idEmpleado = empleado.getIdEmpleado();
         this.nombre = empleado.getNombre();
         this.apellido = empleado.getApellido();
@@ -34,8 +36,6 @@ public class EmpleadoDto {
         this.nombreUsuario = empleado.getNombreUsuario();
         this.password = empleado.getPassword();
         this.rol = empleado.getRol();
-        this.seccionList = empleado.getSeccionList();
-        this.cajaList = empleado.getCajaList();
     }
 
     public Long getIdEmpleado() {
@@ -87,29 +87,28 @@ public class EmpleadoDto {
     public void setPassword(String password) {
         this.password = password;
     }
+        public Boolean getModificado() {
+        return modificado;
+    }
 
-    public int getRol() {
+    public void setModificado(Boolean modificado) {
+        this.modificado = modificado;
+    }
+
+    public Long getRol() {
         return rol;
     }
 
-    public void setRol(int rol) {
+    public void setRol(Long rol) {
         this.rol = rol;
     }
 
-    public List<Seccion> getSeccionList() {
-        return seccionList;
+    public String getToken() {
+        return token;
     }
 
-    public void setSeccionList(List<Seccion> seccionList) {
-        this.seccionList = seccionList;
-    }
-
-    public List<Caja> getCajaList() {
-        return cajaList;
-    }
-
-    public void setCajaList(List<Caja> cajaList) {
-        this.cajaList = cajaList;
+    public void setToken(String token) {
+        this.token = token;
     }
 
 }

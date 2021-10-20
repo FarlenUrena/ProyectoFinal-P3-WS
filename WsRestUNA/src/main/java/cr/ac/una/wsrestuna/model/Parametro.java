@@ -55,7 +55,7 @@ public class Parametro implements Serializable {
 
    
     @Column(name = "VALOR_NUMERICO")
-    private Double valorNumerico;
+    private float valorNumerico;
 
     public Parametro() {
     }
@@ -91,11 +91,11 @@ public class Parametro implements Serializable {
     }
 
 
-    public Double getValorNumerico() {
+    public float getValorNumerico() {
         return valorNumerico;
     }
 
-    public void setValorNumerico(Double valorNumerico) {
+    public void setValorNumerico(float valorNumerico) {
         this.valorNumerico = valorNumerico;
     }
 

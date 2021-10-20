@@ -58,7 +58,7 @@ public class Seccion implements Serializable {
 
     
     @Column(name = "IMPUESTO_POR_SERVICIO")
-    private Double impuestoPorServicio;
+    private float impuestoPorServicio;
     @ManyToMany(mappedBy = "seccionList", fetch = FetchType.LAZY)
     private List<Empleado> empleadoList;
     @OneToMany(mappedBy = "idSeccion", fetch = FetchType.LAZY)
@@ -106,11 +106,11 @@ public class Seccion implements Serializable {
         this.fotoDistribucion = fotoDistribucion;
     }
 
-    public Double getImpuestoPorServicio() {
+    public float getImpuestoPorServicio() {
         return impuestoPorServicio;
     }
 
-    public void setImpuestoPorServicio(Double impuestoPorServicio) {
+    public void setImpuestoPorServicio(float impuestoPorServicio) {
         this.impuestoPorServicio = impuestoPorServicio;
     }
 

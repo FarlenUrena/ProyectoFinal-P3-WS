@@ -18,9 +18,9 @@ public class FacturaDto {
 
     private Long idFactura;
     private Date fechaFacturacion;
-    private float metodoDePago;
-    private double montoPagado;
-    private double total;
+    private int metodoDePago;
+    private float montoPagado;
+    private float total;
     private Caja idCaja;
     private Orden idOrden;
    
@@ -50,27 +50,27 @@ public class FacturaDto {
         this.fechaFacturacion = fechaFacturacion;
     }
 
-    public float getMetodoDePago() {
+    public int getMetodoDePago() {
         return metodoDePago;
     }
 
-    public void setMetodoDePago(float metodoDePago) {
+    public void setMetodoDePago(int metodoDePago) {
         this.metodoDePago = metodoDePago;
     }
 
-    public double getMontoPagado() {
+    public float getMontoPagado() {
         return montoPagado;
     }
 
-    public void setMontoPagado(double montoPagado) {
+    public void setMontoPagado(float montoPagado) {
         this.montoPagado = montoPagado;
     }
 
-    public double getTotal() {
+    public float getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
+    public void setTotal(float total) {
         this.total = total;
     }
 

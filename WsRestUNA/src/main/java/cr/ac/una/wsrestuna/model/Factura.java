@@ -41,7 +41,7 @@ public class Factura implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "METODO_DE_PAGO")
-    private float metodoDePago;
+    private int metodoDePago;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -58,11 +58,11 @@ public class Factura implements Serializable {
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "MONTO_PAGADO")
-    private double montoPagado;
+    private float montoPagado;
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "TOTAL")
-    private double total;
+    private float total;
     @JoinColumn(name = "ID_CAJA", referencedColumnName = "ID_CAJA")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Caja idCaja;
@@ -77,7 +77,7 @@ public class Factura implements Serializable {
         this.idFactura = idFactura;
     }
 
-    public Factura(Long idFactura, Date fechaFacturacion, float metodoDePago, double montoPagado, double total) {
+    public Factura(Long idFactura, Date fechaFacturacion, int metodoDePago, float montoPagado, float total) {
         this.idFactura = idFactura;
         this.fechaFacturacion = fechaFacturacion;
         this.metodoDePago = metodoDePago;
@@ -114,27 +114,27 @@ public class Factura implements Serializable {
         this.fechaFacturacion = fechaFacturacion;
     }
 
-    public float getMetodoDePago() {
+    public int getMetodoDePago() {
         return metodoDePago;
     }
 
-    public void setMetodoDePago(float metodoDePago) {
+    public void setMetodoDePago(int metodoDePago) {
         this.metodoDePago = metodoDePago;
     }
 
-    public double getMontoPagado() {
+    public float getMontoPagado() {
         return montoPagado;
     }
 
-    public void setMontoPagado(double montoPagado) {
+    public void setMontoPagado(float montoPagado) {
         this.montoPagado = montoPagado;
     }
 
-    public double getTotal() {
+    public float getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
+    public void setTotal(float total) {
         this.total = total;
     }
 

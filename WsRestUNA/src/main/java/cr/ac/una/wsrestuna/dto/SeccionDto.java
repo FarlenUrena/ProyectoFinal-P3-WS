@@ -19,7 +19,7 @@ public class SeccionDto {
     private Long idSeccion;
     private String nombre;
     private byte[] fotoDistribucion;
-    private Double impuestoPorServicio;
+    private float impuestoPorServicio;
     private int tipo;
     private List<Empleado> empleadoList;
     private List<Elementodeseccion> elementodeseccionList;
@@ -60,11 +60,11 @@ public class SeccionDto {
         this.fotoDistribucion = fotoDistribucion;
     }
 
-    public Double getImpuestoPorServicio() {
+    public float getImpuestoPorServicio() {
         return impuestoPorServicio;
     }
 
-    public void setImpuestoPorServicio(Double impuestoPorServicio) {
+    public void setImpuestoPorServicio(float impuestoPorServicio) {
         this.impuestoPorServicio = impuestoPorServicio;
     }
 

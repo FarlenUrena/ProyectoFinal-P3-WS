@@ -18,10 +18,10 @@ public class ProductoDto {
     private Long idProducto;
     private String nombre;
     private String nombreCorto;
-    private double precio;
-    private float grupo;
-    private float esAccesoRapido;
-    private float ventasTotales;
+    private float precio;
+    private int grupo;
+    private int esAccesoRapido;
+    private int ventasTotales;
     private List<Productopororden> productoporordenList;
     
     public ProductoDto(Producto producto) {
@@ -59,35 +59,35 @@ public class ProductoDto {
         this.nombreCorto = nombreCorto;
     }
 
-    public double getPrecio() {
+    public float getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(float precio) {
         this.precio = precio;
     }
 
-    public float getGrupo() {
+    public int getGrupo() {
         return grupo;
     }
 
-    public void setGrupo(float grupo) {
+    public void setGrupo(int grupo) {
         this.grupo = grupo;
     }
 
-    public float getEsAccesoRapido() {
+    public int getEsAccesoRapido() {
         return esAccesoRapido;
     }
 
-    public void setEsAccesoRapido(float esAccesoRapido) {
+    public void setEsAccesoRapido(int esAccesoRapido) {
         this.esAccesoRapido = esAccesoRapido;
     }
 
-    public float getVentasTotales() {
+    public int getVentasTotales() {
         return ventasTotales;
     }
 
-    public void setVentasTotales(float ventasTotales) {
+    public void setVentasTotales(int ventasTotales) {
         this.ventasTotales = ventasTotales;
     }
 

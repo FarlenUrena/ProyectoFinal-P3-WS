@@ -51,19 +51,19 @@ public class Caja implements Serializable {
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "SALDO_EFECTIVO")
-    private double saldoEfectivo;
+    private float saldoEfectivo;
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "SALDO_TARJETA")
-    private double saldoTarjeta;
+    private float saldoTarjeta;
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "SALDO_EFECTIVO_CIERRE")
-    private double saldoEfectivoCierre;
+    private float saldoEfectivoCierre;
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "SALDO_TARJETA_CIERRE")
-    private double saldoTarjetaCierre;
+    private float saldoTarjetaCierre;
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "FECHA_CIERRE")
@@ -82,7 +82,7 @@ public class Caja implements Serializable {
         this.idCaja = idCaja;
     }
 
-    public Caja(Long idCaja, double saldoEfectivo, double saldoTarjeta, double saldoEfectivoCierre, double saldoTarjetaCierre, Date fechaCierre) {
+    public Caja(Long idCaja, float saldoEfectivo, float saldoTarjeta, float saldoEfectivoCierre, float saldoTarjetaCierre, Date fechaCierre) {
         this.idCaja = idCaja;
         this.saldoEfectivo = saldoEfectivo;
         this.saldoTarjeta = saldoTarjeta;
@@ -112,35 +112,35 @@ public class Caja implements Serializable {
         this.idCaja = idCaja;
     }
 
-    public double getSaldoEfectivo() {
+    public float getSaldoEfectivo() {
         return saldoEfectivo;
     }
 
-    public void setSaldoEfectivo(double saldoEfectivo) {
+    public void setSaldoEfectivo(float saldoEfectivo) {
         this.saldoEfectivo = saldoEfectivo;
     }
 
-    public double getSaldoTarjeta() {
+    public float getSaldoTarjeta() {
         return saldoTarjeta;
     }
 
-    public void setSaldoTarjeta(double saldoTarjeta) {
+    public void setSaldoTarjeta(float saldoTarjeta) {
         this.saldoTarjeta = saldoTarjeta;
     }
 
-    public double getSaldoEfectivoCierre() {
+    public float getSaldoEfectivoCierre() {
         return saldoEfectivoCierre;
     }
 
-    public void setSaldoEfectivoCierre(double saldoEfectivoCierre) {
+    public void setSaldoEfectivoCierre(float saldoEfectivoCierre) {
         this.saldoEfectivoCierre = saldoEfectivoCierre;
     }
 
-    public double getSaldoTarjetaCierre() {
+    public float getSaldoTarjetaCierre() {
         return saldoTarjetaCierre;
     }
 
-    public void setSaldoTarjetaCierre(double saldoTarjetaCierre) {
+    public void setSaldoTarjetaCierre(float saldoTarjetaCierre) {
         this.saldoTarjetaCierre = saldoTarjetaCierre;
     }
 

@@ -77,7 +77,7 @@ public class Empleado implements Serializable {
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "ROL")
-    private int rol;
+    private Long rol;
     
     @JoinTable(name = "EMPLEADO_SECCION", joinColumns = {
         @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO")}, inverseJoinColumns = {
@@ -94,7 +94,7 @@ public class Empleado implements Serializable {
         this.idEmpleado = idEmpleado;
     }
 
-    public Empleado(String nombre, String apellido, String cedula, String nombreUsuario, String password, int rol, Long idEmpleado) {
+    public Empleado(String nombre, String apellido, String cedula, String nombreUsuario, String password, Long rol, Long idEmpleado) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.cedula = cedula;
@@ -211,11 +211,11 @@ public class Empleado implements Serializable {
         this.password = password;
     }
 
-    public int getRol() {
+    public Long getRol() {
         return rol;
     }
 
-    public void setRol(int rol) {
+    public void setRol(Long rol) {
         this.rol = rol;
     }
 
