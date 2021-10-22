@@ -6,23 +6,27 @@
 package cr.ac.una.wsrestuna.dto;
 
 import cr.ac.una.wsrestuna.model.Producto;
-import cr.ac.una.wsrestuna.model.Productopororden;
-import java.util.List;
+import java.io.Serializable;
 
 /**
  *
  * @author Farlen
  */
-public class ProductoDto {
+public class ProductoDto implements Serializable{
 
     private Long idProducto;
     private String nombre;
     private String nombreCorto;
     private float precio;
-    private int grupo;
-    private int esAccesoRapido;
-    private int ventasTotales;
-    private List<Productopororden> productoporordenList;
+    private Long grupo;
+    private Long esAccesoRapido;
+    private Long ventasTotales;
+    private byte[] imagen;
+
+    private static final long serialVersionUID = 1L;
+    
+    public ProductoDto() {
+    }
     
     public ProductoDto(Producto producto) {
         this.idProducto = producto.getIdProducto();
@@ -32,7 +36,8 @@ public class ProductoDto {
         this.grupo = producto.getGrupo();
         this.esAccesoRapido = producto.getEsAccesoRapido();
         this.ventasTotales = producto.getVentasTotales();
-        this.productoporordenList = producto.getProductoporordenList();
+        this.imagen = producto.getImagen();
+                
    }
 
     public Long getIdProducto() {
@@ -41,6 +46,14 @@ public class ProductoDto {
 
     public void setIdProducto(Long idProducto) {
         this.idProducto = idProducto;
+    }
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
     }
 
     public String getNombre() {
@@ -67,36 +80,30 @@ public class ProductoDto {
         this.precio = precio;
     }
 
-    public int getGrupo() {
+    public Long getGrupo() {
         return grupo;
     }
 
-    public void setGrupo(int grupo) {
+    public void setGrupo(Long grupo) {
         this.grupo = grupo;
     }
 
-    public int getEsAccesoRapido() {
+    public Long getEsAccesoRapido() {
         return esAccesoRapido;
     }
 
-    public void setEsAccesoRapido(int esAccesoRapido) {
+    public void setEsAccesoRapido(Long esAccesoRapido) {
         this.esAccesoRapido = esAccesoRapido;
     }
 
-    public int getVentasTotales() {
+    public Long getVentasTotales() {
         return ventasTotales;
     }
 
-    public void setVentasTotales(int ventasTotales) {
+    public void setVentasTotales(Long ventasTotales) {
         this.ventasTotales = ventasTotales;
     }
 
-    public List<Productopororden> getProductoporordenList() {
-        return productoporordenList;
-    }
-
-    public void setProductoporordenList(List<Productopororden> productoporordenList) {
-        this.productoporordenList = productoporordenList;
-    }
+    
 
 }

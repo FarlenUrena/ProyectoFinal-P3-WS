@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -20,6 +22,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.QueryHint;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -28,7 +31,7 @@ import javax.validation.constraints.Size;
  * @author Farlen
  */
 @Entity
-@Table(name = "EMPLEADO")
+@Table(name = "EMPLEADO", schema = "RESTUNA")
 @NamedQueries({
     @NamedQuery(name = "Empleado.findAll", query = "SELECT e FROM Empleado e"),
     @NamedQuery(name = "Empleado.findByIdEmpleado", query = "SELECT e FROM Empleado e WHERE e.idEmpleado = :idEmpleado"),
@@ -45,6 +48,8 @@ public class Empleado implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
+    @SequenceGenerator(name = "EMPLEADO_ID_GENERATOR", sequenceName = "RESTUNA.SEQ_ID_EMPLEADO", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EMPLEADO_ID_GENERATOR")
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "ID_EMPLEADO")
