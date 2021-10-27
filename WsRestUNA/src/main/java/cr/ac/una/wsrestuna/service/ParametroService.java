@@ -36,7 +36,7 @@ public class ParametroService {
     private EntityManager em;
     
     
-//    Obetener un parametro
+//    Obtener un parametro
     public Respuesta getParametro(Long id) {
         try {
             Query qryParametro = em.createNamedQuery("Parametro.findByIdParametro", Parametro.class);
@@ -53,8 +53,8 @@ public class ParametroService {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar el parametro.", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar el parametro.", "getParametro " + ex.getMessage());
         }
-    }
-
+    }  
+    
 //    Guardar o actualizar un parametro
     public Respuesta guardarParametro(ParametroDto parametroDto) {
         try {

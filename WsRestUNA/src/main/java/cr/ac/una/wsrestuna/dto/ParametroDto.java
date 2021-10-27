@@ -18,8 +18,6 @@ public class ParametroDto {
     private float valorNumerico;
     private String valorTexto;
     private String descripcion;
-
-
     
     public ParametroDto(Parametro parametro) {
         this.idParametro = parametro.getIdParametro();

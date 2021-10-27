@@ -31,8 +31,7 @@ import javax.ws.rs.core.Response;
  */
 @Secure
 @Path("/ParametroController")
-public class ParametroController {
-    
+public class ParametroController {   
      @EJB
      ParametroService parametroService;
     
