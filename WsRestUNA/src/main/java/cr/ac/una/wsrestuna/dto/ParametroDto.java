@@ -15,7 +15,7 @@ public class ParametroDto {
 
     private Long idParametro;
     private String nombre;
-    private float valorNumerico;
+    private double valorNumerico;
     private String valorTexto;
     private String descripcion;
     
@@ -43,11 +43,11 @@ public class ParametroDto {
         this.nombre = nombre;
     }
 
-    public float getValorNumerico() {
+    public double getValorNumerico() {
         return valorNumerico;
     }
 
-    public void setValorNumerico(float valorNumerico) {
+    public void setValorNumerico(double valorNumerico) {
         this.valorNumerico = valorNumerico;
     }
 

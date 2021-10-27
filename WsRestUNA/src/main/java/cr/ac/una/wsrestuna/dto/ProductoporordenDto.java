@@ -16,8 +16,8 @@ import cr.ac.una.wsrestuna.model.Productopororden;
 public class ProductoporordenDto {
 
     private Long idProductoPorOrden;
-    private int cantidad;
-    private float precioProducto;
+    private Long cantidad;
+    private double precioProducto;
     private Orden idOrden;
     private Producto idProducto;
 
@@ -40,19 +40,19 @@ public class ProductoporordenDto {
         this.idProductoPorOrden = idProductoPorOrden;
     }
 
-    public int getCantidad() {
+    public Long getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(Long cantidad) {
         this.cantidad = cantidad;
     }
 
-    public float getPrecioProducto() {
+    public double getPrecioProducto() {
         return precioProducto;
     }
 
-    public void setPrecioProducto(float precioProducto) {
+    public void setPrecioProducto(double precioProducto) {
         this.precioProducto = precioProducto;
     }
 

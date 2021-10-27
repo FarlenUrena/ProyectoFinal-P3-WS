@@ -7,11 +7,15 @@ package cr.ac.una.wsrestuna.model;
 
 import cr.ac.una.wsrestuna.dto.ElementodeseccionDto;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -19,6 +23,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 //import javax.validation.constraints.NotNull;
 //import javax.validation.constraints.NotNull;
@@ -29,7 +34,7 @@ import javax.validation.constraints.Size;
  * @author Farlen
  */
 @Entity
-@Table(name = "ELEMENTODESECCION")
+@Table(name = "ELEMENTODESECCION", schema = "RESTUNA")
 @NamedQueries({
     @NamedQuery(name = "Elementodeseccion.findAll", query = "SELECT e FROM Elementodeseccion e"),
     @NamedQuery(name = "Elementodeseccion.findByIdElemento", query = "SELECT e FROM Elementodeseccion e WHERE e.idElemento = :idElemento"),
@@ -37,12 +42,15 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Elementodeseccion.findByNombre", query = "SELECT e FROM Elementodeseccion e WHERE e.nombre = :nombre"),
     @NamedQuery(name = "Elementodeseccion.findByEsOcupada", query = "SELECT e FROM Elementodeseccion e WHERE e.esOcupada = :esOcupada"),
     @NamedQuery(name = "Elementodeseccion.findByPosicionX", query = "SELECT e FROM Elementodeseccion e WHERE e.posicionX = :posicionX"),
-    @NamedQuery(name = "Elementodeseccion.findByPosicionY", query = "SELECT e FROM Elementodeseccion e WHERE e.posicionY = :posicionY")})
+    @NamedQuery(name = "Elementodeseccion.findByPosicionY", query = "SELECT e FROM Elementodeseccion e WHERE e.posicionY = :posicionY"),
+    @NamedQuery(name = "Elementodeseccion.findByImpuestoPorServicio", query = "SELECT e FROM Elementodeseccion e WHERE e.impuestoPorServicio = :impuestoPorServicio")})
 public class Elementodeseccion implements Serializable {
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
+    @SequenceGenerator(name = "ELEMENTODESECCION_ID_GENERATOR", sequenceName = "RESTUNA.SEQ_ID_ELEMENTODESECCION", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ELEMENTODESECCION_ID_GENERATOR")
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "ID_ELEMENTO")
@@ -50,7 +58,7 @@ public class Elementodeseccion implements Serializable {
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "TIPO")
-    private int tipo;
+    private Long tipo;
     @Basic(optional = false)
 //    @NotNull
     @Size(min = 1, max = 30)
@@ -59,20 +67,24 @@ public class Elementodeseccion implements Serializable {
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "ES_OCUPADA")
-    private int esOcupada;
+    private Long esOcupada;
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "POSICION_X")
-    private float posicionX;
+    private double posicionX;
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "POSICION_Y")
-    private float posicionY;
+    private double posicionY;
     @Basic(optional = false)
 //    @NotNull
     @Lob
     @Column(name = "IMAGEN_ELEMENTO")
-    private byte[] imagenElemento;    
+    private byte [] imagenElemento;
+    @Basic(optional = false)
+//    @NotNull
+    @Column(name = "IMPUESTO_POR_SERVICIO")
+    private double impuestoPorServicio;
     @JoinColumn(name = "ID_SECCION", referencedColumnName = "ID_SECCION")
     @ManyToOne(fetch = FetchType.LAZY)
     private Seccion idSeccion;
@@ -86,7 +98,7 @@ public class Elementodeseccion implements Serializable {
         this.idElemento = idElemento;
     }
 
-    public Elementodeseccion(Long idElemento, int tipo, String nombre, int esOcupada, float posicionX, float posicionY, byte[] imagenElemento) {
+    public Elementodeseccion(Long idElemento, Long tipo, String nombre, Long esOcupada, double posicionX, double posicionY, byte[] imagenElemento, double impuestoPorServicio) {
         this.idElemento = idElemento;
         this.tipo = tipo;
         this.nombre = nombre;
@@ -94,6 +106,7 @@ public class Elementodeseccion implements Serializable {
         this.posicionX = posicionX;
         this.posicionY = posicionY;
         this.imagenElemento = imagenElemento;
+        this.impuestoPorServicio = impuestoPorServicio;
     }
     public Elementodeseccion(ElementodeseccionDto elementodeseccionDto) {
         this.idElemento = elementodeseccionDto.getIdElemento();
@@ -106,9 +119,10 @@ public class Elementodeseccion implements Serializable {
         this.posicionX = elementodeseccionDto.getPosicionX();
         this.posicionY = elementodeseccionDto.getPosicionY();
         this.imagenElemento = elementodeseccionDto.getImagenElemento();
-        this.idSeccion = elementodeseccionDto.getIdSeccion();
-        this.ordenList = elementodeseccionDto.getOrdenList();    
-    
+        this.impuestoPorServicio=elementodeseccionDto.getImpuestoPorServicio();
+//        this.idSeccion = elementodeseccionDto.getIdSeccion();
+//        this.ordenList = elementodeseccionDto.getOrdenList();
+
     }
     
 
@@ -122,28 +136,43 @@ public class Elementodeseccion implements Serializable {
         this.idElemento = idElemento;
     }
 
+    public Long getTipo() {
+        return tipo;
+    }
 
-    public int getEsOcupada() {
+    public void setTipo(Long tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Long getEsOcupada() {
         return esOcupada;
     }
 
-    public void setEsOcupada(int esOcupada) {
+    public void setEsOcupada(Long esOcupada) {
         this.esOcupada = esOcupada;
     }
 
-    public float getPosicionX() {
+    public double getPosicionX() {
         return posicionX;
     }
 
-    public void setPosicionX(float posicionX) {
+    public void setPosicionX(double posicionX) {
         this.posicionX = posicionX;
     }
 
-    public float getPosicionY() {
+    public double getPosicionY() {
         return posicionY;
     }
 
-    public void setPosicionY(float posicionY) {
+    public void setPosicionY(double posicionY) {
         this.posicionY = posicionY;
     }
 
@@ -153,6 +182,14 @@ public class Elementodeseccion implements Serializable {
 
     public void setImagenElemento(byte[] imagenElemento) {
         this.imagenElemento = imagenElemento;
+    }
+
+    public double getImpuestoPorServicio() {
+        return impuestoPorServicio;
+    }
+
+    public void setImpuestoPorServicio(double impuestoPorServicio) {
+        this.impuestoPorServicio = impuestoPorServicio;
     }
 
     public Seccion getIdSeccion() {
@@ -195,23 +232,5 @@ public class Elementodeseccion implements Serializable {
     public String toString() {
         return "cr.ac.una.wsrestuna.model.Elementodeseccion[ idElemento=" + idElemento + " ]";
     }
-
-    public int getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(int tipo) {
-        this.tipo = tipo;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    
     
 }

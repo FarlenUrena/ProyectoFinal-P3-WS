@@ -17,14 +17,15 @@ import java.util.List;
 public class ElementodeseccionDto {
 
     private Long idElemento;
-    private int tipo;
+    private Long tipo;
     private String nombre;
-    private int esOcupada;
-    private float posicionX;
-    private float posicionY;
+    private Long esOcupada;
+    private double posicionX;
+    private double posicionY;
+    private double impuestoPorServicio;
     private byte[] imagenElemento;
-    private Seccion idSeccion;
-    private List<Orden> ordenList;
+//    private Seccion idSeccion;
+//    private List<Orden> ordenList;
 
     public ElementodeseccionDto(Elementodeseccion elementodeseccion) {
         this.idElemento = elementodeseccion.getIdElemento();
@@ -34,8 +35,9 @@ public class ElementodeseccionDto {
         this.posicionX = elementodeseccion.getPosicionX();
         this.posicionY = elementodeseccion.getPosicionY();
         this.imagenElemento = elementodeseccion.getImagenElemento();
-        this.idSeccion = elementodeseccion.getIdSeccion();
-        this.ordenList = elementodeseccion.getOrdenList();
+        this.impuestoPorServicio = elementodeseccion.getImpuestoPorServicio();
+//        this.idSeccion = elementodeseccion.getIdSeccion();
+//        this.ordenList = elementodeseccion.getOrdenList();
     }
 
     public Long getIdElemento() {
@@ -46,11 +48,11 @@ public class ElementodeseccionDto {
         this.idElemento = idElemento;
     }
 
-    public int getTipo() {
+    public Long getTipo() {
         return tipo;
     }
 
-    public void setTipo(int tipo) {
+    public void setTipo(Long tipo) {
         this.tipo = tipo;
     }
 
@@ -62,27 +64,27 @@ public class ElementodeseccionDto {
         this.nombre = nombre;
     }
 
-    public int getEsOcupada() {
+    public Long getEsOcupada() {
         return esOcupada;
     }
 
-    public void setEsOcupada(int esOcupada) {
+    public void setEsOcupada(Long esOcupada) {
         this.esOcupada = esOcupada;
     }
 
-    public float getPosicionX() {
+    public double getPosicionX() {
         return posicionX;
     }
 
-    public void setPosicionX(float posicionX) {
+    public void setPosicionX(double posicionX) {
         this.posicionX = posicionX;
     }
 
-    public float getPosicionY() {
+    public double getPosicionY() {
         return posicionY;
     }
 
-    public void setPosicionY(float posicionY) {
+    public void setPosicionY(double posicionY) {
         this.posicionY = posicionY;
     }
 
@@ -94,20 +96,27 @@ public class ElementodeseccionDto {
         this.imagenElemento = imagenElemento;
     }
 
-    public Seccion getIdSeccion() {
-        return idSeccion;
+    public double getImpuestoPorServicio() {
+        return impuestoPorServicio;
     }
 
-    public void setIdSeccion(Seccion idSeccion) {
-        this.idSeccion = idSeccion;
+    public void setImpuestoPorServicio(double impuestoPorServicio) {
+        this.impuestoPorServicio = impuestoPorServicio;
     }
-
-    public List<Orden> getOrdenList() {
-        return ordenList;
-    }
-
-    public void setOrdenList(List<Orden> ordenList) {
-        this.ordenList = ordenList;
-    }
+//    public Seccion getIdSeccion() {
+//        return idSeccion;
+//    }
+//
+//    public void setIdSeccion(Seccion idSeccion) {
+//        this.idSeccion = idSeccion;
+//    }
+//
+//    public List<Orden> getOrdenList() {
+//        return ordenList;
+//    }
+//
+//    public void setOrdenList(List<Orden> ordenList) {
+//        this.ordenList = ordenList;
+//    }
 
 }

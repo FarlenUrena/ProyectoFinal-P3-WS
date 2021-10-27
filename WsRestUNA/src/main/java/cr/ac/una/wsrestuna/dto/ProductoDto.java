@@ -17,8 +17,7 @@ public class ProductoDto implements Serializable{
     private Long idProducto;
     private String nombre;
     private String nombreCorto;
-    private float precio;
-    private Long grupo;
+    private double precio;
     private Long esAccesoRapido;
     private Long ventasTotales;
     private byte[] imagen;
@@ -33,10 +32,8 @@ public class ProductoDto implements Serializable{
         this.nombre = producto.getNombre();
         this.nombreCorto = producto.getNombreCorto();
         this.precio = producto.getPrecio();
-        this.grupo = producto.getGrupo();
         this.esAccesoRapido = producto.getEsAccesoRapido();
         this.ventasTotales = producto.getVentasTotales();
-        this.imagen = producto.getImagen();
                 
    }
 
@@ -72,20 +69,12 @@ public class ProductoDto implements Serializable{
         this.nombreCorto = nombreCorto;
     }
 
-    public float getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(float precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
-    }
-
-    public Long getGrupo() {
-        return grupo;
-    }
-
-    public void setGrupo(Long grupo) {
-        this.grupo = grupo;
     }
 
     public Long getEsAccesoRapido() {

@@ -14,23 +14,25 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-//import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author Farlen
  */
 @Entity
-@Table(name = "CAJA")
+@Table(name = "CAJA",  schema = "RESTUNA")
 @NamedQueries({
     @NamedQuery(name = "Caja.findAll", query = "SELECT c FROM Caja c"),
     @NamedQuery(name = "Caja.findByIdCaja", query = "SELECT c FROM Caja c WHERE c.idCaja = :idCaja"),
@@ -44,6 +46,8 @@ public class Caja implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
+    @SequenceGenerator(name = "CAJA_ID_GENERATOR", sequenceName = "RESTUNA.SEQ_ID_CAJA", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CAJA_ID_GENERATOR")
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "ID_CAJA")
@@ -51,19 +55,19 @@ public class Caja implements Serializable {
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "SALDO_EFECTIVO")
-    private float saldoEfectivo;
+    private double saldoEfectivo;
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "SALDO_TARJETA")
-    private float saldoTarjeta;
+    private double saldoTarjeta;
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "SALDO_EFECTIVO_CIERRE")
-    private float saldoEfectivoCierre;
+    private double saldoEfectivoCierre;
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "SALDO_TARJETA_CIERRE")
-    private float saldoTarjetaCierre;
+    private double saldoTarjetaCierre;
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "FECHA_CIERRE")
@@ -82,7 +86,7 @@ public class Caja implements Serializable {
         this.idCaja = idCaja;
     }
 
-    public Caja(Long idCaja, float saldoEfectivo, float saldoTarjeta, float saldoEfectivoCierre, float saldoTarjetaCierre, Date fechaCierre) {
+    public Caja(Long idCaja, double saldoEfectivo, double saldoTarjeta, double saldoEfectivoCierre, double saldoTarjetaCierre, Date fechaCierre) {
         this.idCaja = idCaja;
         this.saldoEfectivo = saldoEfectivo;
         this.saldoTarjeta = saldoTarjeta;
@@ -112,35 +116,35 @@ public class Caja implements Serializable {
         this.idCaja = idCaja;
     }
 
-    public float getSaldoEfectivo() {
+    public double getSaldoEfectivo() {
         return saldoEfectivo;
     }
 
-    public void setSaldoEfectivo(float saldoEfectivo) {
+    public void setSaldoEfectivo(double saldoEfectivo) {
         this.saldoEfectivo = saldoEfectivo;
     }
 
-    public float getSaldoTarjeta() {
+    public double getSaldoTarjeta() {
         return saldoTarjeta;
     }
 
-    public void setSaldoTarjeta(float saldoTarjeta) {
+    public void setSaldoTarjeta(double saldoTarjeta) {
         this.saldoTarjeta = saldoTarjeta;
     }
 
-    public float getSaldoEfectivoCierre() {
+    public double getSaldoEfectivoCierre() {
         return saldoEfectivoCierre;
     }
 
-    public void setSaldoEfectivoCierre(float saldoEfectivoCierre) {
+    public void setSaldoEfectivoCierre(double saldoEfectivoCierre) {
         this.saldoEfectivoCierre = saldoEfectivoCierre;
     }
 
-    public float getSaldoTarjetaCierre() {
+    public double getSaldoTarjetaCierre() {
         return saldoTarjetaCierre;
     }
 
-    public void setSaldoTarjetaCierre(float saldoTarjetaCierre) {
+    public void setSaldoTarjetaCierre(double saldoTarjetaCierre) {
         this.saldoTarjetaCierre = saldoTarjetaCierre;
     }
 
@@ -192,7 +196,5 @@ public class Caja implements Serializable {
     public String toString() {
         return "cr.ac.una.wsrestuna.model.Caja[ idCaja=" + idCaja + " ]";
     }
-
-  
     
 }

@@ -7,15 +7,19 @@ package cr.ac.una.wsrestuna.model;
 
 import cr.ac.una.wsrestuna.dto.ParametroDto;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-//import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -23,7 +27,7 @@ import javax.validation.constraints.Size;
  * @author Farlen
  */
 @Entity
-@Table(name = "PARAMETRO")
+@Table(name = "PARAMETRO",schema = "RESTUNA")
 @NamedQueries({
     @NamedQuery(name = "Parametro.findAll", query = "SELECT p FROM Parametro p"),
     @NamedQuery(name = "Parametro.findByIdParametro", query = "SELECT p FROM Parametro p WHERE p.idParametro = :idParametro"),
@@ -36,26 +40,28 @@ public class Parametro implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
+    @SequenceGenerator(name = "PARAMETRO_ID_GENERATOR", sequenceName = "RESTUNA.SEQ_ID_PARAMETRO", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PARAMETRO_ID_GENERATOR")
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "ID_PARAMETRO")
     private Long idParametro;
-    
     @Basic(optional = false)
-    @NotNull
+//    @NotNull
     @Size(min = 1, max = 30)
     @Column(name = "NOMBRE")
     private String nombre;
+    @Column(name = "VALOR_NUMERICO")
+    private double valorNumerico;
     @Size(max = 30)
     @Column(name = "VALOR_TEXTO")
     private String valorTexto;
     @Size(max = 60)
     @Column(name = "DESCRIPCION")
     private String descripcion;
-
-   
-    @Column(name = "VALOR_NUMERICO")
-    private float valorNumerico;
+    @Lob
+    @Column(name = "IMAGEN")
+    private Serializable imagen;
 
     public Parametro() {
     }
@@ -90,12 +96,19 @@ public class Parametro implements Serializable {
         this.idParametro = idParametro;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
 
-    public float getValorNumerico() {
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public double getValorNumerico() {
         return valorNumerico;
     }
 
-    public void setValorNumerico(float valorNumerico) {
+    public void setValorNumerico(double valorNumerico) {
         this.valorNumerico = valorNumerico;
     }
 
@@ -107,6 +120,21 @@ public class Parametro implements Serializable {
         this.valorTexto = valorTexto;
     }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Serializable getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(Serializable imagen) {
+        this.imagen = imagen;
+    }
 
     @Override
     public int hashCode() {
@@ -132,24 +160,5 @@ public class Parametro implements Serializable {
     public String toString() {
         return "cr.ac.una.wsrestuna.model.Parametro[ idParametro=" + idParametro + " ]";
     }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    
     
 }

@@ -7,6 +7,8 @@ package cr.ac.una.wsrestuna.model;
 
 import cr.ac.una.wsrestuna.dto.EmpleadoDto;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -24,6 +26,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.QueryHint;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -71,7 +74,7 @@ public class Empleado implements Serializable {
     private String cedula;
     @Basic(optional = false)
 //    @NotNull
-    @Size(min = 1, max = 30)
+    @Size(min = 1, max = 15)
     @Column(name = "NOMBRE_USUARIO")
     private String nombreUsuario;
     @Basic(optional = false)
@@ -95,27 +98,16 @@ public class Empleado implements Serializable {
     public Empleado() {
     }
 
-    public Empleado(Long idEmpleado) {
-        this.idEmpleado = idEmpleado;
-    }
-
-    public Empleado(String nombre, String apellido, String cedula, String nombreUsuario, String password, Long rol, Long idEmpleado) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.cedula = cedula;
-        this.nombreUsuario = nombreUsuario;
-        this.password = password;
-        this.rol = rol;
+     public Empleado(Long idEmpleado) {
         this.idEmpleado = idEmpleado;
     }
     
-    
-    public Empleado(EmpleadoDto empleado) {
-        this.idEmpleado = empleado.getIdEmpleado();
-        actualizarEmpleado(empleado);
+    public Empleado(EmpleadoDto empleadoDto) {
+        this.idEmpleado = empleadoDto.getIdEmpleado();
+        actualizarEmpleado(empleadoDto);
     }
     
-    public void actualizarEmpleado(EmpleadoDto empleadoDto) {
+        public void actualizarEmpleado(EmpleadoDto empleadoDto) {
         this.nombre = empleadoDto.getNombre();
         this.apellido = empleadoDto.getApellido();
         this.cedula = empleadoDto.getCedula();
@@ -124,14 +116,48 @@ public class Empleado implements Serializable {
         this.rol = empleadoDto.getRol();
     
     }
-    
+    public Empleado(Long idEmpleado, String nombre, String apellido, String cedula, String nombreUsuario, String password, Long rol) {
+        this.idEmpleado = idEmpleado;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.cedula = cedula;
+        this.nombreUsuario = nombreUsuario;
+        this.password = password;
+        this.rol = rol;
+    }
 
+   
+    
     public Long getIdEmpleado() {
         return idEmpleado;
     }
 
     public void setIdEmpleado(Long idEmpleado) {
         this.idEmpleado = idEmpleado;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
     }
 
     public String getNombreUsuario() {
@@ -142,6 +168,21 @@ public class Empleado implements Serializable {
         this.nombreUsuario = nombreUsuario;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Long getRol() {
+        return rol;
+    }
+
+    public void setRol(Long rol) {
+        this.rol = rol;
+    }
 
     public List<Seccion> getSeccionList() {
         return seccionList;
@@ -183,47 +224,5 @@ public class Empleado implements Serializable {
     public String toString() {
         return "cr.ac.una.wsrestuna.model.Empleado[ idEmpleado=" + idEmpleado + " ]";
     }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getCedula() {
-        return cedula;
-    }
-
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Long getRol() {
-        return rol;
-    }
-
-    public void setRol(Long rol) {
-        this.rol = rol;
-    }
-
-    
     
 }

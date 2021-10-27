@@ -18,10 +18,10 @@ import java.util.List;
 public class CajaDto {
 
     private Long idCaja;
-    private float saldoEfectivo;
-    private float saldoTarjeta;
-    private float saldoEfectivoCierre;
-    private float saldoTarjetaCierre;
+    private double saldoEfectivo;
+    private double saldoTarjeta;
+    private double saldoEfectivoCierre;
+    private double saldoTarjetaCierre;
     private Date fechaCierre;
     private Empleado idEmpleado;
     private List<Factura> facturaList;
@@ -45,35 +45,35 @@ public class CajaDto {
         this.idCaja = idCaja;
     }
 
-    public float getSaldoEfectivo() {
+    public double getSaldoEfectivo() {
         return saldoEfectivo;
     }
 
-    public void setSaldoEfectivo(float saldoEfectivo) {
+    public void setSaldoEfectivo(double saldoEfectivo) {
         this.saldoEfectivo = saldoEfectivo;
     }
 
-    public float getSaldoTarjeta() {
+    public double getSaldoTarjeta() {
         return saldoTarjeta;
     }
 
-    public void setSaldoTarjeta(float saldoTarjeta) {
+    public void setSaldoTarjeta(double saldoTarjeta) {
         this.saldoTarjeta = saldoTarjeta;
     }
 
-    public float getSaldoEfectivoCierre() {
+    public double getSaldoEfectivoCierre() {
         return saldoEfectivoCierre;
     }
 
-    public void setSaldoEfectivoCierre(float saldoEfectivoCierre) {
+    public void setSaldoEfectivoCierre(double saldoEfectivoCierre) {
         this.saldoEfectivoCierre = saldoEfectivoCierre;
     }
 
-    public float getSaldoTarjetaCierre() {
+    public double getSaldoTarjetaCierre() {
         return saldoTarjetaCierre;
     }
 
-    public void setSaldoTarjetaCierre(float saldoTarjetaCierre) {
+    public void setSaldoTarjetaCierre(double saldoTarjetaCierre) {
         this.saldoTarjetaCierre = saldoTarjetaCierre;
     }
 

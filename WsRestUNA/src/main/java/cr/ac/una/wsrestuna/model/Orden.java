@@ -13,14 +13,17 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-//import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -28,14 +31,18 @@ import javax.validation.constraints.Size;
  * @author Farlen
  */
 @Entity
-@Table(name = "ORDEN")
+@Table(name = "ORDEN", schema = "RESTUNA")
 @NamedQueries({
     @NamedQuery(name = "Orden.findAll", query = "SELECT o FROM Orden o"),
     @NamedQuery(name = "Orden.findByIdOrden", query = "SELECT o FROM Orden o WHERE o.idOrden = :idOrden"),
     @NamedQuery(name = "Orden.findByNombreCliente", query = "SELECT o FROM Orden o WHERE o.nombreCliente = :nombreCliente")})
 public class Orden implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
+    @SequenceGenerator(name = "ORDEN_ID_GENERATOR", sequenceName = "RESTUNA.SEQ_ID_ORDEN", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORDEN_ID_GENERATOR")
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "ID_ORDEN")
@@ -43,10 +50,6 @@ public class Orden implements Serializable {
     @Size(max = 40)
     @Column(name = "NOMBRE_CLIENTE")
     private String nombreCliente;
-
-    private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    
     @JoinColumn(name = "ID_ELEMENTO", referencedColumnName = "ID_ELEMENTO")
     @ManyToOne(fetch = FetchType.LAZY)
     private Elementodeseccion idElemento;
@@ -138,8 +141,5 @@ public class Orden implements Serializable {
     public String toString() {
         return "cr.ac.una.wsrestuna.model.Orden[ idOrden=" + idOrden + " ]";
     }
-
-    
-
     
 }

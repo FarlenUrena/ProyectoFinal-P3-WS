@@ -7,28 +7,32 @@ package cr.ac.una.wsrestuna.model;
 
 import cr.ac.una.wsrestuna.dto.FacturaDto;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-//import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author Farlen
  */
 @Entity
-@Table(name = "FACTURA")
+@Table(name = "FACTURA", schema = "RESTUNA")
 @NamedQueries({
     @NamedQuery(name = "Factura.findAll", query = "SELECT f FROM Factura f"),
     @NamedQuery(name = "Factura.findByIdFactura", query = "SELECT f FROM Factura f WHERE f.idFactura = :idFactura"),
@@ -38,14 +42,11 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "Factura.findByTotal", query = "SELECT f FROM Factura f WHERE f.total = :total")})
 public class Factura implements Serializable {
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "METODO_DE_PAGO")
-    private int metodoDePago;
-
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
+        @SequenceGenerator(name = "FACTURA_ID_GENERATOR", sequenceName = "RESTUNA.SEQ_ID_FACTURA", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FACTURA_ID_GENERATOR")
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "ID_FACTURA")
@@ -57,12 +58,16 @@ public class Factura implements Serializable {
     private Date fechaFacturacion;
     @Basic(optional = false)
 //    @NotNull
+    @Column(name = "METODO_DE_PAGO")
+    private Long metodoDePago;
+    @Basic(optional = false)
+//    @NotNull
     @Column(name = "MONTO_PAGADO")
-    private float montoPagado;
+    private double montoPagado;
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "TOTAL")
-    private float total;
+    private double total;
     @JoinColumn(name = "ID_CAJA", referencedColumnName = "ID_CAJA")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Caja idCaja;
@@ -77,7 +82,7 @@ public class Factura implements Serializable {
         this.idFactura = idFactura;
     }
 
-    public Factura(Long idFactura, Date fechaFacturacion, int metodoDePago, float montoPagado, float total) {
+    public Factura(Long idFactura, Date fechaFacturacion, Long metodoDePago, float montoPagado, float total) {
         this.idFactura = idFactura;
         this.fechaFacturacion = fechaFacturacion;
         this.metodoDePago = metodoDePago;
@@ -114,27 +119,27 @@ public class Factura implements Serializable {
         this.fechaFacturacion = fechaFacturacion;
     }
 
-    public int getMetodoDePago() {
+    public Long getMetodoDePago() {
         return metodoDePago;
     }
 
-    public void setMetodoDePago(int metodoDePago) {
+    public void setMetodoDePago(Long metodoDePago) {
         this.metodoDePago = metodoDePago;
     }
 
-    public float getMontoPagado() {
+    public double getMontoPagado() {
         return montoPagado;
     }
 
-    public void setMontoPagado(float montoPagado) {
+    public void setMontoPagado(double montoPagado) {
         this.montoPagado = montoPagado;
     }
 
-    public float getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(float total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 
@@ -178,7 +183,5 @@ public class Factura implements Serializable {
     public String toString() {
         return "cr.ac.una.wsrestuna.model.Factura[ idFactura=" + idFactura + " ]";
     }
-
-    
     
 }

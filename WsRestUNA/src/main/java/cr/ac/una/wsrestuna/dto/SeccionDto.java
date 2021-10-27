@@ -19,8 +19,6 @@ public class SeccionDto {
     private Long idSeccion;
     private String nombre;
     private byte[] fotoDistribucion;
-    private float impuestoPorServicio;
-    private int tipo;
     private List<Empleado> empleadoList;
     private List<Elementodeseccion> elementodeseccionList;
 
@@ -30,8 +28,6 @@ public class SeccionDto {
         this.idSeccion = seccion.getIdSeccion();
         this.nombre = seccion.getNombre();
         this.fotoDistribucion = seccion.getFotoDistribucion();
-        this.impuestoPorServicio = seccion.getImpuestoPorServicio();
-        this.tipo = seccion.getTipo();
         this.empleadoList = seccion.getEmpleadoList();
         this.elementodeseccionList = seccion.getElementodeseccionList();
      }
@@ -58,22 +54,6 @@ public class SeccionDto {
 
     public void setFotoDistribucion(byte[] fotoDistribucion) {
         this.fotoDistribucion = fotoDistribucion;
-    }
-
-    public float getImpuestoPorServicio() {
-        return impuestoPorServicio;
-    }
-
-    public void setImpuestoPorServicio(float impuestoPorServicio) {
-        this.impuestoPorServicio = impuestoPorServicio;
-    }
-
-    public int getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(int tipo) {
-        this.tipo = tipo;
     }
 
     public List<Empleado> getEmpleadoList() {
