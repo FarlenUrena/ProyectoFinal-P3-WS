@@ -6,6 +6,7 @@
 package cr.ac.una.wsrestuna.controller;
 
 import cr.ac.una.wsrestuna.dto.GrupoDto;
+import cr.ac.una.wsrestuna.dto.ProductoDto;
 import cr.ac.una.wsrestuna.service.CajaService;
 import cr.ac.una.wsrestuna.service.GrupoService;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
@@ -33,90 +34,77 @@ import javax.ws.rs.core.Response;
 @Secure
 @Path("/GrupoController")
 public class GrupoController {
+
     @EJB
     GrupoService grupoService;
-    
+
     @GET
     @Path("/getGrupoId/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getGrupoId(@PathParam("id") Long id){
-        try
-        {
+    public Response getGrupoId(@PathParam("id") Long id) {
+        try {
             Respuesta res = grupoService.getGrupo(id);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok((GrupoDto) res.getResultado("Grupo")).build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el grupo").build();
         }
     }
+
     @GET
     @Path("/getGrupoNombre/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getGrupoNombre(@PathParam("nombre") String nombre){
-        try
-        {
+    public Response getGrupoNombre(@PathParam("nombre") String nombre) {
+        try {
             Respuesta res = grupoService.getGrupo(nombre);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok((GrupoDto) res.getResultado("Grupo")).build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el grupo").build();
         }
     }
-    
+
     @GET
     @Path("/getGrupos")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getGrupos(){
-        try
-        {
+    public Response getGrupos() {
+        try {
             Respuesta res = grupoService.getGrupos();
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
-            return Response.ok((GrupoDto) res.getResultado("Grupos")).build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE , null , ex);
+            return Response.ok(new GenericEntity<List<GrupoDto>>((List<GrupoDto>) res.getResultado("Grupos")) {
+            }).build();
+        } catch (Exception ex) {
+            Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener los Grupos").build();
         }
     }
-    
+
     @POST
     @Path("/grupo")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response guardarGrupo(GrupoDto grupoDto){
-        try
-        {
+    public Response guardarGrupo(GrupoDto grupoDto) {
+        try {
             Respuesta res = grupoService.guardarGrupo(grupoDto);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok((GrupoDto) res.getResultado("Grupo")).build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al guardar el grupo").build();
         }
     }
-    
+
 }

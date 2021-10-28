@@ -7,13 +7,14 @@ package cr.ac.una.wsrestuna.dto;
 
 import cr.ac.una.wsrestuna.model.Grupo;
 import cr.ac.una.wsrestuna.model.Producto;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author jeez
  */
-public class GrupoDto {
+public class GrupoDto implements Serializable{
 
     private Long idGrupo;
     private String nombreGrupo;
