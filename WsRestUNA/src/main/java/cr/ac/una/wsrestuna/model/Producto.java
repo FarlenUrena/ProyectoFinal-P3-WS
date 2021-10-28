@@ -41,7 +41,9 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Producto.findByNombreCorto", query = "SELECT p FROM Producto p WHERE p.nombreCorto = :nombreCorto"),
     @NamedQuery(name = "Producto.findByPrecio", query = "SELECT p FROM Producto p WHERE p.precio = :precio"),
     @NamedQuery(name = "Producto.findByEsAccesoRapido", query = "SELECT p FROM Producto p WHERE p.esAccesoRapido = :esAccesoRapido"),
-    @NamedQuery(name = "Producto.findByVentasTotales", query = "SELECT p FROM Producto p WHERE p.ventasTotales = :ventasTotales")})
+    @NamedQuery(name = "Producto.findByVentasTotales", query = "SELECT p FROM Producto p WHERE p.ventasTotales = :ventasTotales"),
+//    @NamedQuery(name = "Producto.findByGrupo", query = "SELECT p FROM Producto p WHERE p.ventasTotales = :ventasTotales")
+})
 public class Producto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -81,6 +83,7 @@ public class Producto implements Serializable {
     @JoinColumn(name = "ID_GRUPO", referencedColumnName = "ID_GRUPO")
     @ManyToOne(fetch = FetchType.LAZY)
     private Grupo idGrupo;
+    
     @OneToMany(mappedBy = "idProducto", fetch = FetchType.LAZY)
     private List<Productopororden> productoporordenList;
 
@@ -113,6 +116,7 @@ public class Producto implements Serializable {
         this.esAccesoRapido = productoDto.getEsAccesoRapido();
         this.ventasTotales = productoDto.getVentasTotales();
         this.imagen = productoDto.getImagen();
+        this.idGrupo = productoDto.getIdGrupo();
     }
     
     public Long getIdProducto() {

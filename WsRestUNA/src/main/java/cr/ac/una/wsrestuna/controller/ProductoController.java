@@ -5,7 +5,10 @@
  */
 package cr.ac.una.wsrestuna.controller;
 
+import cr.ac.una.wsrestuna.dto.GrupoDto;
 import cr.ac.una.wsrestuna.dto.ProductoDto;
+import cr.ac.una.wsrestuna.model.Grupo;
+import cr.ac.una.wsrestuna.service.GrupoService;
 import cr.ac.una.wsrestuna.service.ProductoService;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
 import cr.ac.una.wsrestuna.util.Respuesta;
@@ -32,99 +35,109 @@ import javax.ws.rs.core.Response;
 @Secure
 @Path("/ProductoController")
 public class ProductoController {
+
     @EJB
     ProductoService productoService;
-    
-     @GET
+    @EJB
+    GrupoService grupoService;
+
+    @GET
     @Path("/producto/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getProducto(@PathParam("id") Long id)
-    {
-        try
-        {
+    public Response getProducto(@PathParam("id") Long id) {
+        try {
             Respuesta res = productoService.getProducto(id);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok((ProductoDto) res.getResultado("Producto")).build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el producto ").build();
         }
     }
-    
+
     @GET
     @Path("/productos")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getProductos()
-    {
-        try
-        {
+    public Response getProductos() {
+        try {
             Respuesta res = productoService.getProductos();
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
 
-          return Response.ok(new GenericEntity<List<ProductoDto>>((List<ProductoDto>) res.getResultado("ProductosList")) {
+            return Response.ok(new GenericEntity<List<ProductoDto>>((List<ProductoDto>) res.getResultado("ProductosList")) {
             }).build();
 
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el producto ").build();
         }
     }
-    
+
+    @GET
+    @Path("/productos/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getProductosGrupo(@PathParam("id") Long id) {
+        try {
+            Respuesta res = new Respuesta();
+            Respuesta res2 = grupoService.getGrupo(id);
+            if (!res2.getEstado()) {
+                res = productoService.getProductosPorGrupo((GrupoDto) res2.getResultado("Grupo"));
+                if (!res.getEstado()) {
+                    return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
+                }
+            }
+
+            return Response.ok(new GenericEntity<List<ProductoDto>>((List<ProductoDto>) res.getResultado("ProductosList")) {
+            }).build();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el producto ").build();
+        }
+    }
+
     //Falta probar desde el cliente si funciona
     @POST
     @Path("/producto")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response guardarProducto(ProductoDto producto)
-    {
-        try
-        {
+    public Response guardarProducto(ProductoDto producto) {
+        try {
+            Respuesta res2 = grupoService.getGrupo(producto.getNombre());
+            Grupo grupo = new Grupo((GrupoDto)res2.getResultado("Grupo"));
+            producto.setIdGrupo(grupo);
             Respuesta res = productoService.guardarProducto(producto);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok((ProductoDto) res.getResultado("Producto")).build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el producto ").build();
         }
     }
-
+    //Falta probar desde el cliente si funciona
     @DELETE
     @Path("/producto/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response eliminarProducto(@PathParam("id") Long id)
-    {
-        try
-        {
+    public Response eliminarProducto(@PathParam("id") Long id) {
+        try {
             Respuesta res = productoService.eliminarProducto(id);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok().build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el producto ").build();
         }
     }
-    
+
 }

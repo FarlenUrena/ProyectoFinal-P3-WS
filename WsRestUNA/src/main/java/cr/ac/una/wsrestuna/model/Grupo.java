@@ -5,6 +5,7 @@
  */
 package cr.ac.una.wsrestuna.model;
 
+import cr.ac.una.wsrestuna.dto.GrupoDto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
@@ -38,7 +39,7 @@ public class Grupo implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_GRUPO")
-    private BigDecimal idGrupo;
+    private Long idGrupo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
@@ -50,20 +51,29 @@ public class Grupo implements Serializable {
     public Grupo() {
     }
 
-    public Grupo(BigDecimal idGrupo) {
+    public Grupo(Long idGrupo) {
         this.idGrupo = idGrupo;
     }
 
-    public Grupo(BigDecimal idGrupo, String nombreGrupo) {
+    public Grupo(Long idGrupo, String nombreGrupo) {
         this.idGrupo = idGrupo;
         this.nombreGrupo = nombreGrupo;
     }
 
-    public BigDecimal getIdGrupo() {
+    public Grupo(GrupoDto grupodto) {
+        this.idGrupo = grupodto.getIdGrupo();
+        this.nombreGrupo = grupodto.getNombreGrupo();
+    }
+
+    public void atualizarGrupo(GrupoDto grupodto) {
+        this.nombreGrupo = grupodto.getNombreGrupo();
+    }
+
+    public Long getIdGrupo() {
         return idGrupo;
     }
 
-    public void setIdGrupo(BigDecimal idGrupo) {
+    public void setIdGrupo(Long idGrupo) {
         this.idGrupo = idGrupo;
     }
 
@@ -107,5 +117,5 @@ public class Grupo implements Serializable {
     public String toString() {
         return "cr.ac.una.wsrestuna.model.Grupo[ idGrupo=" + idGrupo + " ]";
     }
-    
+
 }

@@ -5,6 +5,7 @@
  */
 package cr.ac.una.wsrestuna.service;
 
+import cr.ac.una.wsrestuna.dto.GrupoDto;
 import cr.ac.una.wsrestuna.dto.ProductoDto;
 import cr.ac.una.wsrestuna.model.Producto;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
@@ -118,6 +119,31 @@ public class ProductoService {
                     "Productos encontrados",
                     "Productos encontrados correctamente",
                     "ProductosList", ProductoDto);
+
+        } catch (NoResultException ex) {
+            return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existen productos en la base de datos.", "getProductos NoResultException");
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar los productos.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los productos.", "getProductos " + ex.getMessage());
+        }
+    }
+        public Respuesta getProductosPorGrupo(GrupoDto grupoDto) {
+        try {
+//            Query qryProducto = em.createNamedQuery("Producto.findAll",Producto.class);
+
+            List<Producto> productos = (List<Producto>) grupoDto.getProductoList();
+           
+            List<ProductoDto> productosDto = new ArrayList<>();
+            productos.forEach(producto
+                    -> {
+                productosDto.add(new ProductoDto(producto));
+            });
+
+            return new Respuesta(true,
+                    CodigoRespuesta.CORRECTO,
+                    "Productos encontrados",
+                    "Productos encontrados correctamente",
+                    "ProductosList", productosDto);
 
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existen productos en la base de datos.", "getProductos NoResultException");

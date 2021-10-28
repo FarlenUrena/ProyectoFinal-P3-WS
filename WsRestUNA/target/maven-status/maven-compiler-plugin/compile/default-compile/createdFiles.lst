@@ -3,6 +3,7 @@ cr\ac\una\wsrestuna\service\EmpleadoService.class
 cr\ac\una\wsrestuna\dto\ElementodeseccionDto.class
 cr\ac\una\wsrestuna\dto\ProductoporordenDto.class
 cr\ac\una\wsrestuna\dto\ProductoDto.class
+cr\ac\una\wsrestuna\dto\GrupoDto.class
 cr\ac\una\wsrestuna\controller\SecurityFilter.class
 cr\ac\una\wsrestuna\controller\ProductoporordenController.class
 cr\ac\una\wsrestuna\service\SeccionService.class
@@ -17,6 +18,7 @@ cr\ac\una\wsrestuna\controller\ElementodeseccionController.class
 cr\ac\una\wsrestuna\controller\SecurityFilter$1.class
 cr\ac\una\wsrestuna\controller\ParametroController.class
 cr\ac\una\wsrestuna\controller\ElementodeseccionController$1.class
+cr\ac\una\wsrestuna\service\GrupoService.class
 cr\ac\una\wsrestuna\controller\ProductoController$1.class
 cr\ac\una\wsrestuna\controller\EmpleadoController.class
 cr\ac\una\wsrestuna\service\CajaService.class
@@ -26,6 +28,8 @@ cr\ac\una\wsrestuna\controller\OrdenController$1.class
 cr\ac\una\wsrestuna\controller\FacturaController$1.class
 cr\ac\una\wsrestuna\service\OrdenService.class
 cr\ac\una\wsrestuna\model\Productopororden.class
+cr\ac\una\wsrestuna\controller\ProductoController$2.class
+cr\ac\una\wsrestuna\model\Grupo.class
 cr\ac\una\wsrestuna\util\CodigoRespuesta.class
 cr\ac\una\wsrestuna\model\Empleado.class
 cr\ac\una\wsrestuna\controller\ProductoporordenController$1.class
@@ -33,6 +37,7 @@ cr\ac\una\wsrestuna\controller\JsonbContextResolver.class
 cr\ac\una\wsrestuna\controller\SeccionController$1.class
 cr\ac\una\wsrestuna\dto\OrdenDto.class
 cr\ac\una\wsrestuna\model\Factura.class
+cr\ac\una\wsrestuna\controller\GrupoController.class
 cr\ac\una\wsrestuna\dto\CajaDto.class
 cr\ac\una\wsrestuna\dto\SeccionDto.class
 cr\ac\una\wsrestuna\controller\CajaController$1.class

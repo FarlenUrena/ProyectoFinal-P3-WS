@@ -23,10 +23,10 @@ public class EmpleadoDto {
     private Boolean modificado;
     private String token;
 
-        public EmpleadoDto() {
+    public EmpleadoDto() {
         this.modificado = false;
     }
-    
+
     public EmpleadoDto(Empleado empleado) {
         this();
         this.idEmpleado = empleado.getIdEmpleado();
@@ -69,8 +69,6 @@ public class EmpleadoDto {
     public void setCedula(String cedula) {
         this.cedula = cedula;
     }
-    
-    
 
     public String getNombreUsuario() {
         return nombreUsuario;
@@ -87,7 +85,8 @@ public class EmpleadoDto {
     public void setPassword(String password) {
         this.password = password;
     }
-        public Boolean getModificado() {
+
+    public Boolean getModificado() {
         return modificado;
     }
 
