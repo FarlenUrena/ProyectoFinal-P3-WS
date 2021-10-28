@@ -7,6 +7,7 @@ package cr.ac.una.wsrestuna.controller;
 
 import cr.ac.una.wsrestuna.dto.GrupoDto;
 import cr.ac.una.wsrestuna.dto.ProductoDto;
+import cr.ac.una.wsrestuna.model.Grupo;
 import cr.ac.una.wsrestuna.service.CajaService;
 import cr.ac.una.wsrestuna.service.GrupoService;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
@@ -56,7 +57,7 @@ public class GrupoController {
     }
 
     @GET
-    @Path("/getGrupoNombre/{id}")
+    @Path("/getGrupoNombre/{nombre}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getGrupoNombre(@PathParam("nombre") String nombre) {
@@ -82,8 +83,12 @@ public class GrupoController {
             if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
-            return Response.ok(new GenericEntity<List<GrupoDto>>((List<GrupoDto>) res.getResultado("Grupos")) {
+              return Response.ok(new GenericEntity<List<GrupoDto>>((List<GrupoDto>) res.getResultado("GruposList")) {
             }).build();
+            
+          
+            
+            
         } catch (Exception ex) {
             Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener los Grupos").build();

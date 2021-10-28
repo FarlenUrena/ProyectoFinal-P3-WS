@@ -26,7 +26,7 @@ public class GrupoDto implements Serializable{
     public GrupoDto(Grupo grupo) {
         this.idGrupo = grupo.getIdGrupo();
         this.nombreGrupo = grupo.getNombreGrupo();
-        this.productoList = grupo.getProductoList();
+//        this.productoList = grupo.getProductoList();
     }
 
     public Long getIdGrupo() {

@@ -37,14 +37,15 @@ public class Grupo implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
-    @NotNull
+//    @NotNull
     @Column(name = "ID_GRUPO")
     private Long idGrupo;
     @Basic(optional = false)
-    @NotNull
+//    @NotNull
     @Size(min = 1, max = 30)
     @Column(name = "NOMBRE_GRUPO")
     private String nombreGrupo;
+    
     @OneToMany(mappedBy = "idGrupo", fetch = FetchType.LAZY)
     private List<Producto> productoList;
 

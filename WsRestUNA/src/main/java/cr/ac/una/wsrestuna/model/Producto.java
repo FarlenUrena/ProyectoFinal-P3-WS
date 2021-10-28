@@ -116,7 +116,7 @@ public class Producto implements Serializable {
         this.esAccesoRapido = productoDto.getEsAccesoRapido();
         this.ventasTotales = productoDto.getVentasTotales();
         this.imagen = productoDto.getImagen();
-        this.idGrupo = productoDto.getIdGrupo();
+//        this.idGrupo = productoDto.getIdGrupo();
     }
     
     public Long getIdProducto() {

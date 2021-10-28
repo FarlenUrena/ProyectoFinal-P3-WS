@@ -7,6 +7,7 @@ package cr.ac.una.wsrestuna.service;
 
 import cr.ac.una.wsrestuna.dto.GrupoDto;
 import cr.ac.una.wsrestuna.dto.ProductoDto;
+import cr.ac.una.wsrestuna.model.Grupo;
 import cr.ac.una.wsrestuna.model.Producto;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
 import cr.ac.una.wsrestuna.util.Respuesta;
@@ -36,6 +37,7 @@ public class ProductoService {
     @PersistenceContext(unitName = "WsRestUnaPU")
     private EntityManager em;
     
+    
     //    Obetener un producto
     public Respuesta getProducto(Long id) {
         try {
@@ -56,18 +58,23 @@ public class ProductoService {
     }
 
 //    Guardar o actualizar un producto
-    public Respuesta guardarProducto(ProductoDto productoDto) {
+    public Respuesta guardarProducto(ProductoDto productoDto, Grupo grupo) {
         try {
             Producto producto;
+            
             if (productoDto.getIdProducto() != null && productoDto.getIdProducto() > 0) {
                 producto = em.find(Producto.class, productoDto.getIdProducto());
                 if (producto == null) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró el producto a modificar.", "guardarProducto NoResultException");
                 }
+                
+                producto.setIdGrupo(grupo);
                 producto.actualizarProducto(productoDto);
                 producto = em.merge(producto);
             } else {
+                
                 producto = new Producto(productoDto);
+                producto.setIdGrupo(grupo);
                 em.persist(producto);
             }
             em.flush();

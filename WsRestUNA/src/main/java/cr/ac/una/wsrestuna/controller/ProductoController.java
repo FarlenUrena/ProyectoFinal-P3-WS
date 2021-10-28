@@ -104,15 +104,18 @@ public class ProductoController {
 
     //Falta probar desde el cliente si funciona
     @POST
-    @Path("/producto")
+    @Path("/producto/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response guardarProducto(ProductoDto producto) {
+    public Response guardarProducto(ProductoDto productoDto) {
         try {
-            Respuesta res2 = grupoService.getGrupo(producto.getNombre());
+            System.out.println(productoDto.getIdGrupo());
+            Respuesta res2 = grupoService.getGrupo(productoDto.getIdGrupo());
+            
+            
             Grupo grupo = new Grupo((GrupoDto)res2.getResultado("Grupo"));
-            producto.setIdGrupo(grupo);
-            Respuesta res = productoService.guardarProducto(producto);
+//            producto.setIdGrupo(grupo);
+            Respuesta res = productoService.guardarProducto(productoDto, grupo);
             if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }

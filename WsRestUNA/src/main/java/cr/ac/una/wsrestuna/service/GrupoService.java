@@ -80,7 +80,7 @@ public class GrupoService {
                 gruposDto.add(new GrupoDto(grupo));
             });
 
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Grupos", gruposDto);
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "GruposList", gruposDto);
 
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe un grupo de seccion con el nombre ingresado.", "getGrupo NoResultException");
