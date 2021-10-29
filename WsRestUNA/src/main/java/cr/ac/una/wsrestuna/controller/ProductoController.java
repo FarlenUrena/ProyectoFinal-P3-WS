@@ -104,7 +104,7 @@ public class ProductoController {
 
     //Falta probar desde el cliente si funciona
     @POST
-    @Path("/producto/")
+    @Path("/producto")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response guardarProducto(ProductoDto productoDto) {

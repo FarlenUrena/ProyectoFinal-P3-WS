@@ -8,15 +8,19 @@ package cr.ac.una.wsrestuna.model;
 import cr.ac.una.wsrestuna.dto.GrupoDto;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,7 +30,7 @@ import javax.validation.constraints.Size;
  * @author Farlen
  */
 @Entity
-@Table(name = "GRUPO")
+@Table(name = "GRUPO", schema = "RESTUNA")
 @NamedQueries({
     @NamedQuery(name = "Grupo.findAll", query = "SELECT g FROM Grupo g"),
     @NamedQuery(name = "Grupo.findByIdGrupo", query = "SELECT g FROM Grupo g WHERE g.idGrupo = :idGrupo"),
@@ -36,6 +40,8 @@ public class Grupo implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
+    @SequenceGenerator(name = "GRUPO_ID_GENERATOR", sequenceName = "RESTUNA.SEQ_ID_GRUPO", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GRUPO_ID_GENERATOR")
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "ID_GRUPO")
@@ -50,6 +56,7 @@ public class Grupo implements Serializable {
     private List<Producto> productoList;
 
     public Grupo() {
+        productoList = new ArrayList<>();
     }
 
     public Grupo(Long idGrupo) {

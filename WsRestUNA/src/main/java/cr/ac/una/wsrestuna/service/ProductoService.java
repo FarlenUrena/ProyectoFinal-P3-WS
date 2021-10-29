@@ -66,17 +66,17 @@ public class ProductoService {
                 if (producto == null) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró el producto a modificar.", "guardarProducto NoResultException");
                 }
-                if(producto.getIdGrupo().getIdGrupo() !=productoDto.getIdGrupo().getIdGrupo()){
+                if(producto.getIdGrupo().getIdGrupo() !=productoDto.getGrupo().getIdGrupo()){
                     
-                    producto.setIdGrupo(new Grupo(productoDto.getIdGrupo()));
+                    producto.setIdGrupo(new Grupo(productoDto.getGrupo()));
                 }
                 producto.actualizarProducto(productoDto);
                 producto = em.merge(producto);
             } else {
 
                 producto = new Producto(productoDto);
-                producto.setIdGrupo(new Grupo(productoDto.getIdGrupo()));
-                em.persist(producto);
+                 producto.setIdGrupo(new Grupo(productoDto.getGrupo()));
+                 em.persist(producto);
             }
             em.flush();
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Producto", new ProductoDto(producto));

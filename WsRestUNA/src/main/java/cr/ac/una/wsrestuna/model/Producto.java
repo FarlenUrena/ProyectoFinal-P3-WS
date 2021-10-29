@@ -89,7 +89,7 @@ public class Producto implements Serializable {
     private List<Productopororden> productoporordenList;
 
     public Producto() {
-        Grupo idGrupo = null;
+        this.idGrupo = new Grupo();
         productoporordenList = new ArrayList<>();
     }
 
@@ -120,6 +120,7 @@ public class Producto implements Serializable {
         this.esAccesoRapido = productoDto.getEsAccesoRapido();
         this.ventasTotales = productoDto.getVentasTotales();
         this.imagen = productoDto.getImagen();
+//        this.idGrupo = productoDto.getGrupo();
     }
     
     public Long getIdProducto() {
