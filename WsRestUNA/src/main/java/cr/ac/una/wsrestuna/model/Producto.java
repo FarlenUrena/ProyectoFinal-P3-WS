@@ -9,6 +9,7 @@ import cr.ac.una.wsrestuna.dto.ProductoDto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -88,10 +89,13 @@ public class Producto implements Serializable {
     private List<Productopororden> productoporordenList;
 
     public Producto() {
+        Grupo idGrupo = null;
+        productoporordenList = new ArrayList<>();
     }
 
     public Producto(Long idProducto) {
         this.idProducto = idProducto;
+        
     }
 
     public Producto(Long idProducto, String nombre, String nombreCorto, double precio, Long esAccesoRapido, Long ventasTotales) {
@@ -108,7 +112,7 @@ public class Producto implements Serializable {
         actualizarProducto(productoDto);
     }
 
-        public void actualizarProducto(ProductoDto productoDto) {
+    public void actualizarProducto(ProductoDto productoDto) {
     
         this.nombre = productoDto.getNombre();
         this.nombreCorto = productoDto.getNombreCorto();
@@ -116,7 +120,6 @@ public class Producto implements Serializable {
         this.esAccesoRapido = productoDto.getEsAccesoRapido();
         this.ventasTotales = productoDto.getVentasTotales();
         this.imagen = productoDto.getImagen();
-//        this.idGrupo = productoDto.getIdGrupo();
     }
     
     public Long getIdProducto() {

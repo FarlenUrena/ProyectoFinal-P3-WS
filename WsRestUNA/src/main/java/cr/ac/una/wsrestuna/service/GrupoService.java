@@ -6,7 +6,9 @@
 package cr.ac.una.wsrestuna.service;
 
 import cr.ac.una.wsrestuna.dto.GrupoDto;
+import cr.ac.una.wsrestuna.dto.ProductoDto;
 import cr.ac.una.wsrestuna.model.Grupo;
+import cr.ac.una.wsrestuna.model.Producto;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
 import cr.ac.una.wsrestuna.util.Respuesta;
 import java.util.ArrayList;
@@ -37,8 +39,14 @@ public class GrupoService {
         try {
             Query qryGrupo = em.createNamedQuery("Grupo.findByIdGrupo", Grupo.class);
             qryGrupo.setParameter("idGrupo", id);
-
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Grupo", new GrupoDto((Grupo) qryGrupo.getSingleResult()));
+            Grupo grupo = (Grupo) qryGrupo.getSingleResult();
+            GrupoDto grupoDto =  new GrupoDto(grupo);
+            for(Producto prd : grupo.getProductoList())
+            {
+                grupoDto.getProductoList().add(new ProductoDto(prd));
+            }
+            
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Grupo", grupoDto);
 
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe un grupo de seccion con el id ingresado.", "getGrupo NoResultException");
@@ -101,9 +109,12 @@ public class GrupoService {
                 if (grupo == null) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró el grupo a modificar.", "guardarGrupo NoResultException");
                 }
+                //Todo: eliminar poroductos y setear los que quedan
+                
                 grupo.atualizarGrupo(grupoDto);
                 grupo = em.merge(grupo);
             } else {
+                
                 grupo = new Grupo(grupoDto);
                 em.persist(grupo);
             }

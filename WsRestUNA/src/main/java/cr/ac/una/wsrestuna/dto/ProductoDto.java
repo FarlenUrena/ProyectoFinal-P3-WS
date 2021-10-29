@@ -22,13 +22,14 @@ public class ProductoDto implements Serializable{
     private Long esAccesoRapido;
     private Long ventasTotales;
     private byte[] imagen;
-    private Long idGrupo;
+    private GrupoDto grupoDto;
 
     
 
     private static final long serialVersionUID = 1L;
     
     public ProductoDto() {
+         GrupoDto grupoDto = null;
     }
     
     public ProductoDto(Producto producto) {
@@ -38,7 +39,6 @@ public class ProductoDto implements Serializable{
         this.precio = producto.getPrecio();
         this.esAccesoRapido = producto.getEsAccesoRapido();
         this.ventasTotales = producto.getVentasTotales();
-        this.idGrupo = producto.getIdGrupo().getIdGrupo();    
    }
 
     public Long getIdProducto() {
@@ -96,12 +96,12 @@ public class ProductoDto implements Serializable{
     public void setVentasTotales(Long ventasTotales) {
         this.ventasTotales = ventasTotales;
     }
-    public Long getIdGrupo() {
-        return idGrupo;
+    public GrupoDto getIdGrupo() {
+        return grupoDto;
     }
 
-    public void setIdGrupo(Long idGrupo) {
-        this.idGrupo = idGrupo;
+    public void setIdGrupo(GrupoDto idGrupo) {
+        this.grupoDto = idGrupo;
     }
     
 

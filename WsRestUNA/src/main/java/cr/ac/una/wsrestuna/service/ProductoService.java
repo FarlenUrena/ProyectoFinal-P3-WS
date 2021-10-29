@@ -31,13 +31,12 @@ import javax.persistence.Query;
 @LocalBean
 @Stateless
 public class ProductoService {
-    
+
     private static final Logger LOG = Logger.getLogger(ProductoService.class.getName());
 
     @PersistenceContext(unitName = "WsRestUnaPU")
     private EntityManager em;
-    
-    
+
     //    Obetener un producto
     public Respuesta getProducto(Long id) {
         try {
@@ -58,23 +57,25 @@ public class ProductoService {
     }
 
 //    Guardar o actualizar un producto
-    public Respuesta guardarProducto(ProductoDto productoDto, Grupo grupo) {
+    public Respuesta guardarProducto(ProductoDto productoDto) {
         try {
             Producto producto;
-            
+
             if (productoDto.getIdProducto() != null && productoDto.getIdProducto() > 0) {
                 producto = em.find(Producto.class, productoDto.getIdProducto());
                 if (producto == null) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró el producto a modificar.", "guardarProducto NoResultException");
                 }
-                
-                producto.setIdGrupo(grupo);
+                if(producto.getIdGrupo().getIdGrupo() !=productoDto.getIdGrupo().getIdGrupo()){
+                    
+                    producto.setIdGrupo(new Grupo(productoDto.getIdGrupo()));
+                }
                 producto.actualizarProducto(productoDto);
                 producto = em.merge(producto);
             } else {
-                
+
                 producto = new Producto(productoDto);
-                producto.setIdGrupo(grupo);
+                producto.setIdGrupo(new Grupo(productoDto.getIdGrupo()));
                 em.persist(producto);
             }
             em.flush();
@@ -112,7 +113,7 @@ public class ProductoService {
 //    Obtener un listado de todos los productos
     public Respuesta getProductos() {
         try {
-            Query qryProducto = em.createNamedQuery("Producto.findAll",Producto.class);
+            Query qryProducto = em.createNamedQuery("Producto.findAll", Producto.class);
 
             List<Producto> productos = (List<Producto>) qryProducto.getResultList();
             List<ProductoDto> ProductoDto = new ArrayList<>();
@@ -134,17 +135,12 @@ public class ProductoService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los productos.", "getProductos " + ex.getMessage());
         }
     }
-        public Respuesta getProductosPorGrupo(GrupoDto grupoDto) {
+
+    public Respuesta getProductosPorGrupo(GrupoDto grupoDto) {
         try {
 //            Query qryProducto = em.createNamedQuery("Producto.findAll",Producto.class);
 
-            List<Producto> productos = (List<Producto>) grupoDto.getProductoList();
-           
-            List<ProductoDto> productosDto = new ArrayList<>();
-            productos.forEach(producto
-                    -> {
-                productosDto.add(new ProductoDto(producto));
-            });
+            List<ProductoDto> productosDto = (List<ProductoDto>) grupoDto.getProductoList();
 
             return new Respuesta(true,
                     CodigoRespuesta.CORRECTO,

@@ -109,13 +109,7 @@ public class ProductoController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response guardarProducto(ProductoDto productoDto) {
         try {
-            System.out.println(productoDto.getIdGrupo());
-            Respuesta res2 = grupoService.getGrupo(productoDto.getIdGrupo());
-            
-            
-            Grupo grupo = new Grupo((GrupoDto)res2.getResultado("Grupo"));
-//            producto.setIdGrupo(grupo);
-            Respuesta res = productoService.guardarProducto(productoDto, grupo);
+            Respuesta res = productoService.guardarProducto(productoDto);
             if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
