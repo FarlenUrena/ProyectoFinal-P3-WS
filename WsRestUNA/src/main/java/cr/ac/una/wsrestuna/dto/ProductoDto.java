@@ -23,7 +23,6 @@ public class ProductoDto implements Serializable{
     private Long ventasTotales;
     private byte[] imagen;
     private GrupoDto grupo;
-
     
 
     private static final long serialVersionUID = 1L;

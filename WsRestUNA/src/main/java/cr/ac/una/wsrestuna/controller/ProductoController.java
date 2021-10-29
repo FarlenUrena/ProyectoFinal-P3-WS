@@ -7,7 +7,6 @@ package cr.ac.una.wsrestuna.controller;
 
 import cr.ac.una.wsrestuna.dto.GrupoDto;
 import cr.ac.una.wsrestuna.dto.ProductoDto;
-import cr.ac.una.wsrestuna.model.Grupo;
 import cr.ac.una.wsrestuna.service.GrupoService;
 import cr.ac.una.wsrestuna.service.ProductoService;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
@@ -109,7 +108,7 @@ public class ProductoController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response guardarProducto(ProductoDto productoDto) {
         try {
-            Respuesta res = productoService.guardarProducto(productoDto);
+                  Respuesta res = productoService.guardarProducto(productoDto);
             if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }

@@ -18,6 +18,7 @@ public class ParametroDto {
     private double valorNumerico;
     private String valorTexto;
     private String descripcion;
+   private byte[] imagen;
     
     public ParametroDto(Parametro parametro) {
         this.idParametro = parametro.getIdParametro();
@@ -27,6 +28,16 @@ public class ParametroDto {
         this.descripcion = parametro.getDescripcion();
     }
 
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }
+
+    
+    
     public Long getIdParametro() {
         return idParametro;
     }
