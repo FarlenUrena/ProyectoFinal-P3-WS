@@ -43,7 +43,7 @@ public class GrupoService {
             GrupoDto grupoDto =  new GrupoDto(grupo);
             for(Producto prd : grupo.getProductoList())
             {
-                grupoDto.getProductoList().add(new ProductoDto(prd));
+                grupoDto.getProductoList().add(prd);
             }
             
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Grupo", grupoDto);

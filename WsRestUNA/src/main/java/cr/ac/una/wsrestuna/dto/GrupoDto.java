@@ -21,10 +21,10 @@ public class GrupoDto implements Serializable{
     
     private Long idGrupo;
     private String nombreGrupo;
-    private List<ProductoDto> productoList;
+    private List<Producto> productoList;
 
     public GrupoDto() {
-        List<ProductoDto> productoList = new ArrayList<>();
+        List<Producto> productoList = new ArrayList<>();
     }
 
     public GrupoDto(Grupo grupo) {
@@ -48,11 +48,20 @@ public class GrupoDto implements Serializable{
         this.nombreGrupo = nombreGrupo;
     }
 
-    public List<ProductoDto> getProductoList() {
+    public List<Producto> getProductoList() {
+        
         return productoList;
     }
 
-    public void setProductoList(List<ProductoDto> productoList) {
+    public void setProductoListDto(List<ProductoDto> productoList) {
+        List<Producto> productosConvertidos = new ArrayList<>();
+        for(ProductoDto prd : productoList)
+            {
+                productosConvertidos.add(new Producto(prd));
+            }
+        this.productoList = productosConvertidos;
+    }
+    public void setProductoList(List<Producto> productoList) {
         this.productoList = productoList;
     }
 

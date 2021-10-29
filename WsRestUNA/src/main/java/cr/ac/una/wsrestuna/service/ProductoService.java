@@ -66,8 +66,8 @@ public class ProductoService {
                 if (producto == null) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró el producto a modificar.", "guardarProducto NoResultException");
                 }
-                if(producto.getIdGrupo().getIdGrupo() !=productoDto.getGrupo().getIdGrupo()){
-                    
+                if (producto.getIdGrupo().getIdGrupo() != productoDto.getGrupo().getIdGrupo()) {
+
                     producto.setIdGrupo(new Grupo(productoDto.getGrupo()));
                 }
                 producto.actualizarProducto(productoDto);
@@ -75,8 +75,8 @@ public class ProductoService {
             } else {
 
                 producto = new Producto(productoDto);
-                 producto.setIdGrupo(new Grupo(productoDto.getGrupo()));
-                 em.persist(producto);
+                producto.setIdGrupo(new Grupo(productoDto.getGrupo()));
+                em.persist(producto);
             }
             em.flush();
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Producto", new ProductoDto(producto));
@@ -139,8 +139,9 @@ public class ProductoService {
     public Respuesta getProductosPorGrupo(GrupoDto grupoDto) {
         try {
 //            Query qryProducto = em.createNamedQuery("Producto.findAll",Producto.class);
-
-            List<ProductoDto> productosDto = (List<ProductoDto>) grupoDto.getProductoList();
+            List<ProductoDto> productosDto = new ArrayList<>();
+            //TODO:
+//            List<ProductoDto> productosDto = (List<ProductoDto>) grupoDto.getProductoList();
 
             return new Respuesta(true,
                     CodigoRespuesta.CORRECTO,
