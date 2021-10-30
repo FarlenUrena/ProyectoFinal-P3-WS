@@ -11,6 +11,7 @@ import cr.ac.una.wsrestuna.model.Grupo;
 import cr.ac.una.wsrestuna.model.Producto;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
 import cr.ac.una.wsrestuna.util.Respuesta;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -127,5 +128,29 @@ public class GrupoService {
     }
     
     //TODO: ELIMINAR
+
+    //    Eliminar un grupo permanentemente
+    public Respuesta eliminarGrupo(Long id) {
+        try {
+            Grupo grupo;
+            if (id != null && id > 0) {
+                grupo = em.find(Grupo.class, id);
+                if (grupo == null) {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encontró el grupo a eliminar.", "eliminarGrupo NoResultException");
+                }
+                em.remove(grupo);
+            } else {
+                return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "Debe cargar el grupo a eliminar.", "eliminarGrupo NoResultException");
+            }
+            em.flush();
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "");
+        } catch (Exception ex) {
+            if (ex.getCause() != null && ex.getCause().getCause().getClass() == SQLIntegrityConstraintViolationException.class) {
+                return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "No se puede eliminar el grupo porque tiene relaciones con otros registros.", "eliminarGrupo " + ex.getMessage());
+            }
+            LOG.log(Level.SEVERE, "Ocurrió un error al guardar el grupo.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al eliminar el grupo.", "eliminarGrupo " + ex.getMessage());
+        }
+    }
 
 }

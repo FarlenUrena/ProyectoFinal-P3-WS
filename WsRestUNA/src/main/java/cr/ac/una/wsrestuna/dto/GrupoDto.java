@@ -15,16 +15,14 @@ import java.util.List;
  *
  * @author jeez
  */
-public class GrupoDto implements Serializable{
-    
-    private static final long serialVersionUID = 1L;
-    
+public class GrupoDto{
+
     private Long idGrupo;
     private String nombreGrupo;
     private List<Producto> productoList;
 
     public GrupoDto() {
-        List<Producto> productoList = new ArrayList<>();
+       this.productoList = new ArrayList<>();
     }
 
     public GrupoDto(Grupo grupo) {

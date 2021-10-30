@@ -112,4 +112,26 @@ public class GrupoController {
         }
     }
 
+    @DELETE
+    @Path("/grupo/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response eliminarGrupo(@PathParam("id") Long id)
+    {
+        try
+        {
+            Respuesta res = grupoService.eliminarGrupo(id);
+            if(!res.getEstado())
+            {
+                return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
+            }
+            return Response.ok().build();
+        }
+        catch(Exception ex)
+        {
+            Logger.getLogger(GrupoController.class.getName()).log(Level.SEVERE , null , ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el empleado ").build();
+        }
+    }    
+    
 }
