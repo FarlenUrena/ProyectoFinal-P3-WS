@@ -44,6 +44,7 @@ public class ParametroController {
         try
         {
             Respuesta res = parametroService.getParametro(id);
+             System.out.println(res.getResultado("Parametro").toString());
             if(!res.getEstado())
             {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
@@ -83,28 +84,23 @@ public class ParametroController {
     }
     
     //Falta probar desde el cliente si funciona
-    @POST
-    @Path("/parametro/{parametro}")
+     @POST
+    @Path("/parametro")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response guardarParametro(ParametroDto parametro)
-    {
-        try
-        {
-            Respuesta res = parametroService.guardarParametro(parametro);
-            if(!res.getEstado())
-            {
+    public Response guardarProducto(ParametroDto parametroDto) {
+        try {
+            Respuesta res = parametroService.guardarParametro(parametroDto);
+            System.out.println(res.toString());
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok((ParametroDto) res.getResultado("Parametro")).build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(ParametroController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ParametroDto.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el parametro ").build();
         }
     }
-
     @DELETE
     @Path("/parametro/{id}")
     @Consumes(MediaType.APPLICATION_JSON)

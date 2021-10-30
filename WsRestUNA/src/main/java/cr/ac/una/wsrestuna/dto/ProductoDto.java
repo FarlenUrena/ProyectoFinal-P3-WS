@@ -5,7 +5,6 @@
  */
 package cr.ac.una.wsrestuna.dto;
 
-import cr.ac.una.wsrestuna.model.Grupo;
 import cr.ac.una.wsrestuna.model.Producto;
 import java.io.Serializable;
 
@@ -23,8 +22,7 @@ public class ProductoDto implements Serializable{
     private Long ventasTotales;
     private byte[] imagen;
     private GrupoDto grupo;
-    
-
+   
     private static final long serialVersionUID = 1L;
     
     public ProductoDto() {

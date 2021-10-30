@@ -22,10 +22,7 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-/**
- *
- * @author Farlen
- */
+/**@author Farlen*/
 @LocalBean
 @Stateless
 public class ParametroService {
@@ -33,8 +30,7 @@ public class ParametroService {
     private static final Logger LOG = Logger.getLogger(ParametroService.class.getName());
 
     @PersistenceContext(unitName = "WsRestUnaPU")
-    private EntityManager em;
-    
+    private EntityManager em;   
     
 //    Obtener un parametro
     public Respuesta getParametro(Long id) {

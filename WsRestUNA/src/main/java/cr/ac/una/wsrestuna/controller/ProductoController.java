@@ -44,7 +44,7 @@ public class ProductoController {
     @Path("/producto/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getProducto(@PathParam("id") Long id) {
+    public Response getProducto(@PathParam("id") Long id){
         try {
             Respuesta res = productoService.getProducto(id);
             if (!res.getEstado()) {
@@ -91,7 +91,6 @@ public class ProductoController {
                     return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
                 }
             }
-
             return Response.ok(new GenericEntity<List<ProductoDto>>((List<ProductoDto>) res.getResultado("ProductosList")) {
             }).build();
 
@@ -108,7 +107,7 @@ public class ProductoController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response guardarProducto(ProductoDto productoDto) {
         try {
-                  Respuesta res = productoService.guardarProducto(productoDto);
+            Respuesta res = productoService.guardarProducto(productoDto);
             if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }

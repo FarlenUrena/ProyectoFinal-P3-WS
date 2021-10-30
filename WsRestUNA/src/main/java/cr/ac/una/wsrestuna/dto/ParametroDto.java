@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
+/*To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package cr.ac.una.wsrestuna.dto;
-
 import cr.ac.una.wsrestuna.model.Parametro;
 
-/**
- *
- * @author Farlen
+/**@author Farlen
  */
 public class ParametroDto {
 
@@ -18,7 +14,7 @@ public class ParametroDto {
     private double valorNumerico;
     private String valorTexto;
     private String descripcion;
-   private byte[] imagen;
+    private byte[] imagen;
     
     public ParametroDto(Parametro parametro) {
         this.idParametro = parametro.getIdParametro();
@@ -28,16 +24,21 @@ public class ParametroDto {
         this.descripcion = parametro.getDescripcion();
     }
 
+    public ParametroDto() {}    
+    
     public byte[] getImagen() {
         return imagen;
     }
 
+    @Override
+    public String toString() {
+        return "ParametroDto{" + "idParametro=" + idParametro + ", nombre=" + nombre + ", valorNumerico=" + valorNumerico + ", valorTexto=" + valorTexto + ", descripcion=" + descripcion + ", imagen=" + imagen + '}';
+    }
+    
     public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }
-
-    
-    
+ 
     public Long getIdParametro() {
         return idParametro;
     }
