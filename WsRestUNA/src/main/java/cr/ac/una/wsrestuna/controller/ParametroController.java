@@ -57,6 +57,30 @@ public class ParametroController {
         }
     }
     
+    
+    @GET
+    @Path("/parametroN/{nombre}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getParametro(@PathParam("nombre") String nombre)
+    {
+        try
+        {
+            Respuesta res = parametroService.getParametro(nombre);
+            if(!res.getEstado())
+            {
+                return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
+            }
+             System.out.println(res.getResultado("Parametro").toString());
+            return Response.ok((ParametroDto) res.getResultado("Parametro")).build();
+        }
+        catch(Exception ex)
+        {
+            Logger.getLogger(ParametroController.class.getName()).log(Level.SEVERE , null , ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el parametro ").build();
+        }
+    }
+       
     @GET
     @Path("/parametros")
     @Consumes(MediaType.APPLICATION_JSON)

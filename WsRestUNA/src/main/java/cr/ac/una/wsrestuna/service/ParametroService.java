@@ -51,6 +51,25 @@ public class ParametroService {
         }
     }  
     
+    
+     public Respuesta getParametro(String nombre) {
+        try {
+            Query qryParametro = em.createNamedQuery("Parametro.findByNombre", Parametro.class);
+            qryParametro.setParameter("nombre",nombre);
+
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Parametro", new ParametroDto((Parametro) qryParametro.getSingleResult()));
+
+        } catch (NoResultException ex) {
+            return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe un parametro con el nombre ingresado.", "getParametro NoResultException");
+        } catch (NonUniqueResultException ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar el parametro.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar el parametro.", "getParametro NonUniqueResultException");
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar el parametro.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar el parametro.", "getParametro " + ex.getMessage());
+        }
+    }  
+    
 //    Guardar o actualizar un parametro
     public Respuesta guardarParametro(ParametroDto parametroDto) {
         try {
