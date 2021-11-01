@@ -25,8 +25,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- *
+/*
  * @author Farlen
  */
 @Secure
@@ -44,11 +43,11 @@ public class ParametroController {
         try
         {
             Respuesta res = parametroService.getParametro(id);
-             System.out.println(res.getResultado("Parametro").toString());
             if(!res.getEstado())
             {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
+             System.out.println(res.getResultado("Parametro").toString());
             return Response.ok((ParametroDto) res.getResultado("Parametro")).build();
         }
         catch(Exception ex)
@@ -84,17 +83,18 @@ public class ParametroController {
     }
     
     //Falta probar desde el cliente si funciona
-     @POST
+    @POST
     @Path("/parametro")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response guardarProducto(ParametroDto parametroDto) {
+    public Response guardarParametro(ParametroDto parametroDto) {
         try {
+            System.out.println(parametroDto.toString());
             Respuesta res = parametroService.guardarParametro(parametroDto);
-            System.out.println(res.toString());
             if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
+          
             return Response.ok((ParametroDto) res.getResultado("Parametro")).build();
         } catch (Exception ex) {
             Logger.getLogger(ParametroDto.class.getName()).log(Level.SEVERE, null, ex);

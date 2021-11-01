@@ -55,6 +55,7 @@ public class ParametroService {
     public Respuesta guardarParametro(ParametroDto parametroDto) {
         try {
             Parametro parametro;
+            System.out.println(parametroDto.toString());
             if (parametroDto.getIdParametro() != null && parametroDto.getIdParametro() > 0) {
                 parametro = em.find(Parametro.class, parametroDto.getIdParametro());
                 if (parametro == null) {

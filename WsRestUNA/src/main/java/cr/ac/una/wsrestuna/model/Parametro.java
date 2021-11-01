@@ -7,7 +7,6 @@ package cr.ac.una.wsrestuna.model;
 
 import cr.ac.una.wsrestuna.dto.ParametroDto;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,12 +18,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- *
- * @author Farlen
+/**@author Farlen
  */
 @Entity
 @Table(name = "PARAMETRO",schema = "RESTUNA")
@@ -61,7 +57,7 @@ public class Parametro implements Serializable {
     private String descripcion;
     @Lob
     @Column(name = "IMAGEN")
-    private Serializable imagen;
+    private byte[] imagen;
 
     public Parametro() {
     }
@@ -128,11 +124,11 @@ public class Parametro implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Serializable getImagen() {
+    public  byte[] getImagen() {
         return imagen;
     }
 
-    public void setImagen(Serializable imagen) {
+    public void setImagen( byte[] imagen) {
         this.imagen = imagen;
     }
 
