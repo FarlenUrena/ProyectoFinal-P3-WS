@@ -24,7 +24,7 @@ public class ElementodeseccionDto {
     private double posicionY;
     private double impuestoPorServicio;
     private byte[] imagenElemento;
-//    private Seccion idSeccion;
+    private SeccionDto idSeccion;
 //    private List<Orden> ordenList;
 
     public ElementodeseccionDto(Elementodeseccion elementodeseccion) {
@@ -36,7 +36,7 @@ public class ElementodeseccionDto {
         this.posicionY = elementodeseccion.getPosicionY();
         this.imagenElemento = elementodeseccion.getImagenElemento();
         this.impuestoPorServicio = elementodeseccion.getImpuestoPorServicio();
-//        this.idSeccion = elementodeseccion.getIdSeccion();
+        this.idSeccion = new SeccionDto(elementodeseccion.getIdSeccion());
 //        this.ordenList = elementodeseccion.getOrdenList();
     }
 
@@ -102,6 +102,14 @@ public class ElementodeseccionDto {
 
     public void setImpuestoPorServicio(double impuestoPorServicio) {
         this.impuestoPorServicio = impuestoPorServicio;
+    }
+
+    public SeccionDto getIdSeccion() {
+        return idSeccion;
+    }
+
+    public void setIdSeccion(SeccionDto idSeccion) {
+        this.idSeccion = idSeccion;
     }
 //    public Seccion getIdSeccion() {
 //        return idSeccion;

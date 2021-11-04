@@ -88,6 +88,7 @@ public class Elementodeseccion implements Serializable {
     @JoinColumn(name = "ID_SECCION", referencedColumnName = "ID_SECCION")
     @ManyToOne(fetch = FetchType.LAZY)
     private Seccion idSeccion;
+    
     @OneToMany(mappedBy = "idElemento", fetch = FetchType.LAZY)
     private List<Orden> ordenList;
 
@@ -122,12 +123,8 @@ public class Elementodeseccion implements Serializable {
         this.impuestoPorServicio=elementodeseccionDto.getImpuestoPorServicio();
 //        this.idSeccion = elementodeseccionDto.getIdSeccion();
 //        this.ordenList = elementodeseccionDto.getOrdenList();
-
     }
     
-
-    
-
     public Long getIdElemento() {
         return idElemento;
     }

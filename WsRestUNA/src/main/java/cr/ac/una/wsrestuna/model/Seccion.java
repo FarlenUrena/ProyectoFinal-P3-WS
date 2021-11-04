@@ -8,6 +8,7 @@ package cr.ac.una.wsrestuna.model;
 import cr.ac.una.wsrestuna.dto.SeccionDto;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -61,6 +62,9 @@ public class Seccion implements Serializable {
     private List<Elementodeseccion> elementodeseccionList;
 
     public Seccion() {
+        this.empleadoList = new ArrayList<>();
+        this.elementodeseccionList = new ArrayList<>();
+        
     }
 
     public Seccion(Long idSeccion) {
@@ -80,8 +84,8 @@ public class Seccion implements Serializable {
     
         this.nombre = seccionDto.getNombre();
         this.fotoDistribucion = seccionDto.getFotoDistribucion();
-        this.empleadoList = seccionDto.getEmpleadoList();
-        this.elementodeseccionList = seccionDto.getElementodeseccionList();
+//        this.empleadoList = seccionDto.getEmpleadoList();
+//        this.elementodeseccionList = seccionDto.getElementodeseccionList();
     }
     public Long getIdSeccion() {
         return idSeccion;

@@ -38,7 +38,7 @@ public class ElementodeseccionController {
     
     
     @GET
-    @Path("/elementodeseccion/{id}")
+    @Path("/elementoDeSeccion/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getElementodeseccion(@PathParam("id") Long id)
@@ -60,7 +60,7 @@ public class ElementodeseccionController {
     }
     
     @GET
-    @Path("/elementosdeseccion")
+    @Path("/elementosDeSeccion")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getElementosdeseccion()
@@ -86,7 +86,7 @@ public class ElementodeseccionController {
     
     //Falta probar desde el cliente si funciona
     @POST
-    @Path("/elementodeseccion/{elementodeseccion}")
+    @Path("/elementoDeSeccion")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response guardarElementodeseccion(ElementodeseccionDto elementodeseccion)
@@ -108,7 +108,7 @@ public class ElementodeseccionController {
     }
 
     @DELETE
-    @Path("/elementodeseccion/{id}")
+    @Path("/elementoDeSeccion/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response eliminarElementodeseccion(@PathParam("id") Long id)

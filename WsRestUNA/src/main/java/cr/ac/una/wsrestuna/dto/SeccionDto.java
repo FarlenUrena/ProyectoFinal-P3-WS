@@ -8,6 +8,7 @@ package cr.ac.una.wsrestuna.dto;
 import cr.ac.una.wsrestuna.model.Elementodeseccion;
 import cr.ac.una.wsrestuna.model.Empleado;
 import cr.ac.una.wsrestuna.model.Seccion;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,14 +24,18 @@ public class SeccionDto {
     private List<Elementodeseccion> elementodeseccionList;
 
 
+     public SeccionDto() {
+        this.empleadoList = new ArrayList<>();
+        this.elementodeseccionList = new ArrayList<>();
+    }
     
     public SeccionDto(Seccion seccion) {
         this.idSeccion = seccion.getIdSeccion();
         this.nombre = seccion.getNombre();
         this.fotoDistribucion = seccion.getFotoDistribucion();
-        this.empleadoList = seccion.getEmpleadoList();
-        this.elementodeseccionList = seccion.getElementodeseccionList();
-     }
+//        this.empleadoList = seccion.getEmpleadoList();
+//        this.elementodeseccionList = seccion.getElementodeseccionList();
+    }
 
     public Long getIdSeccion() {
         return idSeccion;

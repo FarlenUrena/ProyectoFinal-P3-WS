@@ -6,6 +6,8 @@
 package cr.ac.una.wsrestuna.service;
 
 import cr.ac.una.wsrestuna.dto.SeccionDto;
+import cr.ac.una.wsrestuna.model.Elementodeseccion;
+import cr.ac.una.wsrestuna.model.Empleado;
 import cr.ac.una.wsrestuna.model.Seccion;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
 import cr.ac.una.wsrestuna.util.Respuesta;
@@ -29,19 +31,27 @@ import javax.persistence.Query;
 @LocalBean
 @Stateless
 public class SeccionService {
-    
+
     private static final Logger LOG = Logger.getLogger(SeccionService.class.getName());
 
     @PersistenceContext(unitName = "WsRestUnaPU")
     private EntityManager em;
-    
+
     //    Obetener una seccion
     public Respuesta getSeccion(Long id) {
         try {
             Query qrySeccion = em.createNamedQuery("Seccion.findByIdSeccion", Seccion.class);
             qrySeccion.setParameter("idSeccion", id);
-
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Seccion", new SeccionDto((Seccion) qrySeccion.getSingleResult()));
+            Seccion seccion = (Seccion) qrySeccion.getSingleResult();
+            SeccionDto seccionDto = new SeccionDto(seccion);
+            for (Empleado emp : seccion.getEmpleadoList()) {
+                seccionDto.getEmpleadoList().add(emp);
+            }
+            for (Elementodeseccion ele : seccion.getElementodeseccionList()) {
+                seccionDto.getElementodeseccionList().add(ele);
+            }
+            
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Seccion", seccionDto);
 
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe una seccion con el id ingresado.", "getSeccion NoResultException");
@@ -104,7 +114,7 @@ public class SeccionService {
 //    Obtener un listado de todas las secciones
     public Respuesta getSecciones() {
         try {
-            Query qrySeccion = em.createNamedQuery("Seccion.findAll",Seccion.class);
+            Query qrySeccion = em.createNamedQuery("Seccion.findAll", Seccion.class);
 
             List<Seccion> secciones = (List<Seccion>) qrySeccion.getResultList();
             List<SeccionDto> SeccionDto = new ArrayList<>();
@@ -126,5 +136,5 @@ public class SeccionService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar las secciones.", "getSecciones " + ex.getMessage());
         }
     }
-    
+
 }

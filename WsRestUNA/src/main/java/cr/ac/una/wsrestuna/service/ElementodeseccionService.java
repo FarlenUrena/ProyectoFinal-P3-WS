@@ -7,6 +7,7 @@ package cr.ac.una.wsrestuna.service;
 
 import cr.ac.una.wsrestuna.dto.ElementodeseccionDto;
 import cr.ac.una.wsrestuna.model.Elementodeseccion;
+import cr.ac.una.wsrestuna.model.Seccion;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
 import cr.ac.una.wsrestuna.util.Respuesta;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -63,10 +64,14 @@ public class ElementodeseccionService {
                 if (elementodeseccion == null) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró el elemento de seccion a modificar.", "guardarElementodeseccion NoResultException");
                 }
+                if(elementodeseccion.getIdSeccion().getIdSeccion() !=elementodeseccionDto.getIdSeccion().getIdSeccion()){
+                    elementodeseccion.setIdSeccion(new Seccion(elementodeseccionDto.getIdSeccion()));
+                }
                 elementodeseccion.actualizarElementodeseccion(elementodeseccionDto);
                 elementodeseccion = em.merge(elementodeseccion);
             } else {
                 elementodeseccion = new Elementodeseccion(elementodeseccionDto);
+                elementodeseccion.setIdSeccion(new Seccion(elementodeseccionDto.getIdSeccion()));
                 em.persist(elementodeseccion);
             }
             em.flush();

@@ -85,7 +85,7 @@ public class SeccionController {
     
     //Falta probar desde el cliente si funciona
     @POST
-    @Path("/seccion/{seccion}")
+    @Path("/seccion")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response guardarSeccion(SeccionDto seccion)
