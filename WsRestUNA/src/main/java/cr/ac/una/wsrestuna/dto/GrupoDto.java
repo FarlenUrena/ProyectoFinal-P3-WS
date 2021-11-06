@@ -15,17 +15,22 @@ import java.util.List;
  *
  * @author jeez
  */
-public class GrupoDto{
+public class GrupoDto {
 
     private Long idGrupo;
     private String nombreGrupo;
-    private List<Producto> productoList;
+    private Boolean modificado;
+    private List<ProductoDto> productoList;
+    private List<ProductoDto> productosEliminadosList;
 
     public GrupoDto() {
-       this.productoList = new ArrayList<>();
+        this.modificado = false;
+        this.productoList = new ArrayList<>();
+        this.productosEliminadosList = new ArrayList<>();
     }
 
     public GrupoDto(Grupo grupo) {
+        this();
         this.idGrupo = grupo.getIdGrupo();
         this.nombreGrupo = grupo.getNombreGrupo();
     }
@@ -46,21 +51,28 @@ public class GrupoDto{
         this.nombreGrupo = nombreGrupo;
     }
 
-    public List<Producto> getProductoList() {
-        
+    public Boolean getModificado() {
+        return modificado;
+    }
+
+    public void setModificado(Boolean modificado) {
+        this.modificado = modificado;
+    }
+
+    public List<ProductoDto> getProductoList() {
         return productoList;
     }
 
-    public void setProductoListDto(List<ProductoDto> productoList) {
-        List<Producto> productosConvertidos = new ArrayList<>();
-        for(ProductoDto prd : productoList)
-            {
-                productosConvertidos.add(new Producto(prd));
-            }
-        this.productoList = productosConvertidos;
-    }
-    public void setProductoList(List<Producto> productoList) {
+    public void setProductoList(List<ProductoDto> productoList) {
         this.productoList = productoList;
+    }
+
+    public List<ProductoDto> getProductosEliminadosList() {
+        return productosEliminadosList;
+    }
+
+    public void setProductosEliminadosList(List<ProductoDto> productosEliminadosList) {
+        this.productosEliminadosList = productosEliminadosList;
     }
 
 }

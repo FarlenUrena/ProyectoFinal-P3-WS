@@ -32,76 +32,61 @@ import javax.ws.rs.core.Response;
 @Secure
 @Path("/SeccionController")
 public class SeccionController {
-    
+
     @EJB
     SeccionService seccionService;
-    
+
     @GET
     @Path("/seccion/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getSeccion(@PathParam("id") Long id)
-    {
-        try
-        {
+    public Response getSeccion(@PathParam("id") Long id) {
+        try {
             Respuesta res = seccionService.getSeccion(id);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok((SeccionDto) res.getResultado("Seccion")).build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(SeccionController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(SeccionController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener la seccion ").build();
         }
     }
-    
+
     @GET
     @Path("/secciones")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getSecciones()
-    {
-        try
-        {
+    public Response getSecciones() {
+        try {
             Respuesta res = seccionService.getSecciones();
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
 
-          return Response.ok(new GenericEntity<List<SeccionDto>>((List<SeccionDto>) res.getResultado("SeccionesList")) {
+            return Response.ok(new GenericEntity<List<SeccionDto>>((List<SeccionDto>) res.getResultado("SeccionesList")) {
             }).build();
 
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(SeccionController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(SeccionController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el seccion ").build();
         }
     }
-    
+
     //Falta probar desde el cliente si funciona
     @POST
     @Path("/seccion")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response guardarSeccion(SeccionDto seccion)
-    {
-        try
-        {
+    public Response guardarSeccion(SeccionDto seccion) {
+        try {
             Respuesta res = seccionService.guardarSeccion(seccion);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok((SeccionDto) res.getResultado("Seccion")).build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(SeccionController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(SeccionController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener la seccion ").build();
         }
     }
@@ -110,20 +95,15 @@ public class SeccionController {
     @Path("/seccion/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response eliminarSeccion(@PathParam("id") Long id)
-    {
-        try
-        {
+    public Response eliminarSeccion(@PathParam("id") Long id) {
+        try {
             Respuesta res = seccionService.eliminarSeccion(id);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok().build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(SeccionController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(SeccionController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener la seccion ").build();
         }
     }

@@ -8,6 +8,7 @@ import javax.ws.rs.ext.Provider;
 
 @Provider
 public class JsonbContextResolver implements ContextResolver<Jsonb> {
+
     private static Jsonb jsonb;
 
     public JsonbContextResolver() {

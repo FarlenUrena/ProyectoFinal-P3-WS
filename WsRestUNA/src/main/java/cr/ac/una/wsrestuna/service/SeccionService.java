@@ -5,6 +5,8 @@
  */
 package cr.ac.una.wsrestuna.service;
 
+import cr.ac.una.wsrestuna.dto.ElementodeseccionDto;
+import cr.ac.una.wsrestuna.dto.EmpleadoDto;
 import cr.ac.una.wsrestuna.dto.SeccionDto;
 import cr.ac.una.wsrestuna.model.Elementodeseccion;
 import cr.ac.una.wsrestuna.model.Empleado;
@@ -44,13 +46,11 @@ public class SeccionService {
             qrySeccion.setParameter("idSeccion", id);
             Seccion seccion = (Seccion) qrySeccion.getSingleResult();
             SeccionDto seccionDto = new SeccionDto(seccion);
-            for (Empleado emp : seccion.getEmpleadoList()) {
-                seccionDto.getEmpleadoList().add(emp);
-            }
+
             for (Elementodeseccion ele : seccion.getElementodeseccionList()) {
-                seccionDto.getElementodeseccionList().add(ele);
+                seccionDto.getElementosdeseccionDto().add(new ElementodeseccionDto(ele));
             }
-            
+
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Seccion", seccionDto);
 
         } catch (NoResultException ex) {
@@ -74,12 +74,26 @@ public class SeccionService {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró la seccion a modificar.", "guardarSeccion NoResultException");
                 }
                 seccion.actualizarSeccion(seccionDto);
+                //elementos de seccion
+                for (ElementodeseccionDto eleDto : seccionDto.getElementosdeseccionEliminadosDto()) {
+                    seccion.getElementodeseccionList().remove(new Elementodeseccion(eleDto.getIdElemento()));
+                }
+                if (!seccionDto.getElementosdeseccionDto().isEmpty()) {
+                    for (ElementodeseccionDto eleDto : seccionDto.getElementosdeseccionDto()) {
+                        if (eleDto.getModificado()) {
+                            Elementodeseccion eleE = em.find(Elementodeseccion.class, eleDto.getIdElemento());
+                            eleE.setIdSeccion(seccion);
+                            seccion.getElementodeseccionList().add(eleE);
+                        }
+                    }
+                }
                 seccion = em.merge(seccion);
             } else {
                 seccion = new Seccion(seccionDto);
                 em.persist(seccion);
             }
             em.flush();
+
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Seccion", new SeccionDto(seccion));
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar la seccion.", ex);
@@ -117,17 +131,22 @@ public class SeccionService {
             Query qrySeccion = em.createNamedQuery("Seccion.findAll", Seccion.class);
 
             List<Seccion> secciones = (List<Seccion>) qrySeccion.getResultList();
-            List<SeccionDto> SeccionDto = new ArrayList<>();
-            secciones.forEach(seccion
-                    -> {
-                SeccionDto.add(new SeccionDto(seccion));
+            List<SeccionDto> SeccionesDto = new ArrayList<>();
+
+            secciones.forEach(seccion -> {
+                SeccionDto seccionDto = new SeccionDto(seccion);
+
+                for (Elementodeseccion ele : seccion.getElementodeseccionList()) {
+                    seccionDto.getElementosdeseccionDto().add(new ElementodeseccionDto(ele));
+                }
+                SeccionesDto.add(seccionDto);
             });
 
             return new Respuesta(true,
                     CodigoRespuesta.CORRECTO,
                     "Secciones encontradas",
                     "Secciones encontradas correctamente",
-                    "SeccionesList", SeccionDto);
+                    "SeccionesList", SeccionesDto);
 
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existen secciones en la base de datos.", "getSecciones NoResultException");

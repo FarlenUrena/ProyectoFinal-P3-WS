@@ -7,8 +7,10 @@ package cr.ac.una.wsrestuna.service;
 
 import cr.ac.una.wsrestuna.dto.GrupoDto;
 import cr.ac.una.wsrestuna.dto.ProductoDto;
+import cr.ac.una.wsrestuna.dto.ProductoporordenDto;
 import cr.ac.una.wsrestuna.model.Grupo;
 import cr.ac.una.wsrestuna.model.Producto;
+import cr.ac.una.wsrestuna.model.Productopororden;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
 import cr.ac.una.wsrestuna.util.Respuesta;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -43,7 +45,14 @@ public class ProductoService {
             Query qryProducto = em.createNamedQuery("Producto.findByIdProducto", Producto.class);
             qryProducto.setParameter("idProducto", id);
 
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Producto", new ProductoDto((Producto) qryProducto.getSingleResult()));
+            Producto producto = (Producto) qryProducto.getSingleResult();
+            ProductoDto productoDto = new ProductoDto(producto);
+
+            for (Productopororden pxo : producto.getProductoporordenList()) {
+                productoDto.getProductosporordenDto().add(new ProductoporordenDto(pxo));
+            }
+
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Producto", productoDto);
 
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe un producto con el id ingresado.", "getProducto NoResultException");
@@ -66,16 +75,24 @@ public class ProductoService {
                 if (producto == null) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró el producto a modificar.", "guardarProducto NoResultException");
                 }
-                if (producto.getIdGrupo().getIdGrupo() != productoDto.getGrupo().getIdGrupo()) {
-
-                    producto.setIdGrupo(new Grupo(productoDto.getGrupo()));
-                }
                 producto.actualizarProducto(productoDto);
+
+                for (ProductoporordenDto pxo : productoDto.getProductosporordenEliminadosDto()) {
+                    producto.getProductoporordenList().remove(new Productopororden(pxo.getIdProductoPorOrden()));
+                }
+
+                if (!productoDto.getProductosporordenDto().isEmpty()) {
+                    for (ProductoporordenDto pxo : productoDto.getProductosporordenDto()) {
+                        if (pxo.getModificado()) {//si es nueva
+                            Productopororden productopororden = em.find(Productopororden.class, pxo.getIdProductoPorOrden());
+                            productopororden.setIdProducto(producto);
+                            producto.getProductoporordenList().add(productopororden);
+                        }
+                    }
+                }
                 producto = em.merge(producto);
             } else {
-
                 producto = new Producto(productoDto);
-                producto.setIdGrupo(new Grupo(productoDto.getGrupo()));
                 em.persist(producto);
             }
             em.flush();
@@ -116,32 +133,15 @@ public class ProductoService {
             Query qryProducto = em.createNamedQuery("Producto.findAll", Producto.class);
 
             List<Producto> productos = (List<Producto>) qryProducto.getResultList();
-            List<ProductoDto> ProductoDto = new ArrayList<>();
-            productos.forEach(producto
-                    -> {
-                ProductoDto.add(new ProductoDto(producto));
-            });
-
-            return new Respuesta(true,
-                    CodigoRespuesta.CORRECTO,
-                    "Productos encontrados",
-                    "Productos encontrados correctamente",
-                    "ProductosList", ProductoDto);
-
-        } catch (NoResultException ex) {
-            return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existen productos en la base de datos.", "getProductos NoResultException");
-        } catch (Exception ex) {
-            LOG.log(Level.SEVERE, "Ocurrio un error al consultar los productos.", ex);
-            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los productos.", "getProductos " + ex.getMessage());
-        }
-    }
-
-    public Respuesta getProductosPorGrupo(GrupoDto grupoDto) {
-        try {
-//            Query qryProducto = em.createNamedQuery("Producto.findAll",Producto.class);
             List<ProductoDto> productosDto = new ArrayList<>();
-            //TODO:
-//            List<ProductoDto> productosDto = (List<ProductoDto>) grupoDto.getProductoList();
+            productos.forEach(producto -> {
+                ProductoDto productoDto = new ProductoDto(producto);
+
+                for (Productopororden pxo : producto.getProductoporordenList()) {
+                    productoDto.getProductosporordenDto().add(new ProductoporordenDto(pxo));
+                }
+                productosDto.add(productoDto);
+            });
 
             return new Respuesta(true,
                     CodigoRespuesta.CORRECTO,

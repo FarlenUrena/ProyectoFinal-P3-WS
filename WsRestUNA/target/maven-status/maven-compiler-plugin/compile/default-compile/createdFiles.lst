@@ -29,7 +29,6 @@ cr\ac\una\wsrestuna\controller\OrdenController$1.class
 cr\ac\una\wsrestuna\controller\FacturaController$1.class
 cr\ac\una\wsrestuna\service\OrdenService.class
 cr\ac\una\wsrestuna\model\Productopororden.class
-cr\ac\una\wsrestuna\controller\ProductoController$2.class
 cr\ac\una\wsrestuna\model\Grupo.class
 cr\ac\una\wsrestuna\util\CodigoRespuesta.class
 cr\ac\una\wsrestuna\model\Empleado.class

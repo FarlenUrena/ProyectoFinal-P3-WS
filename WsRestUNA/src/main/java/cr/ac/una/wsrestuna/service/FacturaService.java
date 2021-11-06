@@ -29,11 +29,12 @@ import javax.persistence.Query;
 @LocalBean
 @Stateless
 public class FacturaService {
+
     private static final Logger LOG = Logger.getLogger(FacturaService.class.getName());
 
     @PersistenceContext(unitName = "WsRestUnaPU")
     private EntityManager em;
-    
+
     //    Obetener una factura
     public Respuesta getFactura(Long id) {
         try {
@@ -63,6 +64,7 @@ public class FacturaService {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró la factura a modificar.", "guardarFactura NoResultException");
                 }
                 factura.actualizarFactura(facturaDto);
+                
                 factura = em.merge(factura);
             } else {
                 factura = new Factura(facturaDto);
@@ -103,20 +105,20 @@ public class FacturaService {
 //    Obtener un listado de todas las facturas
     public Respuesta getFacturas() {
         try {
-            Query qryFactura = em.createNamedQuery("Factura.findAll",Factura.class);
+            Query qryFactura = em.createNamedQuery("Factura.findAll", Factura.class);
 
             List<Factura> facturas = (List<Factura>) qryFactura.getResultList();
-            List<FacturaDto> FacturaDto = new ArrayList<>();
-            facturas.forEach(factura
-                    -> {
-                FacturaDto.add(new FacturaDto(factura));
+            List<FacturaDto> facturasDto = new ArrayList<>();
+            facturas.forEach(factura -> {
+                facturasDto.add(new FacturaDto(factura));
+
             });
 
             return new Respuesta(true,
                     CodigoRespuesta.CORRECTO,
                     "Facturas encontradas",
                     "Facturas encontradas correctamente",
-                    "FacturasList", FacturaDto);
+                    "FacturasList", facturasDto);
 
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existen facturas en la base de datos.", "getFacturas NoResultException");
@@ -125,5 +127,5 @@ public class FacturaService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar las facturas.", "getFacturas " + ex.getMessage());
         }
     }
-    
+
 }

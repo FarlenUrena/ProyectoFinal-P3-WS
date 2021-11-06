@@ -35,104 +35,83 @@ import javax.ws.rs.core.SecurityContext;
 @Secure
 @Path("/EmpleadoController")
 public class EmpleadoController {
-    
+
     @EJB
     EmpleadoService empleadoService;
-    
-        @Context
+
+    @Context
     SecurityContext securityContext;
-    
+
     @GET
     @Path("/usuario/{usuario}/{clave}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsuario(@PathParam("usuario") String usuario , @PathParam("clave") String clave)
-    {
-        try
-        {
-            Respuesta res = empleadoService.validarUsuario(usuario , clave);
-            if(!res.getEstado())
-            {
+    public Response getUsuario(@PathParam("usuario") String usuario, @PathParam("clave") String clave) {
+        try {
+            Respuesta res = empleadoService.validarUsuario(usuario, clave);
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             EmpleadoDto empleadoDto = (EmpleadoDto) res.getResultado("Empleado");
             empleadoDto.setToken(JwTokenHelper.getInstance().generatePrivateKey(usuario));
-            
-            return Response.ok(empleadoDto).build(); 
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE , null , ex);
+
+            return Response.ok(empleadoDto).build();
+        } catch (Exception ex) {
+            Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al validar el usuario ").build();
         }
     }
-    
-    
+
     @GET
     @Path("/empleado/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEmpleado(@PathParam("id") Long id)
-    {
-        try
-        {
+    public Response getEmpleado(@PathParam("id") Long id) {
+        try {
             Respuesta res = empleadoService.getEmpleado(id);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok((EmpleadoDto) res.getResultado("Empleado")).build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el empleado ").build();
         }
     }
-    
+
     @GET
     @Path("/empleados")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEmpleados()
-    {
-        try
-        {
+    public Response getEmpleados() {
+        try {
             Respuesta res = empleadoService.getEmpleados();
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
 
-          return Response.ok(new GenericEntity<List<EmpleadoDto>>((List<EmpleadoDto>) res.getResultado("EmpleadosList")) {
+            return Response.ok(new GenericEntity<List<EmpleadoDto>>((List<EmpleadoDto>) res.getResultado("EmpleadosList")) {
             }).build();
 
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el empleado ").build();
         }
     }
-    
+
     //Falta probar desde el cliente si funciona
     @POST
     @Path("/empleado")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response guardarEmpleado(EmpleadoDto empleado)
-    {
-        try
-        {
+    public Response guardarEmpleado(EmpleadoDto empleado) {
+        try {
             Respuesta res = empleadoService.guardarEmpleado(empleado);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok((EmpleadoDto) res.getResultado("Empleado")).build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el empleado ").build();
         }
     }
@@ -141,41 +120,36 @@ public class EmpleadoController {
     @Path("/empleado/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response eliminarEmpleado(@PathParam("id") Long id)
-    {
-        try
-        {
+    public Response eliminarEmpleado(@PathParam("id") Long id) {
+        try {
             Respuesta res = empleadoService.eliminarEmpleado(id);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok().build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el empleado ").build();
         }
     }
-    
+
     @GET
     @Path("/renovar")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response renovarToken(){
-        try{
+    public Response renovarToken() {
+        try {
             String usuarioRequest = securityContext.getUserPrincipal().getName();
-            if(usuarioRequest != null && !usuarioRequest.isBlank()){
+            if (usuarioRequest != null && !usuarioRequest.isBlank()) {
                 return Response.ok(JwTokenHelper.getInstance().generatePrivateKey(usuarioRequest)).build();
-            }else{
-             return Response.status(CodigoRespuesta.ERROR_PERMISOS.getValue()).entity("Error renovando el token.").build();
+            } else {
+                return Response.status(CodigoRespuesta.ERROR_PERMISOS.getValue()).entity("Error renovando el token.").build();
             }
-            
-        }catch(Exception ex){
-            Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE , null , ex);
+
+        } catch (Exception ex) {
+            Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error renovando el token.").build();
-        
-                }
+
+        }
     }
-    
+
 }

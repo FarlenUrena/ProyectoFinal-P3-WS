@@ -6,7 +6,10 @@
 package cr.ac.una.wsrestuna.service;
 
 import cr.ac.una.wsrestuna.dto.ElementodeseccionDto;
+import cr.ac.una.wsrestuna.dto.OrdenDto;
+import cr.ac.una.wsrestuna.dto.SeccionDto;
 import cr.ac.una.wsrestuna.model.Elementodeseccion;
+import cr.ac.una.wsrestuna.model.Orden;
 import cr.ac.una.wsrestuna.model.Seccion;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
 import cr.ac.una.wsrestuna.util.Respuesta;
@@ -30,19 +33,26 @@ import javax.persistence.Query;
 @LocalBean
 @Stateless
 public class ElementodeseccionService {
-    
+
     private static final Logger LOG = Logger.getLogger(ElementodeseccionService.class.getName());
     @PersistenceContext(unitName = "WsRestUnaPU")
     private EntityManager em;
-    
-    
+
     //    Obetener un elementodeseccion
     public Respuesta getElementodeseccion(Long id) {
         try {
             Query qryElementodeseccion = em.createNamedQuery("Elementodeseccion.findByIdElemento", Elementodeseccion.class);
             qryElementodeseccion.setParameter("idElemento", id);
+            Elementodeseccion elementodeseccion = (Elementodeseccion) qryElementodeseccion.getSingleResult();
+            ElementodeseccionDto elementodeseccionDto = new ElementodeseccionDto(elementodeseccion);
 
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Elementodeseccion", new ElementodeseccionDto((Elementodeseccion) qryElementodeseccion.getSingleResult()));
+            elementodeseccionDto.setIdSeccion(new SeccionDto(elementodeseccion.getIdSeccion()));
+
+            for (Orden ordenE : elementodeseccion.getOrdenList()) {
+                elementodeseccionDto.getOrdenDtoList().add(new OrdenDto(ordenE));
+            }
+
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Elementodeseccion", elementodeseccionDto);
 
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe un elemento de seccion con el id ingresado.", "getElementodeseccion NoResultException");
@@ -59,15 +69,26 @@ public class ElementodeseccionService {
     public Respuesta guardarElementodeseccion(ElementodeseccionDto elementodeseccionDto) {
         try {
             Elementodeseccion elementodeseccion;
-            if (elementodeseccionDto.getIdElemento()!= null && elementodeseccionDto.getIdElemento() > 0) {
+            if (elementodeseccionDto.getIdElemento() != null && elementodeseccionDto.getIdElemento() > 0) {
                 elementodeseccion = em.find(Elementodeseccion.class, elementodeseccionDto.getIdElemento());
                 if (elementodeseccion == null) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró el elemento de seccion a modificar.", "guardarElementodeseccion NoResultException");
                 }
-                if(elementodeseccion.getIdSeccion().getIdSeccion() !=elementodeseccionDto.getIdSeccion().getIdSeccion()){
-                    elementodeseccion.setIdSeccion(new Seccion(elementodeseccionDto.getIdSeccion()));
-                }
                 elementodeseccion.actualizarElementodeseccion(elementodeseccionDto);
+
+                for (OrdenDto ordenDto : elementodeseccionDto.getOrdenesEliminadasDtoList()) {
+                    elementodeseccion.getOrdenList().remove(new Orden(ordenDto.getIdOrden()));
+                }
+
+                if (!elementodeseccion.getOrdenList().isEmpty()) {
+                    for (OrdenDto ordenDto : elementodeseccionDto.getOrdenDtoList()) {
+                        if (ordenDto.getModificado()) {
+                            Orden ordenE = em.find(Orden.class, ordenDto.getIdOrden());
+                            ordenE.setIdElemento(elementodeseccion);
+                            elementodeseccion.getOrdenList().add(ordenE);
+                        }
+                    }
+                }
                 elementodeseccion = em.merge(elementodeseccion);
             } else {
                 elementodeseccion = new Elementodeseccion(elementodeseccionDto);
@@ -109,13 +130,17 @@ public class ElementodeseccionService {
 //    Obtener un listado de todos los elementodeseccions
     public Respuesta getElementodeseccions() {
         try {
-            Query qryElementodeseccion = em.createNamedQuery("Elementodeseccion.findAll",Elementodeseccion.class);
-
+            Query qryElementodeseccion = em.createNamedQuery("Elementodeseccion.findAll", Elementodeseccion.class);
             List<Elementodeseccion> elementodeseccions = (List<Elementodeseccion>) qryElementodeseccion.getResultList();
             List<ElementodeseccionDto> ElementodeseccionDto = new ArrayList<>();
-            elementodeseccions.forEach(elementodeseccion
-                    -> {
-                ElementodeseccionDto.add(new ElementodeseccionDto(elementodeseccion));
+
+            elementodeseccions.forEach(elementodeseccion -> {
+                ElementodeseccionDto elementodeseccionDto = new ElementodeseccionDto(elementodeseccion);
+                elementodeseccionDto.setIdSeccion(new SeccionDto(elementodeseccion.getIdSeccion()));
+                for (Orden ordenE : elementodeseccion.getOrdenList()) {
+                    elementodeseccionDto.getOrdenesDtoList().add(new OrdenDto(ordenE));
+                }
+                ElementodeseccionDto.add(elementodeseccionDto);
             });
 
             return new Respuesta(true,
@@ -131,6 +156,4 @@ public class ElementodeseccionService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los elementos de seccion.", "getElementodeseccions " + ex.getMessage());
         }
     }
-    
-    
 }

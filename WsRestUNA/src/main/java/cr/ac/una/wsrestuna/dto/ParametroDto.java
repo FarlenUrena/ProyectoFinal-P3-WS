@@ -3,13 +3,14 @@
  * and open the template in the editor.
  */
 package cr.ac.una.wsrestuna.dto;
+
 import cr.ac.una.wsrestuna.model.Parametro;
-import java.io.Serializable;
 import java.util.Arrays;
 
-/**@author Farlen
+/**
+ * @author Farlen
  */
-public class ParametroDto implements Serializable{
+public class ParametroDto {
 
     private Long idParametro;
     private String nombre;
@@ -17,26 +18,27 @@ public class ParametroDto implements Serializable{
     private String valorTexto;
     private String descripcion;
     private byte[] imagen;
-    
-     private static final long serialVersionUID = 1L;
-    
+
     public ParametroDto(Parametro parametro) {
         this.idParametro = parametro.getIdParametro();
         this.nombre = parametro.getNombre();
         this.valorNumerico = parametro.getValorNumerico();
         this.valorTexto = parametro.getValorTexto();
         this.descripcion = parametro.getDescripcion();
-        this.imagen = (byte[])parametro.getImagen();
+        this.imagen = (byte[]) parametro.getImagen();
     }
 
-    public ParametroDto() {}    
-    
-    public byte[] getImagen() {return imagen;}
-    
+    public ParametroDto() {
+    }
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+
     public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }
- 
+
     public Long getIdParametro() {
         return idParametro;
     }
@@ -76,10 +78,10 @@ public class ParametroDto implements Serializable{
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-     
+
     @Override
     public String toString() {
         return "ParametroDto{" + "idParametro=" + idParametro + ", nombre=" + nombre + ", valorNumerico=" + valorNumerico + ", valorTexto=" + valorTexto + ", descripcion=" + descripcion + ", imagen=" + Arrays.toString(imagen) + '}';
     }
-    
+
 }

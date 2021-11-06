@@ -39,13 +39,14 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "Factura.findByFechaFacturacion", query = "SELECT f FROM Factura f WHERE f.fechaFacturacion = :fechaFacturacion"),
     @NamedQuery(name = "Factura.findByMetodoDePago", query = "SELECT f FROM Factura f WHERE f.metodoDePago = :metodoDePago"),
     @NamedQuery(name = "Factura.findByMontoPagado", query = "SELECT f FROM Factura f WHERE f.montoPagado = :montoPagado"),
-    @NamedQuery(name = "Factura.findByTotal", query = "SELECT f FROM Factura f WHERE f.total = :total")})
+    @NamedQuery(name = "Factura.findByTotal", query = "SELECT f FROM Factura f WHERE f.total = :total"),
+    @NamedQuery(name = "Factura.findByDescuento", query = "SELECT f FROM Factura f WHERE f.descuento = :descuento")})
 public class Factura implements Serializable {
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
-        @SequenceGenerator(name = "FACTURA_ID_GENERATOR", sequenceName = "RESTUNA.SEQ_ID_FACTURA", allocationSize = 1)
+    @SequenceGenerator(name = "FACTURA_ID_GENERATOR", sequenceName = "RESTUNA.SEQ_ID_FACTURA", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FACTURA_ID_GENERATOR")
     @Basic(optional = false)
 //    @NotNull
@@ -68,6 +69,10 @@ public class Factura implements Serializable {
 //    @NotNull
     @Column(name = "TOTAL")
     private double total;
+    @Basic(optional = false)
+//    @NotNull
+    @Column(name = "DESCUENTO")
+    private Long descuento;
     @JoinColumn(name = "ID_CAJA", referencedColumnName = "ID_CAJA")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Caja idCaja;
@@ -91,7 +96,7 @@ public class Factura implements Serializable {
     }
 
     public Factura(FacturaDto facturaDto) {
-    this.idFactura = facturaDto.getIdFactura();
+        this.idFactura = facturaDto.getIdFactura();
         actualizarFactura(facturaDto);
     }
 
@@ -100,9 +105,10 @@ public class Factura implements Serializable {
         this.metodoDePago = facturaDto.getMetodoDePago();
         this.montoPagado = facturaDto.getMontoPagado();
         this.total = facturaDto.getTotal();
-        this.idCaja = facturaDto.getIdCaja();
-        this.idOrden = facturaDto.getIdOrden();
+        this.idCaja = new Caja(facturaDto.getIdCajaDto());
+        this.idOrden = new Orden(facturaDto.getIdOrdenDto());
     }
+
     public Long getIdFactura() {
         return idFactura;
     }
@@ -141,6 +147,14 @@ public class Factura implements Serializable {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public Long getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(Long descuento) {
+        this.descuento = descuento;
     }
 
     public Caja getIdCaja() {
@@ -183,5 +197,5 @@ public class Factura implements Serializable {
     public String toString() {
         return "cr.ac.una.wsrestuna.model.Factura[ idFactura=" + idFactura + " ]";
     }
-    
+
 }

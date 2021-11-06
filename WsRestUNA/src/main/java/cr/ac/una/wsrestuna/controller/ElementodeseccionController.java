@@ -32,77 +32,61 @@ import javax.ws.rs.core.Response;
 @Secure
 @Path("/ElementodeseccionController")
 public class ElementodeseccionController {
-    
+
     @EJB
     ElementodeseccionService elementodeseccionService;
-    
-    
+
     @GET
     @Path("/elementoDeSeccion/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getElementodeseccion(@PathParam("id") Long id)
-    {
-        try
-        {
+    public Response getElementodeseccion(@PathParam("id") Long id) {
+        try {
             Respuesta res = elementodeseccionService.getElementodeseccion(id);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok((ElementodeseccionDto) res.getResultado("Elementodeseccion")).build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(ElementodeseccionController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ElementodeseccionController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el elemento de seccion ").build();
         }
     }
-    
+
     @GET
     @Path("/elementosDeSeccion")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getElementosdeseccion()
-    {
-        try
-        {
+    public Response getElementosdeseccion() {
+        try {
             Respuesta res = elementodeseccionService.getElementodeseccions();
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
 
-          return Response.ok(new GenericEntity<List<ElementodeseccionDto>>((List<ElementodeseccionDto>) res.getResultado("ElementosdeseccionList")) {
+            return Response.ok(new GenericEntity<List<ElementodeseccionDto>>((List<ElementodeseccionDto>) res.getResultado("ElementosdeseccionList")) {
             }).build();
 
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(ElementodeseccionController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ElementodeseccionController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el elemento de seccion ").build();
         }
     }
-    
+
     //Falta probar desde el cliente si funciona
     @POST
     @Path("/elementoDeSeccion")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response guardarElementodeseccion(ElementodeseccionDto elementodeseccion)
-    {
-        try
-        {
+    public Response guardarElementodeseccion(ElementodeseccionDto elementodeseccion) {
+        try {
             Respuesta res = elementodeseccionService.guardarElementodeseccion(elementodeseccion);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok((ElementodeseccionDto) res.getResultado("Elementodeseccion")).build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(ElementodeseccionController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ElementodeseccionController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el elemento de seccion ").build();
         }
     }
@@ -111,22 +95,17 @@ public class ElementodeseccionController {
     @Path("/elementoDeSeccion/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response eliminarElementodeseccion(@PathParam("id") Long id)
-    {
-        try
-        {
+    public Response eliminarElementodeseccion(@PathParam("id") Long id) {
+        try {
             Respuesta res = elementodeseccionService.eliminarElementodeseccion(id);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok().build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(ElementodeseccionController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ElementodeseccionController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el elemento de seccion ").build();
         }
     }
-    
+
 }

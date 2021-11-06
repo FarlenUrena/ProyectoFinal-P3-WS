@@ -6,6 +6,8 @@
 package cr.ac.una.wsrestuna.service;
 
 import cr.ac.una.wsrestuna.dto.ProductoporordenDto;
+import cr.ac.una.wsrestuna.model.Orden;
+import cr.ac.una.wsrestuna.model.Producto;
 import cr.ac.una.wsrestuna.model.Productopororden;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
 import cr.ac.una.wsrestuna.util.Respuesta;
@@ -29,19 +31,16 @@ import javax.persistence.Query;
 @LocalBean
 @Stateless
 public class ProductoporordenService {
-    
-    
+
     private static final Logger LOG = Logger.getLogger(ProductoporordenService.class.getName());
     @PersistenceContext(unitName = "WsRestUnaPU")
     private EntityManager em;
-    
-    
+
     //    Obetener un productopororden
     public Respuesta getProductopororden(Long id) {
         try {
             Query qryProductopororden = em.createNamedQuery("Productopororden.findByIdProductoPorOrden", Productopororden.class);
             qryProductopororden.setParameter("idProductoPorOrden", id);
-
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Productopororden", new ProductoporordenDto((Productopororden) qryProductopororden.getSingleResult()));
 
         } catch (NoResultException ex) {
@@ -59,12 +58,15 @@ public class ProductoporordenService {
     public Respuesta guardarProductopororden(ProductoporordenDto productoporordenDto) {
         try {
             Productopororden productopororden;
-            if (productoporordenDto.getIdProductoPorOrden()!= null && productoporordenDto.getIdProductoPorOrden()> 0) {
+            if (productoporordenDto.getIdProductoPorOrden() != null && productoporordenDto.getIdProductoPorOrden() > 0) {
                 productopororden = em.find(Productopororden.class, productoporordenDto.getIdProductoPorOrden());
                 if (productopororden == null) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró el producto por orden a modificar.", "guardarProductopororden NoResultException");
                 }
                 productopororden.actualizarProductopororden(productoporordenDto);
+                productopororden.setIdOrden(new Orden(productoporordenDto.getIdOrdenDto()));
+                productopororden.setIdProducto(new Producto(productoporordenDto.getIdProductoDto()));
+
                 productopororden = em.merge(productopororden);
             } else {
                 productopororden = new Productopororden(productoporordenDto);
@@ -105,12 +107,12 @@ public class ProductoporordenService {
 //    Obtener un listado de todos los productoporordens
     public Respuesta getProductoporordens() {
         try {
-            Query qryProductopororden = em.createNamedQuery("Productopororden.findAll",Productopororden.class);
+            Query qryProductopororden = em.createNamedQuery("Productopororden.findAll", Productopororden.class);
 
             List<Productopororden> productoporordens = (List<Productopororden>) qryProductopororden.getResultList();
             List<ProductoporordenDto> ProductoporordenDto = new ArrayList<>();
-            productoporordens.forEach(productopororden
-                    -> {
+
+            productoporordens.forEach(productopororden -> {
                 ProductoporordenDto.add(new ProductoporordenDto(productopororden));
             });
 
@@ -127,5 +129,5 @@ public class ProductoporordenService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los elementos de seccion.", "getProductoporordens " + ex.getMessage());
         }
     }
-    
+
 }

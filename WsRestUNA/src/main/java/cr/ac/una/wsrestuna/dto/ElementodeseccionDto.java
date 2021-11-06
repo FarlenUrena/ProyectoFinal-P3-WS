@@ -8,6 +8,7 @@ package cr.ac.una.wsrestuna.dto;
 import cr.ac.una.wsrestuna.model.Elementodeseccion;
 import cr.ac.una.wsrestuna.model.Orden;
 import cr.ac.una.wsrestuna.model.Seccion;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,10 +25,19 @@ public class ElementodeseccionDto {
     private double posicionY;
     private double impuestoPorServicio;
     private byte[] imagenElemento;
+    private Boolean modificado;
     private SeccionDto idSeccion;
-//    private List<Orden> ordenList;
+    private List<OrdenDto> ordenesDtoList;
+    private List<OrdenDto> ordenesEliminadasDtoList;
+
+    public ElementodeseccionDto() {
+        this.modificado = false;
+        this.ordenesDtoList = new ArrayList<>();
+        this.ordenesEliminadasDtoList = new ArrayList<>();
+    }
 
     public ElementodeseccionDto(Elementodeseccion elementodeseccion) {
+        this();
         this.idElemento = elementodeseccion.getIdElemento();
         this.tipo = elementodeseccion.getTipo();
         this.nombre = elementodeseccion.getNombre();
@@ -37,7 +47,6 @@ public class ElementodeseccionDto {
         this.imagenElemento = elementodeseccion.getImagenElemento();
         this.impuestoPorServicio = elementodeseccion.getImpuestoPorServicio();
         this.idSeccion = new SeccionDto(elementodeseccion.getIdSeccion());
-//        this.ordenList = elementodeseccion.getOrdenList();
     }
 
     public Long getIdElemento() {
@@ -111,20 +120,36 @@ public class ElementodeseccionDto {
     public void setIdSeccion(SeccionDto idSeccion) {
         this.idSeccion = idSeccion;
     }
-//    public Seccion getIdSeccion() {
-//        return idSeccion;
-//    }
-//
-//    public void setIdSeccion(Seccion idSeccion) {
-//        this.idSeccion = idSeccion;
-//    }
-//
-//    public List<Orden> getOrdenList() {
-//        return ordenList;
-//    }
-//
-//    public void setOrdenList(List<Orden> ordenList) {
-//        this.ordenList = ordenList;
-//    }
 
+    public List<OrdenDto> getOrdenDtoList() {
+        return ordenesDtoList;
+    }
+
+    public void setOrdenDtoList(List<OrdenDto> ordenDtoList) {
+        this.ordenesDtoList = ordenDtoList;
+    }
+
+    public Boolean getModificado() {
+        return modificado;
+    }
+
+    public void setModificado(Boolean Modificado) {
+        this.modificado = Modificado;
+    }
+
+    public List<OrdenDto> getOrdenesDtoList() {
+        return ordenesDtoList;
+    }
+
+    public void setOrdenesDtoList(List<OrdenDto> ordenesDtoList) {
+        this.ordenesDtoList = ordenesDtoList;
+    }
+
+    public List<OrdenDto> getOrdenesEliminadasDtoList() {
+        return ordenesEliminadasDtoList;
+    }
+
+    public void setOrdenesEliminadasDtoList(List<OrdenDto> ordenesEliminadasDtoList) {
+        this.ordenesEliminadasDtoList = ordenesEliminadasDtoList;
+    }
 }

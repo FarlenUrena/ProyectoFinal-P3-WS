@@ -29,7 +29,7 @@ import javax.validation.constraints.NotNull;
  * @author Farlen
  */
 @Entity
-@Table(name = "PRODUCTOPORORDEN",schema = "RESTUNA")
+@Table(name = "PRODUCTOPORORDEN", schema = "RESTUNA")
 @NamedQueries({
     @NamedQuery(name = "Productopororden.findAll", query = "SELECT p FROM Productopororden p"),
     @NamedQuery(name = "Productopororden.findByIdProductoPorOrden", query = "SELECT p FROM Productopororden p WHERE p.idProductoPorOrden = :idProductoPorOrden"),
@@ -75,15 +75,13 @@ public class Productopororden implements Serializable {
     }
 
     public Productopororden(ProductoporordenDto productoporordenDto) {
-        this.idProductoPorOrden=productoporordenDto.getIdProductoPorOrden();
+        this.idProductoPorOrden = productoporordenDto.getIdProductoPorOrden();
         actualizarProductopororden(productoporordenDto);
     }
 
     public void actualizarProductopororden(ProductoporordenDto productoporordenDto) {
         this.cantidad = productoporordenDto.getCantidad();
         this.precioProducto = productoporordenDto.getPrecioProducto();
-        this.idOrden = productoporordenDto.getIdOrden();
-        this.idProducto = productoporordenDto.getIdProducto();
     }
 
     public Long getIdProductoPorOrden() {
@@ -150,5 +148,5 @@ public class Productopororden implements Serializable {
     public String toString() {
         return "cr.ac.una.wsrestuna.model.Productopororden[ idProductoPorOrden=" + idProductoPorOrden + " ]";
     }
-    
+
 }

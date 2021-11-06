@@ -13,14 +13,14 @@ import java.util.HashMap;
  * @author ccarranza
  */
 public class Respuesta implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     private Boolean estado;
-    private CodigoRespuesta codigoRespuesta;   
-    private String mensaje;    
+    private CodigoRespuesta codigoRespuesta;
+    private String mensaje;
     private String mensajeInterno;
-    private HashMap<String, Object> resultado; 
+    private HashMap<String, Object> resultado;
 
     public Respuesta() {
         this.resultado = new HashMap<>();
@@ -33,7 +33,7 @@ public class Respuesta implements Serializable {
         this.mensajeInterno = mensajeInterno;
         this.resultado = new HashMap<>();
     }
-    
+
     public Respuesta(Boolean estado, CodigoRespuesta codigoRespuesta, String mensaje, String mensajeInterno, String nombre, Object resultado) {
         this.estado = estado;
         this.codigoRespuesta = codigoRespuesta;
@@ -51,7 +51,7 @@ public class Respuesta implements Serializable {
         this.resultado = new HashMap<>();
         this.resultado.put("[Objeto]", resultado);
     }
-    
+
     public Boolean getEstado() {
         return estado;
     }
@@ -83,7 +83,7 @@ public class Respuesta implements Serializable {
     public void setMensajeInterno(String mensajeInterno) {
         this.mensajeInterno = mensajeInterno;
     }
-    
+
     public Object getResultado(String nombre) {
         return resultado.get(nombre);
     }
@@ -91,7 +91,7 @@ public class Respuesta implements Serializable {
     public void setResultado(String nombre, Object resultado) {
         this.resultado.put(nombre, resultado);
     }
-    
+
     public Object getResultado() {
         return resultado.get("[Objeto]");
     }

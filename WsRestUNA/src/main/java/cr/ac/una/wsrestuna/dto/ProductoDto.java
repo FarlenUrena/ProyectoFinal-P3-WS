@@ -7,35 +7,42 @@ package cr.ac.una.wsrestuna.dto;
 
 import cr.ac.una.wsrestuna.model.Producto;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-/**@author Farlen
+/**
+ *
+ * @author Farlen
  */
-public class ProductoDto implements Serializable{
+public class ProductoDto {
 
     private Long idProducto;
     private String nombre;
     private String nombreCorto;
     private double precio;
     private Long esAccesoRapido;
-    private Long ventasTotales;
     private byte[] imagen;
+    private Boolean modificado;
     private GrupoDto grupo;
-   
-    private static final long serialVersionUID = 1L;
-    
+    private List<ProductoporordenDto> productosporordenDto;
+    private List<ProductoporordenDto> productosporordenEliminadosDto;
+
     public ProductoDto() {
+        this.modificado = false;
+        this.productosporordenDto = new ArrayList<>();
+        this.productosporordenEliminadosDto = new ArrayList<>();
     }
-    
+
     public ProductoDto(Producto producto) {
+        this();
         this.idProducto = producto.getIdProducto();
         this.nombre = producto.getNombre();
         this.nombreCorto = producto.getNombreCorto();
         this.precio = producto.getPrecio();
         this.esAccesoRapido = producto.getEsAccesoRapido();
-        this.ventasTotales = producto.getVentasTotales();
         this.imagen = producto.getImagen();
         this.grupo = new GrupoDto(producto.getIdGrupo());
-   }
+    }
 
     public Long getIdProducto() {
         return idProducto;
@@ -85,19 +92,35 @@ public class ProductoDto implements Serializable{
         this.esAccesoRapido = esAccesoRapido;
     }
 
-    public Long getVentasTotales() {
-        return ventasTotales;
+    public Boolean getModificado() {
+        return modificado;
     }
 
-    public void setVentasTotales(Long ventasTotales) {
-        this.ventasTotales = ventasTotales;
+    public void setModificado(Boolean modificado) {
+        this.modificado = modificado;
     }
+
     public GrupoDto getGrupo() {
         return grupo;
     }
 
     public void setGrupo(GrupoDto idGrupo) {
         this.grupo = idGrupo;
-    }   
+    }
 
+    public List<ProductoporordenDto> getProductosporordenDto() {
+        return productosporordenDto;
+    }
+
+    public void setProductosporordenDto(List<ProductoporordenDto> productosporordenDto) {
+        this.productosporordenDto = productosporordenDto;
+    }
+
+    public List<ProductoporordenDto> getProductosporordenEliminadosDto() {
+        return productosporordenEliminadosDto;
+    }
+
+    public void setProductosporordenEliminadosDto(List<ProductoporordenDto> productosporordenEliminadosDto) {
+        this.productosporordenEliminadosDto = productosporordenEliminadosDto;
+    }
 }

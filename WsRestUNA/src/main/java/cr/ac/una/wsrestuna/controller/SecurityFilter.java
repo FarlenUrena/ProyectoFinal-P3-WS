@@ -34,15 +34,15 @@ import javax.ws.rs.core.Context;
 public class SecurityFilter implements ContainerRequestFilter {
 
     private static final String AUTHORIZATION_SERVICE_PATH = "getUsuario";
-   private static final String RENEWAL_SERVICE_PATH = "renovarToken";
+    private static final String RENEWAL_SERVICE_PATH = "renovarToken";
     private final JwTokenHelper jwTokenHelper = JwTokenHelper.getInstance();
     private static final String AUTHENTICATION_SCHEME = "Bearer ";
-    
+
     @Context
     private ResourceInfo resourceInfo;
 
     @Override
-   public void filter(ContainerRequestContext request) throws IOException {
+    public void filter(ContainerRequestContext request) throws IOException {
         Method method = resourceInfo.getResourceMethod();
         if (method.getName().equals(AUTHORIZATION_SERVICE_PATH)) {
             return;
@@ -69,12 +69,12 @@ public class SecurityFilter implements ContainerRequestFilter {
             // Validate the token
             try {
                 Claims claims = jwTokenHelper.claimKey(token);
-                if(method.getName().equals(RENEWAL_SERVICE_PATH)){
-                    if(claims.containsKey("rnw")){
+                if (method.getName().equals(RENEWAL_SERVICE_PATH)) {
+                    if (claims.containsKey("rnw")) {
                         abortWithUnauthorized(request, "Invalid authorization.");
                     }
                 }
-                
+
                 final SecurityContext currentSecurityContext = request.getSecurityContext();
                 request.setSecurityContext(new SecurityContext() {
 
@@ -125,7 +125,7 @@ public class SecurityFilter implements ContainerRequestFilter {
         // Abort the filter chain with a 401 status code response
         // The WWW-Authenticate header is sent along with the response
         requestContext.abortWith(
-                Response.status(Response.Status.UNAUTHORIZED.getStatusCode(),message)
+                Response.status(Response.Status.UNAUTHORIZED.getStatusCode(), message)
                         .header(HttpHeaders.WWW_AUTHENTICATE,
                                 message)
                         .build());

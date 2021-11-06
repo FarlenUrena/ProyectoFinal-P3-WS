@@ -23,7 +23,7 @@
             <version>${jakartaee}</version>
             <scope>provided</scope>
         </dependency>
-                <!--Seguridad-->
+        <!--Seguridad-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -49,10 +49,10 @@
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
             <version>1.6.2</version>
-	</dependency>              
+        </dependency>              
     </dependencies>
     
-     <build>
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -5,10 +5,9 @@
  */
 package cr.ac.una.wsrestuna.dto;
 
-import cr.ac.una.wsrestuna.model.Elementodeseccion;
-import cr.ac.una.wsrestuna.model.Factura;
 import cr.ac.una.wsrestuna.model.Orden;
-import cr.ac.una.wsrestuna.model.Productopororden;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,17 +17,33 @@ import java.util.List;
 public class OrdenDto {
 
     private Long idOrden;
+    private Date fechaCreacion;
     private String nombreCliente;
-    private Elementodeseccion idElemento;
-    private List<Productopororden> productoporordenList;
-    private List<Factura> facturaList;
+    private Long esEstado;
+    private ElementodeseccionDto idElementodeseccionDto;
+    private EmpleadoDto idEmpleadoDto;
+    private Boolean modificado;
+    private List<ProductoporordenDto> productosporordenDto;
+    private List<ProductoporordenDto> productosporordenElimindosDto;
+    private List<FacturaDto> facturasDto;
+    private List<FacturaDto> facturasEliminadasDto;
+
+    public OrdenDto() {
+        this.modificado = false;
+        this.productosporordenDto = new ArrayList<>();
+        this.productosporordenElimindosDto = new ArrayList<>();
+        this.facturasDto = new ArrayList<>();
+        this.facturasEliminadasDto = new ArrayList<>();
+    }
 
     public OrdenDto(Orden orden) {
+        this();
         this.idOrden = orden.getIdOrden();
+        this.fechaCreacion = orden.getFechaCreacion();
         this.nombreCliente = orden.getNombreCliente();
-        this.idElemento = orden.getIdElemento();
-        this.productoporordenList = orden.getProductoporordenList();
-        this.facturaList = orden.getFacturaList();
+        this.esEstado = orden.getEsEstado();
+        this.idElementodeseccionDto = new ElementodeseccionDto(orden.getIdElemento());
+        this.idEmpleadoDto = new EmpleadoDto(orden.getIdEmpleado());
     }
 
     public Long getIdOrden() {
@@ -39,6 +54,14 @@ public class OrdenDto {
         this.idOrden = idOrden;
     }
 
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
     public String getNombreCliente() {
         return nombreCliente;
     }
@@ -47,28 +70,68 @@ public class OrdenDto {
         this.nombreCliente = nombreCliente;
     }
 
-    public Elementodeseccion getIdElemento() {
-        return idElemento;
+    public Long getEsEstado() {
+        return esEstado;
     }
 
-    public void setIdElemento(Elementodeseccion idElemento) {
-        this.idElemento = idElemento;
+    public void setEsEstado(Long esEstado) {
+        this.esEstado = esEstado;
     }
 
-    public List<Productopororden> getProductoporordenList() {
-        return productoporordenList;
+    public ElementodeseccionDto getIdElementodeseccionDto() {
+        return idElementodeseccionDto;
     }
 
-    public void setProductoporordenList(List<Productopororden> productoporordenList) {
-        this.productoporordenList = productoporordenList;
+    public void setIdElementodeseccionDto(ElementodeseccionDto idElementodeseccionDto) {
+        this.idElementodeseccionDto = idElementodeseccionDto;
     }
 
-    public List<Factura> getFacturaList() {
-        return facturaList;
+    public EmpleadoDto getIdEmpleadoDto() {
+        return idEmpleadoDto;
     }
 
-    public void setFacturaList(List<Factura> facturaList) {
-        this.facturaList = facturaList;
+    public void setIdEmpleadoDto(EmpleadoDto idEmpleaadoDto) {
+        this.idEmpleadoDto = idEmpleaadoDto;
+    }
+
+    public Boolean getModificado() {
+        return modificado;
+    }
+
+    public void setModificado(Boolean modificado) {
+        this.modificado = modificado;
+    }
+
+    public List<ProductoporordenDto> getProductosporordenDto() {
+        return productosporordenDto;
+    }
+
+    public void setProductosporordenDto(List<ProductoporordenDto> productosporordenDto) {
+        this.productosporordenDto = productosporordenDto;
+    }
+
+    public List<ProductoporordenDto> getProductosporordenElimindosDto() {
+        return productosporordenElimindosDto;
+    }
+
+    public void setProductosporordenElimindosDto(List<ProductoporordenDto> productosporordenElimindosDto) {
+        this.productosporordenElimindosDto = productosporordenElimindosDto;
+    }
+
+    public List<FacturaDto> getFacturasDto() {
+        return facturasDto;
+    }
+
+    public void setFacturasDto(List<FacturaDto> facturasDto) {
+        this.facturasDto = facturasDto;
+    }
+
+    public List<FacturaDto> getFacturasEliminadasDto() {
+        return facturasEliminadasDto;
+    }
+
+    public void setFacturasEliminadasDto(List<FacturaDto> facturasEliminadasDto) {
+        this.facturasEliminadasDto = facturasEliminadasDto;
     }
 
 }

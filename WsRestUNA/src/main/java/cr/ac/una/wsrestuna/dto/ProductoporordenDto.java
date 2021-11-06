@@ -18,18 +18,21 @@ public class ProductoporordenDto {
     private Long idProductoPorOrden;
     private Long cantidad;
     private double precioProducto;
-    private Orden idOrden;
-    private Producto idProducto;
+    private Boolean modificado;
+    private OrdenDto idOrdenDto;
+    private ProductoDto idProductoDto;
 
+    public ProductoporordenDto() {
+        this.modificado = false;
+    }
 
-    
-    
     public ProductoporordenDto(Productopororden productopororden) {
+        this();
         this.idProductoPorOrden = productopororden.getIdProductoPorOrden();
         this.cantidad = productopororden.getCantidad();
         this.precioProducto = productopororden.getPrecioProducto();
-        this.idOrden = productopororden.getIdOrden();
-        this.idProducto = productopororden.getIdProducto();
+        this.idOrdenDto = new OrdenDto(productopororden.getIdOrden());
+        this.idProductoDto = new ProductoDto(productopororden.getIdProducto());
     }
 
     public Long getIdProductoPorOrden() {
@@ -56,20 +59,28 @@ public class ProductoporordenDto {
         this.precioProducto = precioProducto;
     }
 
-    public Orden getIdOrden() {
-        return idOrden;
+    public Boolean getModificado() {
+        return modificado;
     }
 
-    public void setIdOrden(Orden idOrden) {
-        this.idOrden = idOrden;
+    public void setModificado(Boolean modificado) {
+        this.modificado = modificado;
     }
 
-    public Producto getIdProducto() {
-        return idProducto;
+    public OrdenDto getIdOrdenDto() {
+        return idOrdenDto;
     }
 
-    public void setIdProducto(Producto idProducto) {
-        this.idProducto = idProducto;
+    public void setIdOrdenDto(OrdenDto idOrdenDto) {
+        this.idOrdenDto = idOrdenDto;
+    }
+
+    public ProductoDto getIdProductoDto() {
+        return idProductoDto;
+    }
+
+    public void setIdProductoDto(ProductoDto idProductoDto) {
+        this.idProductoDto = idProductoDto;
     }
 
 }

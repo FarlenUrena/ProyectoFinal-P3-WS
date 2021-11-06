@@ -44,7 +44,7 @@ public class ProductoController {
     @Path("/producto/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getProducto(@PathParam("id") Long id){
+    public Response getProducto(@PathParam("id") Long id) {
         try {
             Respuesta res = productoService.getProducto(id);
             if (!res.getEstado()) {
@@ -77,29 +77,6 @@ public class ProductoController {
         }
     }
 
-    @GET
-    @Path("/productos/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getProductosGrupo(@PathParam("id") Long id) {
-        try {
-            Respuesta res = new Respuesta();
-            Respuesta res2 = grupoService.getGrupo(id);
-            if (!res2.getEstado()) {
-                res = productoService.getProductosPorGrupo((GrupoDto) res2.getResultado("Grupo"));
-                if (!res.getEstado()) {
-                    return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
-                }
-            }
-            return Response.ok(new GenericEntity<List<ProductoDto>>((List<ProductoDto>) res.getResultado("ProductosList")) {
-            }).build();
-
-        } catch (Exception ex) {
-            Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE, null, ex);
-            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el producto ").build();
-        }
-    }
-
     //Falta probar desde el cliente si funciona
     @POST
     @Path("/producto")
@@ -117,6 +94,7 @@ public class ProductoController {
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el producto ").build();
         }
     }
+
     //Falta probar desde el cliente si funciona
     @DELETE
     @Path("/producto/{id}")

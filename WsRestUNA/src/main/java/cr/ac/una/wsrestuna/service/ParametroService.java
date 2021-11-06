@@ -22,16 +22,18 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-/**@author Farlen*/
+/**
+ * @author Farlen
+ */
 @LocalBean
 @Stateless
 public class ParametroService {
-    
+
     private static final Logger LOG = Logger.getLogger(ParametroService.class.getName());
 
     @PersistenceContext(unitName = "WsRestUnaPU")
-    private EntityManager em;   
-    
+    private EntityManager em;
+
 //    Obtener un parametro
     public Respuesta getParametro(Long id) {
         try {
@@ -49,13 +51,12 @@ public class ParametroService {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar el parametro.", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar el parametro.", "getParametro " + ex.getMessage());
         }
-    }  
-    
-    
-     public Respuesta getParametro(String nombre) {
+    }
+
+    public Respuesta getParametro(String nombre) {
         try {
             Query qryParametro = em.createNamedQuery("Parametro.findByNombre", Parametro.class);
-            qryParametro.setParameter("nombre",nombre);
+            qryParametro.setParameter("nombre", nombre);
 
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Parametro", new ParametroDto((Parametro) qryParametro.getSingleResult()));
 
@@ -68,8 +69,8 @@ public class ParametroService {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar el parametro.", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar el parametro.", "getParametro " + ex.getMessage());
         }
-    }  
-    
+    }
+
 //    Guardar o actualizar un parametro
     public Respuesta guardarParametro(ParametroDto parametroDto) {
         try {
@@ -121,7 +122,7 @@ public class ParametroService {
 //    Obtener un listado de todos los parametros
     public Respuesta getParametros() {
         try {
-            Query qryParametro = em.createNamedQuery("Parametro.findAll",Parametro.class);
+            Query qryParametro = em.createNamedQuery("Parametro.findAll", Parametro.class);
 
             List<Parametro> parametros = (List<Parametro>) qryParametro.getResultList();
             List<ParametroDto> ParametroDto = new ArrayList<>();
@@ -142,5 +143,5 @@ public class ParametroService {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar los parametros.", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los parametros.", "getParametros " + ex.getMessage());
         }
-    }    
+    }
 }

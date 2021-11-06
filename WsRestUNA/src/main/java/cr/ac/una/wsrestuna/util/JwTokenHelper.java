@@ -65,7 +65,7 @@ public class JwTokenHelper {
     private Date getExpirationDate(Boolean renewal) {
         long currentTimeInMillis = System.currentTimeMillis();
         long expMilliSeconds = TimeUnit.MINUTES.toMillis(EXPIRATION_LIMIT);
-        if(renewal){
+        if (renewal) {
             expMilliSeconds = TimeUnit.MINUTES.toMillis(EXPIRATION_RENEWAL_LIMIT);
         }
         return new Date(currentTimeInMillis + expMilliSeconds);

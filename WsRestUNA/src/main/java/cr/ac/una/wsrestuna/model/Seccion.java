@@ -32,7 +32,7 @@ import javax.validation.constraints.Size;
  * @author Farlen
  */
 @Entity
-@Table(name = "SECCION",schema = "RESTUNA")
+@Table(name = "SECCION", schema = "RESTUNA")
 @NamedQueries({
     @NamedQuery(name = "Seccion.findAll", query = "SELECT s FROM Seccion s"),
     @NamedQuery(name = "Seccion.findByIdSeccion", query = "SELECT s FROM Seccion s WHERE s.idSeccion = :idSeccion"),
@@ -56,15 +56,11 @@ public class Seccion implements Serializable {
     @Lob
     @Column(name = "FOTO_DISTRIBUCION")
     private byte[] fotoDistribucion;
-    @ManyToMany(mappedBy = "seccionList", fetch = FetchType.LAZY)
-    private List<Empleado> empleadoList;
     @OneToMany(mappedBy = "idSeccion", fetch = FetchType.LAZY)
     private List<Elementodeseccion> elementodeseccionList;
 
     public Seccion() {
-        this.empleadoList = new ArrayList<>();
         this.elementodeseccionList = new ArrayList<>();
-        
     }
 
     public Seccion(Long idSeccion) {
@@ -80,13 +76,12 @@ public class Seccion implements Serializable {
         this.idSeccion = seccionDto.getIdSeccion();
         actualizarSeccion(seccionDto);
     }
- public void actualizarSeccion(SeccionDto seccionDto) {
-    
+
+    public void actualizarSeccion(SeccionDto seccionDto) {
         this.nombre = seccionDto.getNombre();
         this.fotoDistribucion = seccionDto.getFotoDistribucion();
-//        this.empleadoList = seccionDto.getEmpleadoList();
-//        this.elementodeseccionList = seccionDto.getElementodeseccionList();
     }
+
     public Long getIdSeccion() {
         return idSeccion;
     }
@@ -109,14 +104,6 @@ public class Seccion implements Serializable {
 
     public void setFotoDistribucion(byte[] fotoDistribucion) {
         this.fotoDistribucion = fotoDistribucion;
-    }
-
-    public List<Empleado> getEmpleadoList() {
-        return empleadoList;
-    }
-
-    public void setEmpleadoList(List<Empleado> empleadoList) {
-        this.empleadoList = empleadoList;
     }
 
     public List<Elementodeseccion> getElementodeseccionList() {
@@ -151,5 +138,5 @@ public class Seccion implements Serializable {
     public String toString() {
         return "cr.ac.una.wsrestuna.model.Seccion[ idSeccion=" + idSeccion + " ]";
     }
-    
+
 }

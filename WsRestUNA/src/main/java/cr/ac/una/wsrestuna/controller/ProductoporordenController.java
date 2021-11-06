@@ -32,76 +32,61 @@ import javax.ws.rs.core.Response;
 @Secure
 @Path("/ProductoporordenController")
 public class ProductoporordenController {
-    
+
     @EJB
     ProductoporordenService productoporordenService;
-    
+
     @GET
     @Path("/productopororden/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getProductopororden(@PathParam("id") Long id)
-    {
-        try
-        {
+    public Response getProductopororden(@PathParam("id") Long id) {
+        try {
             Respuesta res = productoporordenService.getProductopororden(id);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok((ProductoporordenDto) res.getResultado("Productopororden")).build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(ProductoporordenController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ProductoporordenController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el producto por orden ").build();
         }
     }
-    
+
     @GET
     @Path("/productospororden")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getProductospororden()
-    {
-        try
-        {
+    public Response getProductospororden() {
+        try {
             Respuesta res = productoporordenService.getProductoporordens();
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
 
-          return Response.ok(new GenericEntity<List<ProductoporordenDto>>((List<ProductoporordenDto>) res.getResultado("ProductosporordenList")) {
+            return Response.ok(new GenericEntity<List<ProductoporordenDto>>((List<ProductoporordenDto>) res.getResultado("ProductosporordenList")) {
             }).build();
 
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(ProductoporordenController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ProductoporordenController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el producto por orden ").build();
         }
     }
-    
+
     //Falta probar desde el cliente si funciona
     @POST
     @Path("/productopororden/{productopororden}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response guardarProductopororden(ProductoporordenDto productopororden)
-    {
-        try
-        {
+    public Response guardarProductopororden(ProductoporordenDto productopororden) {
+        try {
             Respuesta res = productoporordenService.guardarProductopororden(productopororden);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok((ProductoporordenDto) res.getResultado("Productopororden")).build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(ProductoporordenController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ProductoporordenController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el producto por orden ").build();
         }
     }
@@ -110,23 +95,17 @@ public class ProductoporordenController {
     @Path("/productopororden/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response eliminarProductopororden(@PathParam("id") Long id)
-    {
-        try
-        {
+    public Response eliminarProductopororden(@PathParam("id") Long id) {
+        try {
             Respuesta res = productoporordenService.eliminarProductopororden(id);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok().build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(ProductoporordenController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ProductoporordenController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el producto por orden ").build();
         }
     }
-    
-    
+
 }

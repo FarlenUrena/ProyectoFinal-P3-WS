@@ -34,17 +34,14 @@ import javax.validation.constraints.Size;
  * @author Farlen
  */
 @Entity
-@Table(name = "PRODUCTO",schema = "RESTUNA")
+@Table(name = "PRODUCTO", schema = "RESTUNA")
 @NamedQueries({
     @NamedQuery(name = "Producto.findAll", query = "SELECT p FROM Producto p"),
     @NamedQuery(name = "Producto.findByIdProducto", query = "SELECT p FROM Producto p WHERE p.idProducto = :idProducto"),
     @NamedQuery(name = "Producto.findByNombre", query = "SELECT p FROM Producto p WHERE p.nombre = :nombre"),
     @NamedQuery(name = "Producto.findByNombreCorto", query = "SELECT p FROM Producto p WHERE p.nombreCorto = :nombreCorto"),
     @NamedQuery(name = "Producto.findByPrecio", query = "SELECT p FROM Producto p WHERE p.precio = :precio"),
-    @NamedQuery(name = "Producto.findByEsAccesoRapido", query = "SELECT p FROM Producto p WHERE p.esAccesoRapido = :esAccesoRapido"),
-    @NamedQuery(name = "Producto.findByVentasTotales", query = "SELECT p FROM Producto p WHERE p.ventasTotales = :ventasTotales"),
-//    @NamedQuery(name = "Producto.findByGrupo", query = "SELECT p FROM Producto p WHERE p.ventasTotales = :ventasTotales")
-})
+    @NamedQuery(name = "Producto.findByEsAccesoRapido", query = "SELECT p FROM Producto p WHERE p.esAccesoRapido = :esAccesoRapido")})
 public class Producto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -74,28 +71,20 @@ public class Producto implements Serializable {
 //    @NotNull
     @Column(name = "ES_ACCESO_RAPIDO")
     private Long esAccesoRapido;
-    @Basic(optional = false)
-//    @NotNull
-    @Column(name = "VENTAS_TOTALES")
-    private Long ventasTotales;
     @Lob
     @Column(name = "IMAGEN")
     private byte[] imagen;
     @JoinColumn(name = "ID_GRUPO", referencedColumnName = "ID_GRUPO")
     @ManyToOne(fetch = FetchType.LAZY)
     private Grupo idGrupo;
-    
     @OneToMany(mappedBy = "idProducto", fetch = FetchType.LAZY)
     private List<Productopororden> productoporordenList;
 
     public Producto() {
-        this.idGrupo = new Grupo();
-        productoporordenList = new ArrayList<>();
     }
 
     public Producto(Long idProducto) {
         this.idProducto = idProducto;
-        
     }
 
     public Producto(Long idProducto, String nombre, String nombreCorto, double precio, Long esAccesoRapido, Long ventasTotales) {
@@ -104,7 +93,6 @@ public class Producto implements Serializable {
         this.nombreCorto = nombreCorto;
         this.precio = precio;
         this.esAccesoRapido = esAccesoRapido;
-        this.ventasTotales = ventasTotales;
     }
 
     public Producto(ProductoDto productoDto) {
@@ -113,16 +101,14 @@ public class Producto implements Serializable {
     }
 
     public void actualizarProducto(ProductoDto productoDto) {
-    
         this.nombre = productoDto.getNombre();
         this.nombreCorto = productoDto.getNombreCorto();
         this.precio = productoDto.getPrecio();
         this.esAccesoRapido = productoDto.getEsAccesoRapido();
-        this.ventasTotales = productoDto.getVentasTotales();
         this.imagen = productoDto.getImagen();
-//        this.idGrupo = productoDto.getGrupo();
+        this.idGrupo = new Grupo(productoDto.getGrupo());
     }
-    
+
     public Long getIdProducto() {
         return idProducto;
     }
@@ -161,14 +147,6 @@ public class Producto implements Serializable {
 
     public void setEsAccesoRapido(Long esAccesoRapido) {
         this.esAccesoRapido = esAccesoRapido;
-    }
-
-    public Long getVentasTotales() {
-        return ventasTotales;
-    }
-
-    public void setVentasTotales(Long ventasTotales) {
-        this.ventasTotales = ventasTotales;
     }
 
     public byte[] getImagen() {
@@ -219,5 +197,5 @@ public class Producto implements Serializable {
     public String toString() {
         return "cr.ac.una.wsrestuna.model.Producto[ idProducto=" + idProducto + " ]";
     }
-    
+
 }

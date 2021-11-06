@@ -44,7 +44,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Empleado.findByNombreUsuario", query = "SELECT e FROM Empleado e WHERE e.nombreUsuario = :nombreUsuario"),
     @NamedQuery(name = "Empleado.findByPassword", query = "SELECT e FROM Empleado e WHERE e.password = :password"),
     @NamedQuery(name = "Empleado.findByRol", query = "SELECT e FROM Empleado e WHERE e.rol = :rol"),
-    @NamedQuery(name = "Empleado.findByUsuClave", query = "SELECT e FROM Empleado e WHERE e.nombreUsuario = :nombreUsuario and e.password = :password", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))    
+    @NamedQuery(name = "Empleado.findByUsuClave", query = "SELECT e FROM Empleado e WHERE e.nombreUsuario = :nombreUsuario and e.password = :password", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))   
 })
 public class Empleado implements Serializable {
 
@@ -86,36 +86,33 @@ public class Empleado implements Serializable {
 //    @NotNull
     @Column(name = "ROL")
     private Long rol;
-    
-    @JoinTable(name = "EMPLEADO_SECCION", joinColumns = {
-        @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO")}, inverseJoinColumns = {
-        @JoinColumn(name = "ID_SECCION", referencedColumnName = "ID_SECCION")})
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Seccion> seccionList;
+    @OneToMany(mappedBy = "idEmpleado", fetch = FetchType.LAZY)
+    private List<Orden> ordenList;
     @OneToMany(mappedBy = "idEmpleado", fetch = FetchType.LAZY)
     private List<Caja> cajaList;
 
     public Empleado() {
     }
 
-     public Empleado(Long idEmpleado) {
+    public Empleado(Long idEmpleado) {
         this.idEmpleado = idEmpleado;
     }
-    
+
     public Empleado(EmpleadoDto empleadoDto) {
         this.idEmpleado = empleadoDto.getIdEmpleado();
         actualizarEmpleado(empleadoDto);
     }
-    
-        public void actualizarEmpleado(EmpleadoDto empleadoDto) {
+
+    public void actualizarEmpleado(EmpleadoDto empleadoDto) {
         this.nombre = empleadoDto.getNombre();
         this.apellido = empleadoDto.getApellido();
         this.cedula = empleadoDto.getCedula();
         this.nombreUsuario = empleadoDto.getNombreUsuario();
         this.password = empleadoDto.getPassword();
         this.rol = empleadoDto.getRol();
-    
+
     }
+
     public Empleado(Long idEmpleado, String nombre, String apellido, String cedula, String nombreUsuario, String password, Long rol) {
         this.idEmpleado = idEmpleado;
         this.nombre = nombre;
@@ -126,8 +123,6 @@ public class Empleado implements Serializable {
         this.rol = rol;
     }
 
-   
-    
     public Long getIdEmpleado() {
         return idEmpleado;
     }
@@ -184,12 +179,12 @@ public class Empleado implements Serializable {
         this.rol = rol;
     }
 
-    public List<Seccion> getSeccionList() {
-        return seccionList;
+    public List<Orden> getOrdenList() {
+        return ordenList;
     }
 
-    public void setSeccionList(List<Seccion> seccionList) {
-        this.seccionList = seccionList;
+    public void setOrdenList(List<Orden> ordenList) {
+        this.ordenList = ordenList;
     }
 
     public List<Caja> getCajaList() {
@@ -224,5 +219,5 @@ public class Empleado implements Serializable {
     public String toString() {
         return "cr.ac.una.wsrestuna.model.Empleado[ idEmpleado=" + idEmpleado + " ]";
     }
-    
+
 }

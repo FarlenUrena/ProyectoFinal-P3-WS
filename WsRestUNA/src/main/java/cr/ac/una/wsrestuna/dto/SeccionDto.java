@@ -20,21 +20,21 @@ public class SeccionDto {
     private Long idSeccion;
     private String nombre;
     private byte[] fotoDistribucion;
-    private List<Empleado> empleadoList;
-    private List<Elementodeseccion> elementodeseccionList;
+    private Boolean modificado;
+    private List<ElementodeseccionDto> elementosdeseccionDto;
+    private List<ElementodeseccionDto> elementosdeseccionEliminadosDto;
 
-
-     public SeccionDto() {
-        this.empleadoList = new ArrayList<>();
-        this.elementodeseccionList = new ArrayList<>();
+    public SeccionDto() {
+        this.modificado = false;
+        this.elementosdeseccionDto = new ArrayList<>();
+        this.elementosdeseccionEliminadosDto = new ArrayList<>();
     }
-    
+
     public SeccionDto(Seccion seccion) {
+        this();
         this.idSeccion = seccion.getIdSeccion();
         this.nombre = seccion.getNombre();
         this.fotoDistribucion = seccion.getFotoDistribucion();
-//        this.empleadoList = seccion.getEmpleadoList();
-//        this.elementodeseccionList = seccion.getElementodeseccionList();
     }
 
     public Long getIdSeccion() {
@@ -61,21 +61,28 @@ public class SeccionDto {
         this.fotoDistribucion = fotoDistribucion;
     }
 
-    public List<Empleado> getEmpleadoList() {
-        return empleadoList;
+    public Boolean getModificado() {
+        return modificado;
     }
 
-    public void setEmpleadoList(List<Empleado> empleadoList) {
-        this.empleadoList = empleadoList;
+    public void setModificado(Boolean modificado) {
+        this.modificado = modificado;
     }
 
-    public List<Elementodeseccion> getElementodeseccionList() {
-        return elementodeseccionList;
+    public List<ElementodeseccionDto> getElementosdeseccionDto() {
+        return elementosdeseccionDto;
     }
 
-    public void setElementodeseccionList(List<Elementodeseccion> elementodeseccionList) {
-        this.elementodeseccionList = elementodeseccionList;
+    public void setElementosdeseccionDto(List<ElementodeseccionDto> elementosdeseccionDto) {
+        this.elementosdeseccionDto = elementosdeseccionDto;
     }
 
-    
+    public List<ElementodeseccionDto> getElementosdeseccionEliminadosDto() {
+        return elementosdeseccionEliminadosDto;
+    }
+
+    public void setElementosdeseccionEliminadosDto(List<ElementodeseccionDto> elementosdeseccionEliminadosDto) {
+        this.elementosdeseccionEliminadosDto = elementosdeseccionEliminadosDto;
+    }
+
 }

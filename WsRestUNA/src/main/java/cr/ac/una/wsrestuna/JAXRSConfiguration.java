@@ -5,9 +5,10 @@ import javax.ws.rs.core.Application;
 
 /**
  * Configures JAX-RS for the application.
+ *
  * @author Farlen
  */
 @ApplicationPath("ws")
 public class JAXRSConfiguration extends Application {
-    
+
 }

@@ -5,8 +5,12 @@
  */
 package cr.ac.una.wsrestuna.service;
 
+import cr.ac.una.wsrestuna.dto.CajaDto;
 import cr.ac.una.wsrestuna.dto.EmpleadoDto;
+import cr.ac.una.wsrestuna.dto.OrdenDto;
+import cr.ac.una.wsrestuna.model.Caja;
 import cr.ac.una.wsrestuna.model.Empleado;
+import cr.ac.una.wsrestuna.model.Orden;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
 import cr.ac.una.wsrestuna.util.Respuesta;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -59,8 +63,16 @@ public class EmpleadoService {
         try {
             Query qryEmpleado = em.createNamedQuery("Empleado.findByIdEmpleado", Empleado.class);
             qryEmpleado.setParameter("idEmpleado", id);
+            Empleado empleado = (Empleado) qryEmpleado.getSingleResult();
+            EmpleadoDto empleadoDto = new EmpleadoDto(empleado);
+            for (Orden orden : empleado.getOrdenList()) {
+                empleadoDto.getOrdenesDto().add(new OrdenDto(orden));
+            }
+            for (Caja caja : empleado.getCajaList()) {
+                empleadoDto.getCajasDto().add(new CajaDto(caja));
+            }
 
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Empleado", new EmpleadoDto((Empleado) qryEmpleado.getSingleResult()));
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Empleado", empleadoDto);
 
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe un empleado con el id ingresado.", "getEmpleado NoResultException");
@@ -83,6 +95,32 @@ public class EmpleadoService {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró el empleado a modificar.", "guardarEmpleado NoResultException");
                 }
                 empleado.actualizarEmpleado(empleadoDto);
+                //ORDENES
+                for (OrdenDto orden : empleadoDto.getOrdenesElimindasDto()) {
+                    empleado.getOrdenList().remove(new Orden(orden.getIdOrden()));
+                }
+                if (!empleadoDto.getOrdenesDto().isEmpty()) {
+                    for (OrdenDto ord : empleadoDto.getOrdenesDto()) {
+                        if (ord.getModificado()) {
+                            Orden orden = em.find(Orden.class, ord.getIdOrden());
+                            orden.setIdEmpleado(empleado);
+                            empleado.getOrdenList().add(orden);
+                        }
+                    }
+                }
+                //CAJAS
+                for (CajaDto caj : empleadoDto.getCajasEliminadasDto()) {
+                    empleado.getCajaList().remove(new Caja(caj.getIdCaja()));
+                }
+                if (!empleadoDto.getCajasDto().isEmpty()) {
+                    for (CajaDto caj : empleadoDto.getCajasDto()) {
+                        if (caj.getModificado()) {
+                            Caja caja = em.find(Caja.class, caj.getIdCaja());
+                            caja.setIdEmpleado(empleado);
+                            empleado.getCajaList().add(caja);
+                        }
+                    }
+                }
                 empleado = em.merge(empleado);
             } else {
                 empleado = new Empleado(empleadoDto);
@@ -123,20 +161,26 @@ public class EmpleadoService {
 //    Obtener un listado de todos los empleados
     public Respuesta getEmpleados() {
         try {
-            Query qryEmpleado = em.createNamedQuery("Empleado.findAll",Empleado.class);
+            Query qryEmpleado = em.createNamedQuery("Empleado.findAll", Empleado.class);
 
             List<Empleado> empleados = (List<Empleado>) qryEmpleado.getResultList();
-            List<EmpleadoDto> EmpleadoDto = new ArrayList<>();
-            empleados.forEach(empleado
-                    -> {
-                EmpleadoDto.add(new EmpleadoDto(empleado));
+            List<EmpleadoDto> empleadosDto = new ArrayList<>();
+            empleados.forEach(empleado -> {
+                EmpleadoDto empleadoDto = new EmpleadoDto(empleado);
+                for (Orden orden : empleado.getOrdenList()) {
+                    empleadoDto.getOrdenesDto().add(new OrdenDto(orden));
+                }
+                for (Caja caja : empleado.getCajaList()) {
+                    empleadoDto.getCajasDto().add(new CajaDto(caja));
+                }
+                empleadosDto.add(empleadoDto);
             });
 
             return new Respuesta(true,
                     CodigoRespuesta.CORRECTO,
                     "Empleados encontrados",
                     "Empleados encontrados correctamente",
-                    "EmpleadosList", EmpleadoDto);
+                    "EmpleadosList", empleadosDto);
 
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existen empleados en la base de datos.", "getEmpleados NoResultException");

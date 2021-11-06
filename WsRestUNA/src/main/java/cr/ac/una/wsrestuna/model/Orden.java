@@ -7,6 +7,7 @@ package cr.ac.una.wsrestuna.model;
 
 import cr.ac.una.wsrestuna.dto.OrdenDto;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -23,6 +24,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -35,7 +38,9 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Orden.findAll", query = "SELECT o FROM Orden o"),
     @NamedQuery(name = "Orden.findByIdOrden", query = "SELECT o FROM Orden o WHERE o.idOrden = :idOrden"),
-    @NamedQuery(name = "Orden.findByNombreCliente", query = "SELECT o FROM Orden o WHERE o.nombreCliente = :nombreCliente")})
+    @NamedQuery(name = "Orden.findByFechaCreacion", query = "SELECT o FROM Orden o WHERE o.fechaCreacion = :fechaCreacion"),
+    @NamedQuery(name = "Orden.findByNombreCliente", query = "SELECT o FROM Orden o WHERE o.nombreCliente = :nombreCliente"),
+    @NamedQuery(name = "Orden.findByEsEstado", query = "SELECT o FROM Orden o WHERE o.esEstado = :esEstado")})
 public class Orden implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,12 +52,24 @@ public class Orden implements Serializable {
 //    @NotNull
     @Column(name = "ID_ORDEN")
     private Long idOrden;
+    @Basic(optional = false)
+//    @NotNull
+    @Column(name = "FECHA_CREACION")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCreacion;
     @Size(max = 40)
     @Column(name = "NOMBRE_CLIENTE")
     private String nombreCliente;
+    @Basic(optional = false)
+//    @NotNull
+    @Column(name = "ES_ESTADO")
+    private Long esEstado;
     @JoinColumn(name = "ID_ELEMENTO", referencedColumnName = "ID_ELEMENTO")
     @ManyToOne(fetch = FetchType.LAZY)
     private Elementodeseccion idElemento;
+    @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Empleado idEmpleado;
     @OneToMany(mappedBy = "idOrden", fetch = FetchType.LAZY)
     private List<Productopororden> productoporordenList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOrden", fetch = FetchType.LAZY)
@@ -67,15 +84,17 @@ public class Orden implements Serializable {
 
     public Orden(OrdenDto ordenDto) {
         this.idOrden = ordenDto.getIdOrden();
-        
+        actualizarOrden(ordenDto);
     }
+
     public void actualizarOrden(OrdenDto ordenDto) {
         this.nombreCliente = ordenDto.getNombreCliente();
-        this.idElemento = ordenDto.getIdElemento();
-        this.productoporordenList = ordenDto.getProductoporordenList();
-        this.facturaList = ordenDto.getFacturaList();
+        this.fechaCreacion = ordenDto.getFechaCreacion();
+        this.nombreCliente = ordenDto.getNombreCliente();
+        this.esEstado = ordenDto.getEsEstado();
+        this.idElemento = new Elementodeseccion(ordenDto.getIdElementodeseccionDto());
+        this.idEmpleado = new Empleado(ordenDto.getIdEmpleadoDto());
     }
-    
 
     public Long getIdOrden() {
         return idOrden;
@@ -83,6 +102,14 @@ public class Orden implements Serializable {
 
     public void setIdOrden(Long idOrden) {
         this.idOrden = idOrden;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
     public String getNombreCliente() {
@@ -93,12 +120,28 @@ public class Orden implements Serializable {
         this.nombreCliente = nombreCliente;
     }
 
+    public Long getEsEstado() {
+        return esEstado;
+    }
+
+    public void setEsEstado(Long esEstado) {
+        this.esEstado = esEstado;
+    }
+
     public Elementodeseccion getIdElemento() {
         return idElemento;
     }
 
     public void setIdElemento(Elementodeseccion idElemento) {
         this.idElemento = idElemento;
+    }
+
+    public Empleado getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public void setIdEmpleado(Empleado idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
     public List<Productopororden> getProductoporordenList() {
@@ -141,5 +184,5 @@ public class Orden implements Serializable {
     public String toString() {
         return "cr.ac.una.wsrestuna.model.Orden[ idOrden=" + idOrden + " ]";
     }
-    
+
 }

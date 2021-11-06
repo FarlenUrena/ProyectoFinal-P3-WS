@@ -21,17 +21,25 @@ public class FacturaDto {
     private Long metodoDePago;
     private double montoPagado;
     private double total;
-    private Caja idCaja;
-    private Orden idOrden;
-   
+    private Long descuento;
+    private Boolean modificado;
+    private CajaDto idCajaDto;
+    private OrdenDto idOrdenDto;
+
+    public FacturaDto() {
+        this.modificado = false;
+    }
+
     public FacturaDto(Factura factura) {
+        this();
         this.idFactura = factura.getIdFactura();
         this.fechaFacturacion = factura.getFechaFacturacion();
         this.metodoDePago = factura.getMetodoDePago();
         this.montoPagado = factura.getMontoPagado();
         this.total = factura.getTotal();
-        this.idCaja = factura.getIdCaja();
-        this.idOrden = factura.getIdOrden();
+        this.descuento = factura.getDescuento();
+        this.idCajaDto = new CajaDto(factura.getIdCaja());
+        this.idOrdenDto = new OrdenDto(factura.getIdOrden());
     }
 
     public Long getIdFactura() {
@@ -74,20 +82,36 @@ public class FacturaDto {
         this.total = total;
     }
 
-    public Caja getIdCaja() {
-        return idCaja;
+    public Long getDescuento() {
+        return descuento;
     }
 
-    public void setIdCaja(Caja idCaja) {
-        this.idCaja = idCaja;
+    public void setDescuento(Long descuento) {
+        this.descuento = descuento;
     }
 
-    public Orden getIdOrden() {
-        return idOrden;
+    public Boolean getModificado() {
+        return modificado;
     }
 
-    public void setIdOrden(Orden idOrden) {
-        this.idOrden = idOrden;
+    public void setModificado(Boolean modificado) {
+        this.modificado = modificado;
+    }
+
+    public CajaDto getIdCajaDto() {
+        return idCajaDto;
+    }
+
+    public void setIdCajaDto(CajaDto idCajaDto) {
+        this.idCajaDto = idCajaDto;
+    }
+
+    public OrdenDto getIdOrdenDto() {
+        return idOrdenDto;
+    }
+
+    public void setIdOrdenDto(OrdenDto idOrdenDto) {
+        this.idOrdenDto = idOrdenDto;
     }
 
 }

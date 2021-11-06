@@ -6,6 +6,8 @@
 package cr.ac.una.wsrestuna.dto;
 
 import cr.ac.una.wsrestuna.model.Empleado;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -22,9 +24,15 @@ public class EmpleadoDto {
     private Long rol;
     private Boolean modificado;
     private String token;
+    private List<OrdenDto> ordenesDto;
+    private List<OrdenDto> ordenesElimindasDto;
+    private List<CajaDto> cajasDto;
+    private List<CajaDto> cajasEliminadasDto;
 
     public EmpleadoDto() {
         this.modificado = false;
+        this.cajasDto = new ArrayList<>();
+        this.cajasEliminadasDto = new ArrayList<>();
     }
 
     public EmpleadoDto(Empleado empleado) {
@@ -108,6 +116,38 @@ public class EmpleadoDto {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public List<OrdenDto> getOrdenesDto() {
+        return ordenesDto;
+    }
+
+    public void setOrdenesDto(List<OrdenDto> ordenesDto) {
+        this.ordenesDto = ordenesDto;
+    }
+
+    public List<OrdenDto> getOrdenesElimindasDto() {
+        return ordenesElimindasDto;
+    }
+
+    public void setOrdenesElimindasDto(List<OrdenDto> ordenesElimindasDto) {
+        this.ordenesElimindasDto = ordenesElimindasDto;
+    }
+
+    public List<CajaDto> getCajasDto() {
+        return cajasDto;
+    }
+
+    public void setCajasDto(List<CajaDto> cajasDto) {
+        this.cajasDto = cajasDto;
+    }
+
+    public List<CajaDto> getCajasEliminadasDto() {
+        return cajasEliminadasDto;
+    }
+
+    public void setCajasEliminadasDto(List<CajaDto> cajasEliminadasDto) {
+        this.cajasEliminadasDto = cajasEliminadasDto;
     }
 
 }

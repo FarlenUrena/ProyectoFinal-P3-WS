@@ -32,76 +32,61 @@ import javax.ws.rs.core.Response;
 @Secure
 @Path("/OrdenController")
 public class OrdenController {
-    
+
     @EJB
     OrdenService ordenService;
-    
+
     @GET
     @Path("/orden/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getOrden(@PathParam("id") Long id)
-    {
-        try
-        {
+    public Response getOrden(@PathParam("id") Long id) {
+        try {
             Respuesta res = ordenService.getOrden(id);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok((OrdenDto) res.getResultado("Orden")).build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(OrdenController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(OrdenController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener la orden ").build();
         }
     }
-    
+
     @GET
     @Path("/ordenes")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getOrdenes()
-    {
-        try
-        {
+    public Response getOrdenes() {
+        try {
             Respuesta res = ordenService.getOrdenes();
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
 
-          return Response.ok(new GenericEntity<List<OrdenDto>>((List<OrdenDto>) res.getResultado("OrdenesList")) {
+            return Response.ok(new GenericEntity<List<OrdenDto>>((List<OrdenDto>) res.getResultado("OrdenesList")) {
             }).build();
 
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(OrdenController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(OrdenController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el orden ").build();
         }
     }
-    
+
     //Falta probar desde el cliente si funciona
     @POST
     @Path("/orden/{orden}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response guardarOrden(OrdenDto orden)
-    {
-        try
-        {
+    public Response guardarOrden(OrdenDto orden) {
+        try {
             Respuesta res = ordenService.guardarOrden(orden);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok((OrdenDto) res.getResultado("Orden")).build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(OrdenController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(OrdenController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener la orden ").build();
         }
     }
@@ -110,22 +95,17 @@ public class OrdenController {
     @Path("/orden/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response eliminarOrden(@PathParam("id") Long id)
-    {
-        try
-        {
+    public Response eliminarOrden(@PathParam("id") Long id) {
+        try {
             Respuesta res = ordenService.eliminarOrden(id);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok().build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(OrdenController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(OrdenController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener la orden ").build();
         }
     }
-    
+
 }

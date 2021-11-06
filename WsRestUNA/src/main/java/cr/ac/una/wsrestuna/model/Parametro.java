@@ -20,10 +20,11 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
-/**@author Farlen
+/**
+ * @author Farlen
  */
 @Entity
-@Table(name = "PARAMETRO",schema = "RESTUNA")
+@Table(name = "PARAMETRO", schema = "RESTUNA")
 @NamedQueries({
     @NamedQuery(name = "Parametro.findAll", query = "SELECT p FROM Parametro p"),
     @NamedQuery(name = "Parametro.findByIdParametro", query = "SELECT p FROM Parametro p WHERE p.idParametro = :idParametro"),
@@ -75,9 +76,8 @@ public class Parametro implements Serializable {
         this.idParametro = parametroDto.getIdParametro();
         actualizarParametro(parametroDto);
     }
-    
+
     public void actualizarParametro(ParametroDto parametroDto) {
-    
         this.nombre = parametroDto.getNombre();
         this.valorNumerico = parametroDto.getValorNumerico();
         this.valorTexto = parametroDto.getValorTexto();
@@ -124,11 +124,11 @@ public class Parametro implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public  byte[] getImagen() {
+    public byte[] getImagen() {
         return imagen;
     }
 
-    public void setImagen( byte[] imagen) {
+    public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }
 
@@ -156,5 +156,5 @@ public class Parametro implements Serializable {
     public String toString() {
         return "cr.ac.una.wsrestuna.model.Parametro[ idParametro=" + idParametro + " ]";
     }
-    
+
 }

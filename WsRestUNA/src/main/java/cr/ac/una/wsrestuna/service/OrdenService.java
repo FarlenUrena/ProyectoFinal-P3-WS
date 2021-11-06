@@ -29,13 +29,12 @@ import javax.persistence.Query;
 @LocalBean
 @Stateless
 public class OrdenService {
-    
+
     private static final Logger LOG = Logger.getLogger(OrdenService.class.getName());
 
     @PersistenceContext(unitName = "WsRestUnaPU")
     private EntityManager em;
-    
-    
+
     //    Obetener una orden
     public Respuesta getOrden(Long id) {
         try {
@@ -105,7 +104,7 @@ public class OrdenService {
 //    Obtener un listado de todas las ordenes
     public Respuesta getOrdenes() {
         try {
-            Query qryOrden = em.createNamedQuery("Orden.findAll",Orden.class);
+            Query qryOrden = em.createNamedQuery("Orden.findAll", Orden.class);
 
             List<Orden> ordenes = (List<Orden>) qryOrden.getResultList();
             List<OrdenDto> OrdenDto = new ArrayList<>();

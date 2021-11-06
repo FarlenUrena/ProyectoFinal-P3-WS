@@ -51,22 +51,21 @@ public class Grupo implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "NOMBRE_GRUPO")
     private String nombreGrupo;
-    
+
     @OneToMany(mappedBy = "idGrupo", fetch = FetchType.LAZY)
     private List<Producto> productoList;
 
     public Grupo() {
-        productoList = new ArrayList<>();
     }
 
     public Grupo(Long idGrupo) {
         this.idGrupo = idGrupo;
     }
 
-//    public Grupo(Long idGrupo, String nombreGrupo) {
-//        this.idGrupo = idGrupo;
-//        this.nombreGrupo = nombreGrupo;
-//    }
+    public Grupo(Long idGrupo, String nombreGrupo) {
+        this.idGrupo = idGrupo;
+        this.nombreGrupo = nombreGrupo;
+    }
 
     public Grupo(GrupoDto grupodto) {
         this.idGrupo = grupodto.getIdGrupo();

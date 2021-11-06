@@ -80,7 +80,7 @@ public class Elementodeseccion implements Serializable {
 //    @NotNull
     @Lob
     @Column(name = "IMAGEN_ELEMENTO")
-    private byte [] imagenElemento;
+    private byte[] imagenElemento;
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "IMPUESTO_POR_SERVICIO")
@@ -88,7 +88,7 @@ public class Elementodeseccion implements Serializable {
     @JoinColumn(name = "ID_SECCION", referencedColumnName = "ID_SECCION")
     @ManyToOne(fetch = FetchType.LAZY)
     private Seccion idSeccion;
-    
+
     @OneToMany(mappedBy = "idElemento", fetch = FetchType.LAZY)
     private List<Orden> ordenList;
 
@@ -109,10 +109,12 @@ public class Elementodeseccion implements Serializable {
         this.imagenElemento = imagenElemento;
         this.impuestoPorServicio = impuestoPorServicio;
     }
+
     public Elementodeseccion(ElementodeseccionDto elementodeseccionDto) {
         this.idElemento = elementodeseccionDto.getIdElemento();
         actualizarElementodeseccion(elementodeseccionDto);
     }
+
     public void actualizarElementodeseccion(ElementodeseccionDto elementodeseccionDto) {
         this.tipo = elementodeseccionDto.getTipo();
         this.nombre = elementodeseccionDto.getNombre();
@@ -120,11 +122,9 @@ public class Elementodeseccion implements Serializable {
         this.posicionX = elementodeseccionDto.getPosicionX();
         this.posicionY = elementodeseccionDto.getPosicionY();
         this.imagenElemento = elementodeseccionDto.getImagenElemento();
-        this.impuestoPorServicio=elementodeseccionDto.getImpuestoPorServicio();
-//        this.idSeccion = elementodeseccionDto.getIdSeccion();
-//        this.ordenList = elementodeseccionDto.getOrdenList();
+        this.impuestoPorServicio = elementodeseccionDto.getImpuestoPorServicio();
     }
-    
+
     public Long getIdElemento() {
         return idElemento;
     }
@@ -229,5 +229,5 @@ public class Elementodeseccion implements Serializable {
     public String toString() {
         return "cr.ac.una.wsrestuna.model.Elementodeseccion[ idElemento=" + idElemento + " ]";
     }
-    
+
 }

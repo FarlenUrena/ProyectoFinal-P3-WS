@@ -41,14 +41,12 @@ public class GrupoService {
             Query qryGrupo = em.createNamedQuery("Grupo.findByIdGrupo", Grupo.class);
             qryGrupo.setParameter("idGrupo", id);
             Grupo grupo = (Grupo) qryGrupo.getSingleResult();
-            GrupoDto grupoDto =  new GrupoDto(grupo);
-            for(Producto prd : grupo.getProductoList())
-            {
-                grupoDto.getProductoList().add(prd);
-            }
-            
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Grupo", grupoDto);
+            GrupoDto grupoDto = new GrupoDto(grupo);
 
+            for (Producto prd : grupo.getProductoList()) {
+                grupoDto.getProductoList().add(new ProductoDto(prd));
+            }
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Grupo", grupoDto);
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe un grupo de seccion con el id ingresado.", "getGrupo NoResultException");
         } catch (NonUniqueResultException ex) {
@@ -64,9 +62,13 @@ public class GrupoService {
         try {
             Query qryGrupo = em.createNamedQuery("Grupo.findByNombreGrupo", Grupo.class);
             qryGrupo.setParameter("nombreGrupo", nombre);
+            Grupo grupo = (Grupo) qryGrupo.getSingleResult();
+            GrupoDto grupoDto = new GrupoDto(grupo);
 
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Grupo", new GrupoDto((Grupo) qryGrupo.getSingleResult()));
-
+            for (Producto prd : grupo.getProductoList()) {
+                grupoDto.getProductoList().add(new ProductoDto(prd));
+            }
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Grupo", grupoDto);
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe un grupo de seccion con el nombre ingresado.", "getGrupo NoResultException");
         } catch (NonUniqueResultException ex) {
@@ -81,16 +83,17 @@ public class GrupoService {
     public Respuesta getGrupos() {
         try {
             Query qryGrupo = em.createNamedQuery("Grupo.findAll", Grupo.class);
-//            qryGrupo.setParameter("nombreGrupo", nombre);
             List<Grupo> grupos = (List<Grupo>) qryGrupo.getResultList();
-
             List<GrupoDto> gruposDto = new ArrayList<>();
+
             grupos.forEach(grupo -> {
-                gruposDto.add(new GrupoDto(grupo));
+                GrupoDto grupoDto = new GrupoDto(grupo);
+                for (Producto producto : grupo.getProductoList()) {
+                    grupoDto.getProductoList().add(new ProductoDto(producto));
+                }
+                gruposDto.add(grupoDto);
             });
-
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "GruposList", gruposDto);
-
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe un grupo de seccion con el nombre ingresado.", "getGrupo NoResultException");
         } catch (NonUniqueResultException ex) {
@@ -108,14 +111,23 @@ public class GrupoService {
             if (grupoDto.getIdGrupo() != null && grupoDto.getIdGrupo() > 0) {
                 grupo = em.find(Grupo.class, grupoDto.getIdGrupo());
                 if (grupo == null) {
-                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró el grupo a modificar.", "guardarGrupo NoResultException");
+                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontrÃ³ el grupo a modificar.", "guardarGrupo NoResultException");
                 }
-                //Todo: eliminar poroductos y setear los que quedan
-                
                 grupo.atualizarGrupo(grupoDto);
+                for (ProductoDto prd : grupoDto.getProductosEliminadosList()) {
+                    grupo.getProductoList().remove(new Producto(prd.getIdProducto()));
+                }
+                if (!grupoDto.getProductoList().isEmpty()) {
+                    for (ProductoDto prd : grupoDto.getProductoList()) {
+                        if (prd.getModificado()) {
+                            Producto producto = em.find(Producto.class, prd.getIdProducto());
+                            producto.setIdGrupo(grupo);
+                            grupo.getProductoList().add(producto);
+                        }
+                    }
+                }
                 grupo = em.merge(grupo);
             } else {
-                
                 grupo = new Grupo(grupoDto);
                 em.persist(grupo);
             }
@@ -126,9 +138,8 @@ public class GrupoService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el grupo.", "guardarGrupo " + ex.getMessage());
         }
     }
-    
-    //TODO: ELIMINAR
 
+    //TODO: ELIMINAR
     //    Eliminar un grupo permanentemente
     public Respuesta eliminarGrupo(Long id) {
         try {

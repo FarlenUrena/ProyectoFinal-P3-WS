@@ -32,76 +32,61 @@ import javax.ws.rs.core.Response;
 @Secure
 @Path("/CajaController")
 public class CajaController {
-    
+
     @EJB
     CajaService cajaService;
-    
+
     @GET
     @Path("/caja/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCaja(@PathParam("id") Long id)
-    {
-        try
-        {
+    public Response getCaja(@PathParam("id") Long id) {
+        try {
             Respuesta res = cajaService.getCaja(id);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok((CajaDto) res.getResultado("Caja")).build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener la caja ").build();
         }
     }
-    
+
     @GET
     @Path("/cajas")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCajas()
-    {
-        try
-        {
+    public Response getCajas() {
+        try {
             Respuesta res = cajaService.getCajas();
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
 
-          return Response.ok(new GenericEntity<List<CajaDto>>((List<CajaDto>) res.getResultado("CajasList")) {
+            return Response.ok(new GenericEntity<List<CajaDto>>((List<CajaDto>) res.getResultado("CajasList")) {
             }).build();
 
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el caja ").build();
         }
     }
-    
+
     //Falta probar desde el cliente si funciona
     @POST
     @Path("/caja/{caja}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response guardarCaja(CajaDto caja)
-    {
-        try
-        {
+    public Response guardarCaja(CajaDto caja) {
+        try {
             Respuesta res = cajaService.guardarCaja(caja);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok((CajaDto) res.getResultado("Caja")).build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener la caja ").build();
         }
     }
@@ -110,20 +95,15 @@ public class CajaController {
     @Path("/caja/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response eliminarCaja(@PathParam("id") Long id)
-    {
-        try
-        {
+    public Response eliminarCaja(@PathParam("id") Long id) {
+        try {
             Respuesta res = cajaService.eliminarCaja(id);
-            if(!res.getEstado())
-            {
+            if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }
             return Response.ok().build();
-        }
-        catch(Exception ex)
-        {
-            Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE , null , ex);
+        } catch (Exception ex) {
+            Logger.getLogger(CajaController.class.getName()).log(Level.SEVERE, null, ex);
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener la caja ").build();
         }
     }
