@@ -7,8 +7,6 @@ package cr.ac.una.wsrestuna.model;
 
 import cr.ac.una.wsrestuna.dto.FacturaDto;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -21,11 +19,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -40,7 +38,9 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "Factura.findByMetodoDePago", query = "SELECT f FROM Factura f WHERE f.metodoDePago = :metodoDePago"),
     @NamedQuery(name = "Factura.findByMontoPagado", query = "SELECT f FROM Factura f WHERE f.montoPagado = :montoPagado"),
     @NamedQuery(name = "Factura.findByTotal", query = "SELECT f FROM Factura f WHERE f.total = :total"),
-    @NamedQuery(name = "Factura.findByDescuento", query = "SELECT f FROM Factura f WHERE f.descuento = :descuento")})
+    @NamedQuery(name = "Factura.findByDescuento", query = "SELECT f FROM Factura f WHERE f.descuento = :descuento"),
+    @NamedQuery(name = "Factura.findByImpuestoVenta", query = "SELECT f FROM Factura f WHERE f.impuestoVenta = :impuestoVenta"),
+    @NamedQuery(name = "Factura.findByImpuestoServicio", query = "SELECT f FROM Factura f WHERE f.impuestoServicio = :impuestoServicio")})
 public class Factura implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -72,12 +72,18 @@ public class Factura implements Serializable {
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "DESCUENTO")
-    private Long descuento;
+    private double descuento;
+    @Basic(optional = false)
+    @Column(name = "IMPUESTO_VENTA")
+    private double impuestoVenta;
+    @Basic(optional = false)
+    @Column(name = "IMPUESTO_SERVICIO")
+    private double impuestoServicio;
     @JoinColumn(name = "ID_CAJA", referencedColumnName = "ID_CAJA")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Caja idCaja;
     @JoinColumn(name = "ID_ORDEN", referencedColumnName = "ID_ORDEN")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Orden idOrden;
 
     public Factura() {
@@ -87,12 +93,15 @@ public class Factura implements Serializable {
         this.idFactura = idFactura;
     }
 
-    public Factura(Long idFactura, Date fechaFacturacion, Long metodoDePago, float montoPagado, float total) {
+    public Factura(Long idFactura, Date fechaFacturacion, Long metodoDePago, float montoPagado, float total, float descuento,float impuestoVenta,float impuestoServicio) {
         this.idFactura = idFactura;
         this.fechaFacturacion = fechaFacturacion;
         this.metodoDePago = metodoDePago;
         this.montoPagado = montoPagado;
         this.total = total;
+        this.descuento = descuento;
+        this.impuestoVenta = impuestoVenta;
+        this.impuestoServicio = impuestoServicio;
     }
 
     public Factura(FacturaDto facturaDto) {
@@ -105,8 +114,11 @@ public class Factura implements Serializable {
         this.metodoDePago = facturaDto.getMetodoDePago();
         this.montoPagado = facturaDto.getMontoPagado();
         this.total = facturaDto.getTotal();
-        this.idCaja = new Caja(facturaDto.getIdCajaDto());
-        this.idOrden = new Orden(facturaDto.getIdOrdenDto());
+        this.descuento = facturaDto.getDescuento();
+        this.impuestoVenta = facturaDto.getImpuestoVenta();
+        this.impuestoServicio = facturaDto.getImpuestoServicio();
+//        this.idCaja = new Caja(facturaDto.getIdCajaDto());
+//        this.idOrden = new Orden(facturaDto.getIdOrdenDto());
     }
 
     public Long getIdFactura() {
@@ -149,7 +161,7 @@ public class Factura implements Serializable {
         this.total = total;
     }
 
-    public Long getDescuento() {
+    public double getDescuento() {
         return descuento;
     }
 
@@ -157,6 +169,22 @@ public class Factura implements Serializable {
         this.descuento = descuento;
     }
 
+    public double getImpuestoVenta() {
+        return impuestoVenta;
+    }
+
+    public void setImpuestoVenta(double impuestoVenta) {
+        this.impuestoVenta = impuestoVenta;
+    }
+
+    public double getImpuestoServicio() {
+        return impuestoServicio;
+    }
+
+    public void setImpuestoServicio(double impuestoServicio) {
+        this.impuestoServicio = impuestoServicio;
+    }
+    
     public Caja getIdCaja() {
         return idCaja;
     }

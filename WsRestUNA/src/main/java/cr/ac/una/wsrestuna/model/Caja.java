@@ -40,6 +40,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Caja.findBySaldoTarjeta", query = "SELECT c FROM Caja c WHERE c.saldoTarjeta = :saldoTarjeta"),
     @NamedQuery(name = "Caja.findBySaldoEfectivoCierre", query = "SELECT c FROM Caja c WHERE c.saldoEfectivoCierre = :saldoEfectivoCierre"),
     @NamedQuery(name = "Caja.findBySaldoTarjetaCierre", query = "SELECT c FROM Caja c WHERE c.saldoTarjetaCierre = :saldoTarjetaCierre"),
+    @NamedQuery(name = "Caja.findByFechaApertura", query = "SELECT c FROM Caja c WHERE c.fechaApertura = :fechaApertura"),
     @NamedQuery(name = "Caja.findByFechaCierre", query = "SELECT c FROM Caja c WHERE c.fechaCierre = :fechaCierre"),
     @NamedQuery(name = "Caja.findByEsActiva", query = "SELECT c FROM Caja c WHERE c.esActiva = :esActiva")})
 public class Caja implements Serializable {
@@ -70,6 +71,10 @@ public class Caja implements Serializable {
     @Column(name = "SALDO_TARJETA_CIERRE")
     private double saldoTarjetaCierre;
     @Basic(optional = false)
+    @Column(name = "FECHA_APERTURA")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaApertura;
+    @Basic(optional = false)
 //    @NotNull
     @Column(name = "FECHA_CIERRE")
     @Temporal(TemporalType.TIMESTAMP)
@@ -91,12 +96,13 @@ public class Caja implements Serializable {
         this.idCaja = idCaja;
     }
 
-    public Caja(Long idCaja, double saldoEfectivo, double saldoTarjeta, double saldoEfectivoCierre, double saldoTarjetaCierre, Date fechaCierre, Long esActiva) {
+    public Caja(Long idCaja, double saldoEfectivo, double saldoTarjeta, double saldoEfectivoCierre, double saldoTarjetaCierre, Date fechaApertura,Date fechaCierre, Long esActiva) {
         this.idCaja = idCaja;
         this.saldoEfectivo = saldoEfectivo;
         this.saldoTarjeta = saldoTarjeta;
         this.saldoEfectivoCierre = saldoEfectivoCierre;
         this.saldoTarjetaCierre = saldoTarjetaCierre;
+        this.fechaApertura = fechaApertura;
         this.fechaCierre = fechaCierre;
         this.esActiva = esActiva;
     }
@@ -111,9 +117,10 @@ public class Caja implements Serializable {
         this.saldoTarjeta = caja.getSaldoTarjeta();
         this.saldoEfectivoCierre = caja.getSaldoEfectivoCierre();
         this.saldoTarjetaCierre = caja.getSaldoTarjetaCierre();
+        this.fechaApertura = caja.getFechaApertura();
         this.fechaCierre = caja.getFechaCierre();
         this.esActiva = caja.getEsActiva();
-        this.idEmpleado = new Empleado(caja.getIdEmpleadoDto());
+//        this.idEmpleado = new Empleado(caja.getIdEmpleadoDto());
     }
 
     public Long getIdCaja() {
@@ -156,6 +163,14 @@ public class Caja implements Serializable {
         this.saldoTarjetaCierre = saldoTarjetaCierre;
     }
 
+    public Date getFechaApertura() {
+        return fechaApertura;
+    }
+
+    public void setFechaApertura(Date fechaApertura) {
+        this.fechaApertura = fechaApertura;
+    }
+    
     public Date getFechaCierre() {
         return fechaCierre;
     }

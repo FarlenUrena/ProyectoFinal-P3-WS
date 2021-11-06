@@ -24,13 +24,13 @@ public class ProductoDto {
     private byte[] imagen;
     private Boolean modificado;
     private GrupoDto grupoDto;
-    private List<ProductoporordenDto> productosporordenDto;
-    private List<ProductoporordenDto> productosporordenEliminadosDto;
+//    private List<ProductoporordenDto> productosporordenDto;
+//    private List<ProductoporordenDto> productosporordenEliminadosDto;
 
     public ProductoDto() {
         this.modificado = false;
-        this.productosporordenDto = new ArrayList<>();
-        this.productosporordenEliminadosDto = new ArrayList<>();
+//        this.productosporordenDto = new ArrayList<>();
+//        this.productosporordenEliminadosDto = new ArrayList<>();
     }
 
     public ProductoDto(Producto producto) {
@@ -100,27 +100,27 @@ public class ProductoDto {
         this.modificado = modificado;
     }
 
-    public GrupoDto getGrupo() {
+    public GrupoDto getGrupoDto() {
         return grupoDto;
     }
 
-    public void setGrupo(GrupoDto idGrupo) {
-        this.grupoDto = idGrupo;
+    public void setGrupoDto(GrupoDto grupoDto) {
+        this.grupoDto = grupoDto;
     }
 
-    public List<ProductoporordenDto> getProductosporordenDto() {
-        return productosporordenDto;
-    }
-
-    public void setProductosporordenDto(List<ProductoporordenDto> productosporordenDto) {
-        this.productosporordenDto = productosporordenDto;
-    }
-
-    public List<ProductoporordenDto> getProductosporordenEliminadosDto() {
-        return productosporordenEliminadosDto;
-    }
-
-    public void setProductosporordenEliminadosDto(List<ProductoporordenDto> productosporordenEliminadosDto) {
-        this.productosporordenEliminadosDto = productosporordenEliminadosDto;
-    }
+//    public List<ProductoporordenDto> getProductosporordenDto() {
+//        return productosporordenDto;
+//    }
+//
+//    public void setProductosporordenDto(List<ProductoporordenDto> productosporordenDto) {
+//        this.productosporordenDto = productosporordenDto;
+//    }
+//
+//    public List<ProductoporordenDto> getProductosporordenEliminadosDto() {
+//        return productosporordenEliminadosDto;
+//    }
+//
+//    public void setProductosporordenEliminadosDto(List<ProductoporordenDto> productosporordenEliminadosDto) {
+//        this.productosporordenEliminadosDto = productosporordenEliminadosDto;
+//    }
 }

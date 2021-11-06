@@ -15,32 +15,32 @@ import java.util.List;
  *
  * @author jeez
  */
-public class GrupoDto {
+public class GrupoDto{
 
-    private Long idGrupo;
+    private Long grupoDto;
     private String nombreGrupo;
     private Boolean modificado;
-    private List<ProductoDto> productosDto;
-    private List<ProductoDto> productosEliminadosDto;
+//    private List<ProductoDto> productosDto;
+//    private List<ProductoDto> productosEliminadosDto;
 
     public GrupoDto() {
         this.modificado = false;
-        this.productosDto = new ArrayList<>();
-        this.productosEliminadosDto = new ArrayList<>();
+//        this.productosDto = new ArrayList<>();
+//        this.productosEliminadosDto = new ArrayList<>();
     }
 
     public GrupoDto(Grupo grupo) {
         this();
-        this.idGrupo = grupo.getIdGrupo();
+        this.grupoDto = grupo.getIdGrupo();
         this.nombreGrupo = grupo.getNombreGrupo();
     }
 
     public Long getIdGrupo() {
-        return idGrupo;
+        return grupoDto;
     }
 
     public void setIdGrupo(Long idGrupo) {
-        this.idGrupo = idGrupo;
+        this.grupoDto = idGrupo;
     }
 
     public String getNombreGrupo() {
@@ -59,20 +59,20 @@ public class GrupoDto {
         this.modificado = modificado;
     }
 
-    public List<ProductoDto> getProductosDto() {
-        return productosDto;
-    }
-
-    public void setProductosDto(List<ProductoDto> productosDto) {
-        this.productosDto = productosDto;
-    }
-
-    public List<ProductoDto> getProductosEliminadosDto() {
-        return productosEliminadosDto;
-    }
-
-    public void setProductosEliminadosDto(List<ProductoDto> productosEliminadosDto) {
-        this.productosEliminadosDto = productosEliminadosDto;
-    }
+//    public List<ProductoDto> getProductosDto() {
+//        return productosDto;
+//    }
+//
+//    public void setProductosDto(List<ProductoDto> productosDto) {
+//        this.productosDto = productosDto;
+//    }
+//
+//    public List<ProductoDto> getProductosEliminadosDto() {
+//        return productosEliminadosDto;
+//    }
+//
+//    public void setProductosEliminadosDto(List<ProductoDto> productosEliminadosDto) {
+//        this.productosEliminadosDto = productosEliminadosDto;
+//    }
 
 }

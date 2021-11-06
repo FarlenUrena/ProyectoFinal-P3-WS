@@ -18,7 +18,7 @@ public class ProductoporordenDto {
     private Long idProductoPorOrden;
     private Long cantidad;
     private double precioProducto;
-    //falta subtotal
+    private double subtotal;
     private Boolean modificado;
     private OrdenDto idOrdenDto;
     private ProductoDto idProductoDto;
@@ -32,6 +32,7 @@ public class ProductoporordenDto {
         this.idProductoPorOrden = productopororden.getIdProductoPorOrden();
         this.cantidad = productopororden.getCantidad();
         this.precioProducto = productopororden.getPrecioProducto();
+        this.subtotal = productopororden.getSubtotal();
         this.idOrdenDto = new OrdenDto(productopororden.getIdOrden());
         this.idProductoDto = new ProductoDto(productopororden.getIdProducto());
     }
@@ -58,6 +59,14 @@ public class ProductoporordenDto {
 
     public void setPrecioProducto(double precioProducto) {
         this.precioProducto = precioProducto;
+    }
+
+    public double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal;
     }
 
     public Boolean getModificado() {

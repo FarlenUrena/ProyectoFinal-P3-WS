@@ -21,8 +21,9 @@ public class FacturaDto {
     private Long metodoDePago;
     private double montoPagado;
     private double total;
-    private Long descuento;
-    //falta los impuestos
+    private double descuento;
+    private double impuestoVenta;
+    private double impuestoServicio;
     private Boolean modificado;
     private CajaDto idCajaDto;
     private OrdenDto idOrdenDto;
@@ -39,7 +40,8 @@ public class FacturaDto {
         this.montoPagado = factura.getMontoPagado();
         this.total = factura.getTotal();
         this.descuento = factura.getDescuento();
-        //falta los impuestos
+        this.impuestoVenta = factura.getImpuestoVenta();
+        this.impuestoServicio = factura.getImpuestoServicio();
         this.idCajaDto = new CajaDto(factura.getIdCaja());
         this.idOrdenDto = new OrdenDto(factura.getIdOrden());
     }
@@ -84,14 +86,30 @@ public class FacturaDto {
         this.total = total;
     }
 
-    public Long getDescuento() {
+    public double getDescuento() {
         return descuento;
     }
 
-    public void setDescuento(Long descuento) {
+    public void setDescuento(double descuento) {
         this.descuento = descuento;
     }
 
+    public double getImpuestoVenta() {
+        return impuestoVenta;
+    }
+
+    public void setImpuestoVenta(double impuestoVenta) {
+        this.impuestoVenta = impuestoVenta;
+    }
+
+    public double getImpuestoServicio() {
+        return impuestoServicio;
+    }
+
+    public void setImpuestoServicio(double impuestoServicio) {
+        this.impuestoServicio = impuestoServicio;
+    }
+    
     public Boolean getModificado() {
         return modificado;
     }

@@ -26,7 +26,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -92,8 +91,8 @@ public class Orden implements Serializable {
         this.fechaCreacion = ordenDto.getFechaCreacion();
         this.nombreCliente = ordenDto.getNombreCliente();
         this.esEstado = ordenDto.getEsEstado();
-        this.idElemento = new Elementodeseccion(ordenDto.getIdElementodeseccionDto());
-        this.idEmpleado = new Empleado(ordenDto.getIdEmpleadoDto());
+//        this.idElemento = new Elementodeseccion(ordenDto.getIdElementodeseccionDto());
+//        this.idEmpleado = new Empleado(ordenDto.getIdEmpleadoDto());
     }
 
     public Long getIdOrden() {

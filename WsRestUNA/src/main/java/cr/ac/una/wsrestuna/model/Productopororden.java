@@ -20,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -34,7 +35,8 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "Productopororden.findAll", query = "SELECT p FROM Productopororden p"),
     @NamedQuery(name = "Productopororden.findByIdProductoPorOrden", query = "SELECT p FROM Productopororden p WHERE p.idProductoPorOrden = :idProductoPorOrden"),
     @NamedQuery(name = "Productopororden.findByCantidad", query = "SELECT p FROM Productopororden p WHERE p.cantidad = :cantidad"),
-    @NamedQuery(name = "Productopororden.findByPrecioProducto", query = "SELECT p FROM Productopororden p WHERE p.precioProducto = :precioProducto")})
+    @NamedQuery(name = "Productopororden.findByPrecioProducto", query = "SELECT p FROM Productopororden p WHERE p.precioProducto = :precioProducto"),
+    @NamedQuery(name = "Productopororden.findBySubtotal", query = "SELECT p FROM Productopororden p WHERE p.subtotal = :subtotal")})
 public class Productopororden implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,11 +56,14 @@ public class Productopororden implements Serializable {
 //    @NotNull
     @Column(name = "PRECIO_PRODUCTO")
     private double precioProducto;
+    @Basic(optional = false)
+    @Column(name = "SUBTOTAL")
+    private double subtotal;
     @JoinColumn(name = "ID_ORDEN", referencedColumnName = "ID_ORDEN")
     @ManyToOne(fetch = FetchType.LAZY)
     private Orden idOrden;
     @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private Producto idProducto;
 
     public Productopororden() {
@@ -68,10 +73,11 @@ public class Productopororden implements Serializable {
         this.idProductoPorOrden = idProductoPorOrden;
     }
 
-    public Productopororden(Long idProductoPorOrden, Long cantidad, double precioProducto) {
+    public Productopororden(Long idProductoPorOrden, Long cantidad, double precioProducto, double subtotal) {
         this.idProductoPorOrden = idProductoPorOrden;
         this.cantidad = cantidad;
         this.precioProducto = precioProducto;
+        this.subtotal = subtotal;
     }
 
     public Productopororden(ProductoporordenDto productoporordenDto) {
@@ -82,6 +88,7 @@ public class Productopororden implements Serializable {
     public void actualizarProductopororden(ProductoporordenDto productoporordenDto) {
         this.cantidad = productoporordenDto.getCantidad();
         this.precioProducto = productoporordenDto.getPrecioProducto();
+        this.subtotal = productoporordenDto.getSubtotal();
     }
 
     public Long getIdProductoPorOrden() {
@@ -106,6 +113,14 @@ public class Productopororden implements Serializable {
 
     public void setPrecioProducto(double precioProducto) {
         this.precioProducto = precioProducto;
+    }
+
+    public double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal;
     }
 
     public Orden getIdOrden() {

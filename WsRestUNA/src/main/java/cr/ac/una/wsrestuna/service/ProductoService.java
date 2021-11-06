@@ -48,9 +48,9 @@ public class ProductoService {
             Producto producto = (Producto) qryProducto.getSingleResult();
             ProductoDto productoDto = new ProductoDto(producto);
 
-            for (Productopororden pxo : producto.getProductoporordenList()) {
-                productoDto.getProductosporordenDto().add(new ProductoporordenDto(pxo));
-            }
+//            for (Productopororden pxo : producto.getProductoporordenList()) {
+//                productoDto.getProductosporordenDto().add(new ProductoporordenDto(pxo));
+//            }
 
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Producto", productoDto);
 
@@ -76,20 +76,21 @@ public class ProductoService {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró el producto a modificar.", "guardarProducto NoResultException");
                 }
                 producto.actualizarProducto(productoDto);
-
-                for (ProductoporordenDto pxo : productoDto.getProductosporordenEliminadosDto()) {
-                    producto.getProductoporordenList().remove(new Productopororden(pxo.getIdProductoPorOrden()));
-                }
-
-                if (!productoDto.getProductosporordenDto().isEmpty()) {
-                    for (ProductoporordenDto pxo : productoDto.getProductosporordenDto()) {
-                        if (pxo.getModificado()) {//si es nueva
-                            Productopororden productopororden = em.find(Productopororden.class, pxo.getIdProductoPorOrden());
-                            productopororden.setIdProducto(producto);
-                            producto.getProductoporordenList().add(productopororden);
-                        }
-                    }
-                }
+                
+//
+//                for (ProductoporordenDto pxo : productoDto.getProductosporordenEliminadosDto()) {
+//                    producto.getProductoporordenList().remove(new Productopororden(pxo.getIdProductoPorOrden()));
+//                }
+//
+//                if (!productoDto.getProductosporordenDto().isEmpty()) {
+//                    for (ProductoporordenDto pxo : productoDto.getProductosporordenDto()) {
+//                        if (pxo.getModificado()) {//si es nueva
+//                            Productopororden productopororden = em.find(Productopororden.class, pxo.getIdProductoPorOrden());
+//                            productopororden.setIdProducto(producto);
+//                            producto.getProductoporordenList().add(productopororden);
+//                        }
+//                    }
+//                }
                 producto = em.merge(producto);
             } else {
                 producto = new Producto(productoDto);
@@ -102,6 +103,7 @@ public class ProductoService {
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el producto.", "guardarProducto " + ex.getMessage());
         }
     }
+
 
 //    Eliminar un producto permanentemente
     public Respuesta eliminarProducto(Long id) {
@@ -137,9 +139,9 @@ public class ProductoService {
             productos.forEach(producto -> {
                 ProductoDto productoDto = new ProductoDto(producto);
 
-                for (Productopororden pxo : producto.getProductoporordenList()) {
-                    productoDto.getProductosporordenDto().add(new ProductoporordenDto(pxo));
-                }
+//                for (Productopororden pxo : producto.getProductoporordenList()) {
+//                    productoDto.getProductosporordenDto().add(new ProductoporordenDto(pxo));
+//                }
                 productosDto.add(productoDto);
             });
 
