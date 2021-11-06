@@ -18,6 +18,7 @@ public class ProductoporordenDto {
     private Long idProductoPorOrden;
     private Long cantidad;
     private double precioProducto;
+    //falta subtotal
     private Boolean modificado;
     private OrdenDto idOrdenDto;
     private ProductoDto idProductoDto;

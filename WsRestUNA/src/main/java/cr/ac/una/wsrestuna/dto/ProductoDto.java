@@ -23,7 +23,7 @@ public class ProductoDto {
     private Long esAccesoRapido;
     private byte[] imagen;
     private Boolean modificado;
-    private GrupoDto grupo;
+    private GrupoDto grupoDto;
     private List<ProductoporordenDto> productosporordenDto;
     private List<ProductoporordenDto> productosporordenEliminadosDto;
 
@@ -41,7 +41,7 @@ public class ProductoDto {
         this.precio = producto.getPrecio();
         this.esAccesoRapido = producto.getEsAccesoRapido();
         this.imagen = producto.getImagen();
-        this.grupo = new GrupoDto(producto.getIdGrupo());
+        this.grupoDto = new GrupoDto(producto.getIdGrupo());
     }
 
     public Long getIdProducto() {
@@ -101,11 +101,11 @@ public class ProductoDto {
     }
 
     public GrupoDto getGrupo() {
-        return grupo;
+        return grupoDto;
     }
 
     public void setGrupo(GrupoDto idGrupo) {
-        this.grupo = idGrupo;
+        this.grupoDto = idGrupo;
     }
 
     public List<ProductoporordenDto> getProductosporordenDto() {

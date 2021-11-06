@@ -22,8 +22,8 @@ public class EmpleadoDto {
     private String nombreUsuario;
     private String password;
     private Long rol;
-    private Boolean modificado;
     private String token;
+    private Boolean modificado;
     private List<OrdenDto> ordenesDto;
     private List<OrdenDto> ordenesElimindasDto;
     private List<CajaDto> cajasDto;
@@ -31,6 +31,8 @@ public class EmpleadoDto {
 
     public EmpleadoDto() {
         this.modificado = false;
+        this.ordenesDto = new ArrayList<>();
+        this.ordenesElimindasDto = new ArrayList<>();
         this.cajasDto = new ArrayList<>();
         this.cajasEliminadasDto = new ArrayList<>();
     }

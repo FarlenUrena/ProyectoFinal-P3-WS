@@ -20,13 +20,13 @@ public class GrupoDto {
     private Long idGrupo;
     private String nombreGrupo;
     private Boolean modificado;
-    private List<ProductoDto> productoList;
-    private List<ProductoDto> productosEliminadosList;
+    private List<ProductoDto> productosDto;
+    private List<ProductoDto> productosEliminadosDto;
 
     public GrupoDto() {
         this.modificado = false;
-        this.productoList = new ArrayList<>();
-        this.productosEliminadosList = new ArrayList<>();
+        this.productosDto = new ArrayList<>();
+        this.productosEliminadosDto = new ArrayList<>();
     }
 
     public GrupoDto(Grupo grupo) {
@@ -59,20 +59,20 @@ public class GrupoDto {
         this.modificado = modificado;
     }
 
-    public List<ProductoDto> getProductoList() {
-        return productoList;
+    public List<ProductoDto> getProductosDto() {
+        return productosDto;
     }
 
-    public void setProductoList(List<ProductoDto> productoList) {
-        this.productoList = productoList;
+    public void setProductosDto(List<ProductoDto> productosDto) {
+        this.productosDto = productosDto;
     }
 
-    public List<ProductoDto> getProductosEliminadosList() {
-        return productosEliminadosList;
+    public List<ProductoDto> getProductosEliminadosDto() {
+        return productosEliminadosDto;
     }
 
-    public void setProductosEliminadosList(List<ProductoDto> productosEliminadosList) {
-        this.productosEliminadosList = productosEliminadosList;
+    public void setProductosEliminadosDto(List<ProductoDto> productosEliminadosDto) {
+        this.productosEliminadosDto = productosEliminadosDto;
     }
 
 }

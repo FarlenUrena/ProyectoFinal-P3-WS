@@ -22,6 +22,7 @@ public class FacturaDto {
     private double montoPagado;
     private double total;
     private Long descuento;
+    //falta los impuestos
     private Boolean modificado;
     private CajaDto idCajaDto;
     private OrdenDto idOrdenDto;
@@ -38,6 +39,7 @@ public class FacturaDto {
         this.montoPagado = factura.getMontoPagado();
         this.total = factura.getTotal();
         this.descuento = factura.getDescuento();
+        //falta los impuestos
         this.idCajaDto = new CajaDto(factura.getIdCaja());
         this.idOrdenDto = new OrdenDto(factura.getIdOrden());
     }

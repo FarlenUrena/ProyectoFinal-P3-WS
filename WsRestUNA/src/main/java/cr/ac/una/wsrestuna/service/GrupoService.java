@@ -44,7 +44,7 @@ public class GrupoService {
             GrupoDto grupoDto = new GrupoDto(grupo);
 
             for (Producto prd : grupo.getProductoList()) {
-                grupoDto.getProductoList().add(new ProductoDto(prd));
+                grupoDto.getProductosDto().add(new ProductoDto(prd));
             }
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Grupo", grupoDto);
         } catch (NoResultException ex) {
@@ -66,7 +66,7 @@ public class GrupoService {
             GrupoDto grupoDto = new GrupoDto(grupo);
 
             for (Producto prd : grupo.getProductoList()) {
-                grupoDto.getProductoList().add(new ProductoDto(prd));
+                grupoDto.getProductosDto().add(new ProductoDto(prd));
             }
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Grupo", grupoDto);
         } catch (NoResultException ex) {
@@ -89,7 +89,7 @@ public class GrupoService {
             grupos.forEach(grupo -> {
                 GrupoDto grupoDto = new GrupoDto(grupo);
                 for (Producto producto : grupo.getProductoList()) {
-                    grupoDto.getProductoList().add(new ProductoDto(producto));
+                    grupoDto.getProductosDto().add(new ProductoDto(producto));
                 }
                 gruposDto.add(grupoDto);
             });
@@ -114,11 +114,11 @@ public class GrupoService {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontrÃ³ el grupo a modificar.", "guardarGrupo NoResultException");
                 }
                 grupo.atualizarGrupo(grupoDto);
-                for (ProductoDto prd : grupoDto.getProductosEliminadosList()) {
+                for (ProductoDto prd : grupoDto.getProductosEliminadosDto()) {
                     grupo.getProductoList().remove(new Producto(prd.getIdProducto()));
                 }
-                if (!grupoDto.getProductoList().isEmpty()) {
-                    for (ProductoDto prd : grupoDto.getProductoList()) {
+                if (!grupoDto.getProductosDto().isEmpty()) {
+                    for (ProductoDto prd : grupoDto.getProductosDto()) {
                         if (prd.getModificado()) {
                             Producto producto = em.find(Producto.class, prd.getIdProducto());
                             producto.setIdGrupo(grupo);

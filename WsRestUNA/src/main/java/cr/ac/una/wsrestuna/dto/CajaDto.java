@@ -23,6 +23,7 @@ public class CajaDto {
     private double saldoTarjeta;
     private double saldoEfectivoCierre;
     private double saldoTarjetaCierre;
+    private Date fechaApertura;
     private Date fechaCierre;
     private Long esActiva;
     private Boolean modificado;
@@ -43,6 +44,7 @@ public class CajaDto {
         this.saldoTarjeta = caja.getSaldoTarjeta();
         this.saldoEfectivoCierre = caja.getSaldoEfectivoCierre();
         this.saldoTarjetaCierre = caja.getSaldoTarjetaCierre();
+        //this.fechaApertura = caja.getFechaApertura();
         this.fechaCierre = caja.getFechaCierre();
         this.esActiva = caja.getEsActiva();
         this.idEmpleadoDto = new EmpleadoDto(caja.getIdEmpleado());
@@ -88,6 +90,14 @@ public class CajaDto {
         this.saldoTarjetaCierre = saldoTarjetaCierre;
     }
 
+    public Date getFechaApertura() {
+        return fechaApertura;
+    }
+
+    public void setFechaApertura(Date fechaApertura) {
+        this.fechaApertura = fechaApertura;
+    }
+    
     public Date getFechaCierre() {
         return fechaCierre;
     }

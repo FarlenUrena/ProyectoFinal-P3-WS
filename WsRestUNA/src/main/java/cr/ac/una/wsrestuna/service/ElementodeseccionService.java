@@ -46,7 +46,7 @@ public class ElementodeseccionService {
             Elementodeseccion elementodeseccion = (Elementodeseccion) qryElementodeseccion.getSingleResult();
             ElementodeseccionDto elementodeseccionDto = new ElementodeseccionDto(elementodeseccion);
 
-            elementodeseccionDto.setIdSeccion(new SeccionDto(elementodeseccion.getIdSeccion()));
+            elementodeseccionDto.setIdSeccionDto(new SeccionDto(elementodeseccion.getIdSeccion()));
 
             for (Orden ordenE : elementodeseccion.getOrdenList()) {
                 elementodeseccionDto.getOrdenDtoList().add(new OrdenDto(ordenE));
@@ -92,7 +92,7 @@ public class ElementodeseccionService {
                 elementodeseccion = em.merge(elementodeseccion);
             } else {
                 elementodeseccion = new Elementodeseccion(elementodeseccionDto);
-                elementodeseccion.setIdSeccion(new Seccion(elementodeseccionDto.getIdSeccion()));
+                elementodeseccion.setIdSeccion(new Seccion(elementodeseccionDto.getIdSeccionDto()));
                 em.persist(elementodeseccion);
             }
             em.flush();
@@ -131,12 +131,12 @@ public class ElementodeseccionService {
     public Respuesta getElementodeseccions() {
         try {
             Query qryElementodeseccion = em.createNamedQuery("Elementodeseccion.findAll", Elementodeseccion.class);
-            List<Elementodeseccion> elementodeseccions = (List<Elementodeseccion>) qryElementodeseccion.getResultList();
+            List<Elementodeseccion> elementosdeseccion = (List<Elementodeseccion>) qryElementodeseccion.getResultList();
             List<ElementodeseccionDto> ElementodeseccionDto = new ArrayList<>();
 
-            elementodeseccions.forEach(elementodeseccion -> {
+            elementosdeseccion.forEach(elementodeseccion -> {
                 ElementodeseccionDto elementodeseccionDto = new ElementodeseccionDto(elementodeseccion);
-                elementodeseccionDto.setIdSeccion(new SeccionDto(elementodeseccion.getIdSeccion()));
+                elementodeseccionDto.setIdSeccionDto(new SeccionDto(elementodeseccion.getIdSeccion()));
                 for (Orden ordenE : elementodeseccion.getOrdenList()) {
                     elementodeseccionDto.getOrdenesDtoList().add(new OrdenDto(ordenE));
                 }
