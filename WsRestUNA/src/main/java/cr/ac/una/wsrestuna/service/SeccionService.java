@@ -75,18 +75,18 @@ public class SeccionService {
                 }
                 seccion.actualizarSeccion(seccionDto);
                 //elementos de seccion
-                for (ElementodeseccionDto eleDto : seccionDto.getElementosdeseccionEliminadosDto()) {
-                    seccion.getElementodeseccionList().remove(new Elementodeseccion(eleDto.getIdElemento()));
-                }
-                if (!seccionDto.getElementosdeseccionDto().isEmpty()) {
-                    for (ElementodeseccionDto eleDto : seccionDto.getElementosdeseccionDto()) {
-                        if (eleDto.getModificado()) {
-                            Elementodeseccion eleE = em.find(Elementodeseccion.class, eleDto.getIdElemento());
-                            eleE.setIdSeccion(seccion);
-                            seccion.getElementodeseccionList().add(eleE);
-                        }
-                    }
-                }
+//                for (ElementodeseccionDto eleDto : seccionDto.getElementosdeseccionEliminadosDto()) {
+//                    seccion.getElementodeseccionList().remove(new Elementodeseccion(eleDto.getIdElemento()));
+//                }
+//                if (!seccionDto.getElementosdeseccionDto().isEmpty()) {
+//                    for (ElementodeseccionDto eleDto : seccionDto.getElementosdeseccionDto()) {
+//                        if (eleDto.getModificado()) {
+//                            Elementodeseccion eleE = em.find(Elementodeseccion.class, eleDto.getIdElemento());
+//                            eleE.setIdSeccion(seccion);
+//                            seccion.getElementodeseccionList().add(eleE);
+//                        }
+//                    }
+//                }
                 seccion = em.merge(seccion);
             } else {
                 seccion = new Seccion(seccionDto);

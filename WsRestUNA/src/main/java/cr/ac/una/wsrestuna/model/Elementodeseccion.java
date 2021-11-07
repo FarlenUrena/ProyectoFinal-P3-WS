@@ -45,7 +45,7 @@ public class Elementodeseccion implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
-    @SequenceGenerator(name = "ELEMENTODESECCION_ID_GENERATOR", sequenceName = "RESTUNA.SEQ_ID_ELEMENTODESECCION", allocationSize = 1)
+    @SequenceGenerator(name = "ELEMENTODESECCION_ID_GENERATOR", sequenceName = "RESTUNA.SEQ_ID_ELEMENTOSECCION", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ELEMENTODESECCION_ID_GENERATOR")
     @Basic(optional = false)
 //    @NotNull
@@ -119,6 +119,9 @@ public class Elementodeseccion implements Serializable {
         this.posicionY = elementodeseccionDto.getPosicionY();
         this.imagenElemento = elementodeseccionDto.getImagenElemento();
         this.impuestoPorServicio = elementodeseccionDto.getImpuestoPorServicio();
+        if(elementodeseccionDto.getIdSeccionDto()!=null){
+            this.idSeccion = new Seccion((elementodeseccionDto.getIdSeccionDto()));
+        }
     }
 
     public Long getIdElemento() {

@@ -20,7 +20,7 @@ public class GrupoDto{
     private Long idGrupoDto;
     private String nombreGrupo;
     private Boolean modificado;
-//    private List<ProductoDto> productosDto;
+    private List<ProductoDto> productosDto;
 //    private List<ProductoDto> productosEliminadosDto;
 
     public GrupoDto() {
@@ -59,13 +59,13 @@ public class GrupoDto{
         this.modificado = modificado;
     }
 
-//    public List<ProductoDto> getProductosDto() {
-//        return productosDto;
-//    }
-//
-//    public void setProductosDto(List<ProductoDto> productosDto) {
-//        this.productosDto = productosDto;
-//    }
+    public List<ProductoDto> getProductosDto() {
+        return productosDto;
+    }
+
+    public void setProductosDto(List<ProductoDto> productosDto) {
+        this.productosDto = productosDto;
+    }
 //
 //    public List<ProductoDto> getProductosEliminadosDto() {
 //        return productosEliminadosDto;

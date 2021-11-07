@@ -43,9 +43,9 @@ public class GrupoService {
             Grupo grupo = (Grupo) qryGrupo.getSingleResult();
             GrupoDto grupoDto = new GrupoDto(grupo);
 
-//            for (Producto prd : grupo.getProductoList()) {
-//                grupoDto.getProductosDto().add(new ProductoDto(prd));
-//            }
+            for (Producto prd : grupo.getProductoList()) {
+                grupoDto.getProductosDto().add(new ProductoDto(prd));
+            }
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Grupo", grupoDto);
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe un grupo de seccion con el id ingresado.", "getGrupo NoResultException");
@@ -65,9 +65,9 @@ public class GrupoService {
             Grupo grupo = (Grupo) qryGrupo.getSingleResult();
             GrupoDto grupoDto = new GrupoDto(grupo);
 
-//            for (Producto prd : grupo.getProductoList()) {
-//                grupoDto.getProductosDto().add(new ProductoDto(prd));
-//            }
+            for (Producto prd : grupo.getProductoList()) {
+                grupoDto.getProductosDto().add(new ProductoDto(prd));
+            }
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Grupo", grupoDto);
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe un grupo de seccion con el nombre ingresado.", "getGrupo NoResultException");
@@ -88,9 +88,9 @@ public class GrupoService {
 
             grupos.forEach(grupo -> {
                 GrupoDto grupoDto = new GrupoDto(grupo);
-//                for (Producto producto : grupo.getProductoList()) {
-//                    grupoDto.getProductosDto().add(new ProductoDto(producto));
-//                }
+                for (Producto producto : grupo.getProductoList()) {
+                    grupoDto.getProductosDto().add(new ProductoDto(producto));
+                }
                 gruposDto.add(grupoDto);
             });
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "GruposList", gruposDto);

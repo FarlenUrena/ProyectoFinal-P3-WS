@@ -46,12 +46,11 @@ public class ElementodeseccionService {
             Elementodeseccion elementodeseccion = (Elementodeseccion) qryElementodeseccion.getSingleResult();
             ElementodeseccionDto elementodeseccionDto = new ElementodeseccionDto(elementodeseccion);
 
-            elementodeseccionDto.setIdSeccionDto(new SeccionDto(elementodeseccion.getIdSeccion()));
+//            elementodeseccionDto.setIdSeccionDto(new SeccionDto(elementodeseccion.getIdSeccion()));
 
-            for (Orden ordenE : elementodeseccion.getOrdenList()) {
-                elementodeseccionDto.getOrdenDtoList().add(new OrdenDto(ordenE));
-            }
-
+//            for (Orden ordenE : elementodeseccion.getOrdenList()) {
+//                elementodeseccionDto.getOrdenDtoList().add(new OrdenDto(ordenE));
+//            }
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Elementodeseccion", elementodeseccionDto);
 
         } catch (NoResultException ex) {
@@ -76,19 +75,19 @@ public class ElementodeseccionService {
                 }
                 elementodeseccion.actualizarElementodeseccion(elementodeseccionDto);
 
-                for (OrdenDto ordenDto : elementodeseccionDto.getOrdenesEliminadasDtoList()) {
-                    elementodeseccion.getOrdenList().remove(new Orden(ordenDto.getIdOrden()));
-                }
-
-                if (!elementodeseccion.getOrdenList().isEmpty()) {
-                    for (OrdenDto ordenDto : elementodeseccionDto.getOrdenDtoList()) {
-                        if (ordenDto.getModificado()) {
-                            Orden ordenE = em.find(Orden.class, ordenDto.getIdOrden());
-                            ordenE.setIdElemento(elementodeseccion);
-                            elementodeseccion.getOrdenList().add(ordenE);
-                        }
-                    }
-                }
+//                for (OrdenDto ordenDto : elementodeseccionDto.getOrdenesEliminadasDtoList()) {
+//                    elementodeseccion.getOrdenList().remove(new Orden(ordenDto.getIdOrden()));
+//                }
+//
+//                if (!elementodeseccion.getOrdenList().isEmpty()) {
+//                    for (OrdenDto ordenDto : elementodeseccionDto.getOrdenDtoList()) {
+//                        if (ordenDto.getModificado()) {
+//                            Orden ordenE = em.find(Orden.class, ordenDto.getIdOrden());
+//                            ordenE.setIdElemento(elementodeseccion);
+//                            elementodeseccion.getOrdenList().add(ordenE);
+//                        }
+//                    }
+//                }
                 elementodeseccion = em.merge(elementodeseccion);
             } else {
                 elementodeseccion = new Elementodeseccion(elementodeseccionDto);
@@ -136,10 +135,9 @@ public class ElementodeseccionService {
 
             elementosdeseccion.forEach(elementodeseccion -> {
                 ElementodeseccionDto elementodeseccionDto = new ElementodeseccionDto(elementodeseccion);
-                elementodeseccionDto.setIdSeccionDto(new SeccionDto(elementodeseccion.getIdSeccion()));
-                for (Orden ordenE : elementodeseccion.getOrdenList()) {
-                    elementodeseccionDto.getOrdenesDtoList().add(new OrdenDto(ordenE));
-                }
+//                for (Orden ordenE : elementodeseccion.getOrdenList()) {
+//                    elementodeseccionDto.getOrdenesDtoList().add(new OrdenDto(ordenE));
+//                }
                 ElementodeseccionDto.add(elementodeseccionDto);
             });
 

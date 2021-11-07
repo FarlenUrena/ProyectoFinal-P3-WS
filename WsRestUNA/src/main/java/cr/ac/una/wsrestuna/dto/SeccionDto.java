@@ -5,8 +5,6 @@
  */
 package cr.ac.una.wsrestuna.dto;
 
-import cr.ac.una.wsrestuna.model.Elementodeseccion;
-import cr.ac.una.wsrestuna.model.Empleado;
 import cr.ac.una.wsrestuna.model.Seccion;
 import java.util.ArrayList;
 import java.util.List;
