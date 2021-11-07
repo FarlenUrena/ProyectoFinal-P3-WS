@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author jeez
  */
-public class GrupoDto{
+public class GrupoDto {
 
     private Long idGrupoDto;
     private String nombreGrupo;
@@ -25,7 +25,7 @@ public class GrupoDto{
 
     public GrupoDto() {
         this.modificado = false;
-//        this.productosDto = new ArrayList<>();
+        this.productosDto = new ArrayList<>();
 //        this.productosEliminadosDto = new ArrayList<>();
     }
 
@@ -66,7 +66,7 @@ public class GrupoDto{
     public void setProductosDto(List<ProductoDto> productosDto) {
         this.productosDto = productosDto;
     }
-//
+
 //    public List<ProductoDto> getProductosEliminadosDto() {
 //        return productosEliminadosDto;
 //    }

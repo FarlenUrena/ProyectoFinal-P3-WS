@@ -88,11 +88,14 @@ public class GrupoService {
 
             grupos.forEach(grupo -> {
                 GrupoDto grupoDto = new GrupoDto(grupo);
+
                 for (Producto producto : grupo.getProductoList()) {
                     grupoDto.getProductosDto().add(new ProductoDto(producto));
                 }
+
                 gruposDto.add(grupoDto);
             });
+
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "GruposList", gruposDto);
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe un grupo de seccion con el nombre ingresado.", "getGrupo NoResultException");
@@ -108,7 +111,7 @@ public class GrupoService {
     public Respuesta guardarGrupo(GrupoDto grupoDto) {
         try {
             Grupo grupo;
-            if (grupoDto.getIdGrupoDto()!= null && grupoDto.getIdGrupoDto()> 0) {
+            if (grupoDto.getIdGrupoDto() != null && grupoDto.getIdGrupoDto() > 0) {
                 grupo = em.find(Grupo.class, grupoDto.getIdGrupoDto());
                 if (grupo == null) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontrÃ³ el grupo a modificar.", "guardarGrupo NoResultException");
