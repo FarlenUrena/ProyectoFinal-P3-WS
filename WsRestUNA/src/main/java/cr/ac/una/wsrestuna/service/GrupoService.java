@@ -108,8 +108,8 @@ public class GrupoService {
     public Respuesta guardarGrupo(GrupoDto grupoDto) {
         try {
             Grupo grupo;
-            if (grupoDto.getIdGrupo() != null && grupoDto.getIdGrupo() > 0) {
-                grupo = em.find(Grupo.class, grupoDto.getIdGrupo());
+            if (grupoDto.getIdGrupoDto()!= null && grupoDto.getIdGrupoDto()> 0) {
+                grupo = em.find(Grupo.class, grupoDto.getIdGrupoDto());
                 if (grupo == null) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontrÃ³ el grupo a modificar.", "guardarGrupo NoResultException");
                 }

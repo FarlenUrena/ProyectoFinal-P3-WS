@@ -65,7 +65,7 @@ public class Grupo implements Serializable {
     }
 
     public Grupo(GrupoDto grupodto) {
-        this.idGrupo = grupodto.getIdGrupo();
+        this.idGrupo = grupodto.getIdGrupoDto();
         atualizarGrupo(grupodto);
     }
 

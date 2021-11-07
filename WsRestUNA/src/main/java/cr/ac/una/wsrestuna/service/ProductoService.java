@@ -97,6 +97,7 @@ public class ProductoService {
                 em.persist(producto);
             }
             em.flush();
+            
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Producto", new ProductoDto(producto));
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar el producto.", ex);

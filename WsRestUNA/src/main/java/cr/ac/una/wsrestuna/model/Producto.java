@@ -102,7 +102,9 @@ public class Producto implements Serializable {
         this.precio = productoDto.getPrecio();
         this.esAccesoRapido = productoDto.getEsAccesoRapido();
         this.imagen = productoDto.getImagen();
-//        this.idGrupo = new Grupo(productoDto.getGrupo());
+        if (productoDto.getGrupoDto() != null) {
+            this.idGrupo = new Grupo(productoDto.getGrupoDto());
+        }
     }
 
     public Long getIdProducto() {

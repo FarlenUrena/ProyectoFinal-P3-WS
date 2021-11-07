@@ -41,7 +41,9 @@ public class ProductoDto {
         this.precio = producto.getPrecio();
         this.esAccesoRapido = producto.getEsAccesoRapido();
         this.imagen = producto.getImagen();
-        this.grupoDto = new GrupoDto(producto.getIdGrupo());
+        if (producto.getIdGrupo() != null) {
+            this.grupoDto = new GrupoDto(producto.getIdGrupo());
+        }
     }
 
     public Long getIdProducto() {

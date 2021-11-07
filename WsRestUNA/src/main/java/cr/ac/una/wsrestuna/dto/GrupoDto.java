@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class GrupoDto{
 
-    private Long grupoDto;
+    private Long idGrupoDto;
     private String nombreGrupo;
     private Boolean modificado;
 //    private List<ProductoDto> productosDto;
@@ -31,16 +31,16 @@ public class GrupoDto{
 
     public GrupoDto(Grupo grupo) {
         this();
-        this.grupoDto = grupo.getIdGrupo();
+        this.idGrupoDto = grupo.getIdGrupo();
         this.nombreGrupo = grupo.getNombreGrupo();
     }
 
-    public Long getIdGrupo() {
-        return grupoDto;
+    public Long getIdGrupoDto() {
+        return idGrupoDto;
     }
 
-    public void setIdGrupo(Long idGrupo) {
-        this.grupoDto = idGrupo;
+    public void setIdGrupoDto(Long idGrupo) {
+        this.idGrupoDto = idGrupo;
     }
 
     public String getNombreGrupo() {
