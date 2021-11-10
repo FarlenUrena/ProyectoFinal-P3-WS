@@ -29,7 +29,10 @@ public class OrdenDto {
     private List<FacturaDto> facturasEliminadasDto;
 
     public OrdenDto() {
+        this.idEmpleadoDto = new EmpleadoDto();
+        this.idElementodeseccionDto = new ElementodeseccionDto();
         this.modificado = false;
+        this.fechaCreacion = new Date();
         this.productosporordenDto = new ArrayList<>();
         this.productosporordenElimindosDto = new ArrayList<>();
         this.facturasDto = new ArrayList<>();

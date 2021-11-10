@@ -5,8 +5,6 @@
  */
 package cr.ac.una.wsrestuna.dto;
 
-import cr.ac.una.wsrestuna.model.Orden;
-import cr.ac.una.wsrestuna.model.Producto;
 import cr.ac.una.wsrestuna.model.Productopororden;
 
 /**

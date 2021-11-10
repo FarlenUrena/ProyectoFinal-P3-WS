@@ -6,9 +6,6 @@
 package cr.ac.una.wsrestuna.dto;
 
 import cr.ac.una.wsrestuna.model.Producto;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *

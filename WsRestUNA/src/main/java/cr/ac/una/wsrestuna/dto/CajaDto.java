@@ -6,8 +6,6 @@
 package cr.ac.una.wsrestuna.dto;
 
 import cr.ac.una.wsrestuna.model.Caja;
-import cr.ac.una.wsrestuna.model.Empleado;
-import cr.ac.una.wsrestuna.model.Factura;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
