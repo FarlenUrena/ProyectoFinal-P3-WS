@@ -29,8 +29,6 @@ public class OrdenDto {
     private List<FacturaDto> facturasEliminadasDto;
 
     public OrdenDto() {
-        this.idEmpleadoDto = new EmpleadoDto();
-        this.idElementodeseccionDto = new ElementodeseccionDto();
         this.modificado = false;
         this.fechaCreacion = new Date();
         this.productosporordenDto = new ArrayList<>();
@@ -45,12 +43,16 @@ public class OrdenDto {
         this.fechaCreacion = orden.getFechaCreacion();
         this.nombreCliente = orden.getNombreCliente();
         this.esEstado = orden.getEsEstado();
-        
+
         if (orden.getIdElemento() != null) {
             this.idElementodeseccionDto = new ElementodeseccionDto(orden.getIdElemento());
+        } else {
+            this.idElementodeseccionDto = new ElementodeseccionDto();
         }
         if (orden.getIdEmpleado() != null) {
             this.idEmpleadoDto = new EmpleadoDto(orden.getIdEmpleado());
+        } else {
+            this.idEmpleadoDto = new EmpleadoDto();
         }
     }
 
