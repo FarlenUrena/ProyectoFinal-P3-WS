@@ -46,14 +46,10 @@ public class OrdenDto {
 
         if (orden.getIdElemento() != null) {
             this.idElementodeseccionDto = new ElementodeseccionDto(orden.getIdElemento());
-        } else {
-            this.idElementodeseccionDto = new ElementodeseccionDto();
-        }
+        } 
         if (orden.getIdEmpleado() != null) {
             this.idEmpleadoDto = new EmpleadoDto(orden.getIdEmpleado());
-        } else {
-            this.idEmpleadoDto = new EmpleadoDto();
-        }
+        } 
     }
 
     public Long getIdOrden() {

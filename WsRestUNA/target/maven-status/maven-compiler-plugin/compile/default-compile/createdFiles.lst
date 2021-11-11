@@ -3,6 +3,7 @@ cr\ac\una\wsrestuna\service\EmpleadoService.class
 cr\ac\una\wsrestuna\dto\ElementodeseccionDto.class
 cr\ac\una\wsrestuna\dto\ProductoporordenDto.class
 cr\ac\una\wsrestuna\dto\ProductoDto.class
+cr\ac\una\wsrestuna\controller\ElementodeseccionController$2.class
 cr\ac\una\wsrestuna\dto\GrupoDto.class
 cr\ac\una\wsrestuna\controller\GrupoController$1.class
 cr\ac\una\wsrestuna\controller\SecurityFilter.class
