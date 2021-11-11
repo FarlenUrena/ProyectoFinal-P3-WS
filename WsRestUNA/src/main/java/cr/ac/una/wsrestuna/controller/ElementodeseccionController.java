@@ -90,6 +90,22 @@ public class ElementodeseccionController {
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el elemento de seccion ").build();
         }
     }
+    @POST
+    @Path("/elementosDeSeccion")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response guardarElementosdeseccion(List<ElementodeseccionDto> elementosdeseccion) {
+        try {
+            Respuesta res = elementodeseccionService.guardarElementosdeseccion(elementosdeseccion);
+            if (!res.getEstado()) {
+                return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
+            }
+            return Response.ok(new GenericEntity<List<ElementodeseccionDto>>((List<ElementodeseccionDto>) res.getResultado("ElementosSend")){}).build();
+        } catch (Exception ex) {
+            Logger.getLogger(ElementodeseccionController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el elemento de seccion ").build();
+        }
+    }
 
     @DELETE
     @Path("/elementoDeSeccion/{id}")

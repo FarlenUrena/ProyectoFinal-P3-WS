@@ -75,7 +75,7 @@ public class OrdenController {
 
     //Falta probar desde el cliente si funciona
     @POST
-    @Path("/orden/{orden}")
+    @Path("/orden")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response guardarOrden(OrdenDto orden) {

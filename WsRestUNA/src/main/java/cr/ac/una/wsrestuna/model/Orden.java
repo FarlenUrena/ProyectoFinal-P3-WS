@@ -91,8 +91,12 @@ public class Orden implements Serializable {
         this.fechaCreacion = ordenDto.getFechaCreacion();
         this.nombreCliente = ordenDto.getNombreCliente();
         this.esEstado = ordenDto.getEsEstado();
-//        this.idElemento = new Elementodeseccion(ordenDto.getIdElementodeseccionDto());
-//        this.idEmpleado = new Empleado(ordenDto.getIdEmpleadoDto());
+        if (ordenDto.getIdElementodeseccionDto() != null) {
+            this.idElemento = new Elementodeseccion(ordenDto.getIdElementodeseccionDto());
+        }
+        if (ordenDto.getIdEmpleadoDto() != null) {
+            this.idEmpleado = new Empleado(ordenDto.getIdEmpleadoDto());
+        }
     }
 
     public Long getIdOrden() {

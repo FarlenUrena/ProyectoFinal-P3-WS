@@ -47,7 +47,6 @@ public class ElementodeseccionService {
             ElementodeseccionDto elementodeseccionDto = new ElementodeseccionDto(elementodeseccion);
 
 //            elementodeseccionDto.setIdSeccionDto(new SeccionDto(elementodeseccion.getIdSeccion()));
-
 //            for (Orden ordenE : elementodeseccion.getOrdenList()) {
 //                elementodeseccionDto.getOrdenDtoList().add(new OrdenDto(ordenE));
 //            }
@@ -100,6 +99,49 @@ public class ElementodeseccionService {
             LOG.log(Level.SEVERE, "Ocurrio un error al guardar el elementodeseccion.", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el elemento de seccion.", "guardarElementodeseccion " + ex.getMessage());
         }
+    }
+
+    public Respuesta guardarElementosdeseccion(List<ElementodeseccionDto> elementosdeseccionDto) {
+        List<ElementodeseccionDto> elementosSend = new ArrayList<>();
+        try {
+           
+            for (ElementodeseccionDto elementodeseccionDto : elementosdeseccionDto) {
+               Elementodeseccion elementodeseccion;
+                if (elementodeseccionDto.getIdElemento() != null && elementodeseccionDto.getIdElemento() > 0) {
+                    elementodeseccion = em.find(Elementodeseccion.class, elementodeseccionDto.getIdElemento());
+                    if (elementodeseccion == null) {
+                        return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró el elemento de seccion a modificar.", "guardarElementodeseccion NoResultException");
+                    }
+                    elementodeseccion.actualizarElementodeseccion(elementodeseccionDto);
+
+//                for (OrdenDto ordenDto : elementodeseccionDto.getOrdenesEliminadasDtoList()) {
+//                    elementodeseccion.getOrdenList().remove(new Orden(ordenDto.getIdOrden()));
+//                }
+//
+//                if (!elementodeseccion.getOrdenList().isEmpty()) {
+//                    for (OrdenDto ordenDto : elementodeseccionDto.getOrdenDtoList()) {
+//                        if (ordenDto.getModificado()) {
+//                            Orden ordenE = em.find(Orden.class, ordenDto.getIdOrden());
+//                            ordenE.setIdElemento(elementodeseccion);
+//                            elementodeseccion.getOrdenList().add(ordenE);
+//                        }
+//                    }
+//                }
+                    elementodeseccion = em.merge(elementodeseccion);
+                } else {
+                    elementodeseccion = new Elementodeseccion(elementodeseccionDto);
+                    elementodeseccion.setIdSeccion(new Seccion(elementodeseccionDto.getIdSeccionDto()));
+                    em.persist(elementodeseccion);
+                }
+                em.flush();
+                elementosSend.add(new ElementodeseccionDto(elementodeseccion));
+            }
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "ElementosSend", elementosSend);
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al guardar el elementodeseccion.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al guardar el elemento de seccion.", "guardarElementodeseccion " + ex.getMessage());
+        }
+
     }
 
 //    Eliminar un elementodeseccion permanentemente

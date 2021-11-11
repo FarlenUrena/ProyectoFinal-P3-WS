@@ -45,8 +45,13 @@ public class OrdenDto {
         this.fechaCreacion = orden.getFechaCreacion();
         this.nombreCliente = orden.getNombreCliente();
         this.esEstado = orden.getEsEstado();
-        this.idElementodeseccionDto = new ElementodeseccionDto(orden.getIdElemento());
-        this.idEmpleadoDto = new EmpleadoDto(orden.getIdEmpleado());
+        
+        if (orden.getIdElemento() != null) {
+            this.idElementodeseccionDto = new ElementodeseccionDto(orden.getIdElemento());
+        }
+        if (orden.getIdEmpleado() != null) {
+            this.idEmpleadoDto = new EmpleadoDto(orden.getIdEmpleado());
+        }
     }
 
     public Long getIdOrden() {
