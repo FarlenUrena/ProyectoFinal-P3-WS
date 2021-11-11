@@ -34,6 +34,7 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name = "Productopororden.findAll", query = "SELECT p FROM Productopororden p"),
     @NamedQuery(name = "Productopororden.findByIdProductoPorOrden", query = "SELECT p FROM Productopororden p WHERE p.idProductoPorOrden = :idProductoPorOrden"),
+    @NamedQuery(name = "Productopororden.findByProductoYOrden", query = "SELECT p FROM Productopororden p WHERE p.idProducto = :idProducto and p.idOrden = :idOrden"),
     @NamedQuery(name = "Productopororden.findByCantidad", query = "SELECT p FROM Productopororden p WHERE p.cantidad = :cantidad"),
     @NamedQuery(name = "Productopororden.findByPrecioProducto", query = "SELECT p FROM Productopororden p WHERE p.precioProducto = :precioProducto"),
     @NamedQuery(name = "Productopororden.findBySubtotal", query = "SELECT p FROM Productopororden p WHERE p.subtotal = :subtotal")})

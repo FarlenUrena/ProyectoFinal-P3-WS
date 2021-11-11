@@ -46,10 +46,10 @@ public class ElementodeseccionService {
             Elementodeseccion elementodeseccion = (Elementodeseccion) qryElementodeseccion.getSingleResult();
             ElementodeseccionDto elementodeseccionDto = new ElementodeseccionDto(elementodeseccion);
 
-//            elementodeseccionDto.setIdSeccionDto(new SeccionDto(elementodeseccion.getIdSeccion()));
-//            for (Orden ordenE : elementodeseccion.getOrdenList()) {
-//                elementodeseccionDto.getOrdenDtoList().add(new OrdenDto(ordenE));
-//            }
+            elementodeseccionDto.setIdSeccionDto(new SeccionDto(elementodeseccion.getIdSeccion()));
+            for (Orden ordenE : elementodeseccion.getOrdenList()) {
+                elementodeseccionDto.getOrdenesDtoList().add(new OrdenDto(ordenE));
+            }
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Elementodeseccion", elementodeseccionDto);
 
         } catch (NoResultException ex) {
@@ -90,7 +90,6 @@ public class ElementodeseccionService {
                 elementodeseccion = em.merge(elementodeseccion);
             } else {
                 elementodeseccion = new Elementodeseccion(elementodeseccionDto);
-                elementodeseccion.setIdSeccion(new Seccion(elementodeseccionDto.getIdSeccionDto()));
                 em.persist(elementodeseccion);
             }
             em.flush();
@@ -177,9 +176,9 @@ public class ElementodeseccionService {
 
             elementosdeseccion.forEach(elementodeseccion -> {
                 ElementodeseccionDto elementodeseccionDto = new ElementodeseccionDto(elementodeseccion);
-//                for (Orden ordenE : elementodeseccion.getOrdenList()) {
-//                    elementodeseccionDto.getOrdenesDtoList().add(new OrdenDto(ordenE));
-//                }
+                for (Orden ordenE : elementodeseccion.getOrdenList()) {
+                    elementodeseccionDto.getOrdenesDtoList().add(new OrdenDto(ordenE));
+                }
                 ElementodeseccionDto.add(elementodeseccionDto);
             });
 

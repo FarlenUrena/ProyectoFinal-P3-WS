@@ -27,13 +27,13 @@ public class ElementodeseccionDto {
     private byte[] imagenElemento;
     private Boolean modificado;
     private SeccionDto idSeccionDto;
-//    private List<OrdenDto> ordenesDtoList;
-//    private List<OrdenDto> ordenesEliminadasDtoList;
+    private List<OrdenDto> ordenesDtoList;
+    private List<OrdenDto> ordenesEliminadasDtoList;
 
     public ElementodeseccionDto() {
         this.modificado = false;
-//        this.ordenesDtoList = new ArrayList<>();
-//        this.ordenesEliminadasDtoList = new ArrayList<>();
+        this.ordenesDtoList = new ArrayList<>();
+        this.ordenesEliminadasDtoList = new ArrayList<>();
     }
 
     public ElementodeseccionDto(Elementodeseccion elementodeseccion) {
@@ -131,19 +131,19 @@ public class ElementodeseccionDto {
         this.modificado = Modificado;
     }
 
-//    public List<OrdenDto> getOrdenesDtoList() {
-//        return ordenesDtoList;
-//    }
-//
-//    public void setOrdenesDtoList(List<OrdenDto> ordenesDtoList) {
-//        this.ordenesDtoList = ordenesDtoList;
-//    }
-//
-//    public List<OrdenDto> getOrdenesEliminadasDtoList() {
-//        return ordenesEliminadasDtoList;
-//    }
-//
-//    public void setOrdenesEliminadasDtoList(List<OrdenDto> ordenesEliminadasDtoList) {
-//        this.ordenesEliminadasDtoList = ordenesEliminadasDtoList;
-//    }
+    public List<OrdenDto> getOrdenesDtoList() {
+        return ordenesDtoList;
+    }
+
+    public void setOrdenesDtoList(List<OrdenDto> ordenesDtoList) {
+        this.ordenesDtoList = ordenesDtoList;
+    }
+
+    public List<OrdenDto> getOrdenesEliminadasDtoList() {
+        return ordenesEliminadasDtoList;
+    }
+
+    public void setOrdenesEliminadasDtoList(List<OrdenDto> ordenesEliminadasDtoList) {
+        this.ordenesEliminadasDtoList = ordenesEliminadasDtoList;
+    }
 }
