@@ -11,9 +11,7 @@ import cr.ac.una.wsrestuna.model.Seccion;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Farlen
+/**@author Farlen
  */
 public class ElementodeseccionDto {
 

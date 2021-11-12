@@ -53,14 +53,14 @@ public class ProductoporordenService {
         }
     }
 
-//    Guardar o actualizar un productopororden
+    
     public Respuesta guardarProductopororden(ProductoporordenDto productoporordenDto) {
         try {
             Productopororden productopororden;
             if (productoporordenDto.getIdProductoPorOrden() != null && productoporordenDto.getIdProductoPorOrden() > 0) {
                 productopororden = em.find(Productopororden.class, productoporordenDto.getIdProductoPorOrden());
                 if (productopororden == null) {
-                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró el producto por orden a modificar.", "guardarProductopororden NoResultException");
+                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO,"No se encrontró el producto por orden a modificar.", "guardarProductopororden NoResultException");
                 }
                 productopororden.actualizarProductopororden(productoporordenDto);
                 productopororden.setIdOrden(new Orden(productoporordenDto.getIdOrdenDto()));

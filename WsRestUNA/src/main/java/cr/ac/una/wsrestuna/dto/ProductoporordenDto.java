@@ -7,9 +7,7 @@ package cr.ac.una.wsrestuna.dto;
 
 import cr.ac.una.wsrestuna.model.Productopororden;
 
-/**
- *
- * @author Farlen
+/**@author Farlen
  */
 public class ProductoporordenDto {
 
@@ -22,7 +20,7 @@ public class ProductoporordenDto {
     private ProductoDto idProductoDto;
 
     public ProductoporordenDto() {
-        this.modificado = false;
+//        this.modificado = false;
     }
 
     public ProductoporordenDto(Productopororden productopororden) {

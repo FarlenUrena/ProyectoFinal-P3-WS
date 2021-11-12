@@ -75,7 +75,7 @@ public class ProductoporordenController {
 
     //Falta probar desde el cliente si funciona
     @POST
-    @Path("/productopororden/{productopororden}")
+    @Path("/productopororden")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response guardarProductopororden(ProductoporordenDto productopororden) {
