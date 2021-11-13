@@ -68,7 +68,11 @@ public class Factura implements Serializable {
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "TOTAL")
-    private double total;
+    private double total;    
+    @Basic(optional = false)
+//    @NotNull
+    @Column(name = "VUELTO")
+    private double vuelto;
     @Basic(optional = false)
 //    @NotNull
     @Column(name = "DESCUENTO")
@@ -93,12 +97,13 @@ public class Factura implements Serializable {
         this.idFactura = idFactura;
     }
 
-    public Factura(Long idFactura, Date fechaFacturacion, Long metodoDePago, float montoPagado, float total, float descuento,float impuestoVenta,float impuestoServicio) {
+    public Factura(Long idFactura, Date fechaFacturacion, Long metodoDePago, float montoPagado, float total, float vuelto, float descuento,float impuestoVenta,float impuestoServicio) {
         this.idFactura = idFactura;
         this.fechaFacturacion = fechaFacturacion;
         this.metodoDePago = metodoDePago;
         this.montoPagado = montoPagado;
         this.total = total;
+        this.vuelto = vuelto;
         this.descuento = descuento;
         this.impuestoVenta = impuestoVenta;
         this.impuestoServicio = impuestoServicio;
@@ -114,6 +119,7 @@ public class Factura implements Serializable {
         this.metodoDePago = facturaDto.getMetodoDePago();
         this.montoPagado = facturaDto.getMontoPagado();
         this.total = facturaDto.getTotal();
+        this.vuelto = facturaDto.getVuelto();
         this.descuento = facturaDto.getDescuento();
         this.impuestoVenta = facturaDto.getImpuestoVenta();
         this.impuestoServicio = facturaDto.getImpuestoServicio();
@@ -159,6 +165,14 @@ public class Factura implements Serializable {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public double getVuelto() {
+        return vuelto;
+    }
+
+    public void setVuelto(double vuelto) {
+        this.vuelto = vuelto;
     }
 
     public double getDescuento() {

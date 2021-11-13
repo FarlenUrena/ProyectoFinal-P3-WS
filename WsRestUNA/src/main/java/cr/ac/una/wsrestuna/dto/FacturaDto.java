@@ -21,6 +21,7 @@ public class FacturaDto {
     private Long metodoDePago;
     private double montoPagado;
     private double total;
+    private double vuelto;
     private double descuento;
     private double impuestoVenta;
     private double impuestoServicio;
@@ -39,6 +40,7 @@ public class FacturaDto {
         this.metodoDePago = factura.getMetodoDePago();
         this.montoPagado = factura.getMontoPagado();
         this.total = factura.getTotal();
+        this.vuelto = factura.getVuelto();
         this.descuento = factura.getDescuento();
         this.impuestoVenta = factura.getImpuestoVenta();
         this.impuestoServicio = factura.getImpuestoServicio();
@@ -84,6 +86,14 @@ public class FacturaDto {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public double getVuelto() {
+        return vuelto;
+    }
+
+    public void setVuelto(double vuelto) {
+        this.vuelto = vuelto;
     }
 
     public double getDescuento() {
