@@ -5,7 +5,9 @@
  */
 package cr.ac.una.wsrestuna.controller;
 
+import cr.ac.una.wsrestuna.dto.OrdenDto;
 import cr.ac.una.wsrestuna.dto.ProductoporordenDto;
+import cr.ac.una.wsrestuna.service.OrdenService;
 import cr.ac.una.wsrestuna.service.ProductoporordenService;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
 import cr.ac.una.wsrestuna.util.Respuesta;
@@ -35,6 +37,8 @@ public class ProductoporordenController {
 
     @EJB
     ProductoporordenService productoporordenService;
+    @EJB
+    OrdenService ordenService;
 
     @GET
     @Path("/productopororden/{id}")
@@ -65,6 +69,27 @@ public class ProductoporordenController {
             }
 
             return Response.ok(new GenericEntity<List<ProductoporordenDto>>((List<ProductoporordenDto>) res.getResultado("ProductosporordenList")) {
+            }).build();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ProductoporordenController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error al obtener el producto por orden ").build();
+        }
+    }
+    @GET
+    @Path("/productosporordenIdOrden/{idOrden}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getProductosporordenByOrden(@PathParam("idOrden") Long idOrden) {
+        try {
+            Respuesta res1 = ordenService.getOrden(idOrden);
+            
+            Respuesta res = productoporordenService.getProductoporordensByOrden((OrdenDto)res1.getResultado("Orden"));
+            if (!res.getEstado()) {
+                return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
+            }
+
+            return Response.ok(new GenericEntity<List<ProductoporordenDto>>((List<ProductoporordenDto>) res.getResultado("ProductosporordenFiltered")) {
             }).build();
 
         } catch (Exception ex) {

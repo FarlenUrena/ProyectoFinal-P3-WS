@@ -5,6 +5,7 @@
  */
 package cr.ac.una.wsrestuna.service;
 
+import cr.ac.una.wsrestuna.dto.OrdenDto;
 import cr.ac.una.wsrestuna.dto.ProductoporordenDto;
 import cr.ac.una.wsrestuna.model.Orden;
 import cr.ac.una.wsrestuna.model.Producto;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -30,6 +32,8 @@ import javax.persistence.Query;
 @LocalBean
 @Stateless
 public class ProductoporordenService {
+
+    
 
     private static final Logger LOG = Logger.getLogger(ProductoporordenService.class.getName());
     @PersistenceContext(unitName = "WsRestUnaPU")
@@ -53,22 +57,21 @@ public class ProductoporordenService {
         }
     }
 
-    
     public Respuesta guardarProductopororden(ProductoporordenDto productoporordenDto) {
         try {
             Productopororden productopororden;
             if (productoporordenDto.getIdProductoPorOrden() != null && productoporordenDto.getIdProductoPorOrden() > 0) {
                 productopororden = em.find(Productopororden.class, productoporordenDto.getIdProductoPorOrden());
                 if (productopororden == null) {
-                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO,"No se encrontró el producto por orden a modificar.", "guardarProductopororden NoResultException");
+                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró el producto por orden a modificar.", "guardarProductopororden NoResultException");
                 }
                 productopororden.actualizarProductopororden(productoporordenDto);
-                productopororden.setIdOrden(new Orden(productoporordenDto.getIdOrdenDto()));
-                productopororden.setIdProducto(new Producto(productoporordenDto.getIdProductoDto()));
-
                 productopororden = em.merge(productopororden);
             } else {
                 productopororden = new Productopororden(productoporordenDto);
+                productopororden.setIdOrden(new Orden(productoporordenDto.getIdOrdenDto()));
+
+                productopororden.setIdProducto(new Producto(productoporordenDto.getIdProductoDto()));
                 em.persist(productopororden);
             }
             em.flush();
@@ -120,6 +123,35 @@ public class ProductoporordenService {
                     "elementos de seccion encontrados",
                     "elementos de seccion encontrados correctamente",
                     "ProductosporordenList", ProductoporordenDto);
+
+        } catch (NoResultException ex) {
+            return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existen elementos de seccion en la base de datos.", "getProductoporordens NoResultException");
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Ocurrio un error al consultar los elementos de seccion.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los elementos de seccion.", "getProductoporordens " + ex.getMessage());
+        }
+    }
+
+    public Respuesta getProductoporordensByOrden(OrdenDto idOrden) {
+        try {
+            
+            
+            Query qryProductopororden = em.createNamedQuery("Productopororden.findByOrden", Productopororden.class);
+            qryProductopororden.setParameter("idOrden", new Orden( idOrden));
+
+            List<Productopororden> productoporordens = (List<Productopororden>) qryProductopororden.getResultList();
+            List<ProductoporordenDto> ProductoporordenDto = new ArrayList<>();
+
+            productoporordens.forEach(productopororden -> {
+                
+                ProductoporordenDto.add(new ProductoporordenDto(productopororden));
+            });
+
+            return new Respuesta(true,
+                    CodigoRespuesta.CORRECTO,
+                    "elementos de seccion encontrados",
+                    "elementos de seccion encontrados correctamente",
+                    "ProductosporordenFiltered", ProductoporordenDto);
 
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existen elementos de seccion en la base de datos.", "getProductoporordens NoResultException");

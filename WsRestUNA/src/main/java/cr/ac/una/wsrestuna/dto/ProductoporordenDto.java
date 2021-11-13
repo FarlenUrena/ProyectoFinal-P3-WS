@@ -7,7 +7,8 @@ package cr.ac.una.wsrestuna.dto;
 
 import cr.ac.una.wsrestuna.model.Productopororden;
 
-/**@author Farlen
+/**
+ * @author Farlen
  */
 public class ProductoporordenDto {
 
@@ -29,8 +30,12 @@ public class ProductoporordenDto {
         this.cantidad = productopororden.getCantidad();
         this.precioProducto = productopororden.getPrecioProducto();
         this.subtotal = productopororden.getSubtotal();
-        this.idOrdenDto = new OrdenDto(productopororden.getIdOrden());
-        this.idProductoDto = new ProductoDto(productopororden.getIdProducto());
+        if (productopororden.getIdOrden() != null) {
+            this.idOrdenDto = new OrdenDto(productopororden.getIdOrden());
+        }
+        if (productopororden.getIdProducto() != null) {
+            this.idProductoDto = new ProductoDto(productopororden.getIdProducto());
+        }
     }
 
     public Long getIdProductoPorOrden() {

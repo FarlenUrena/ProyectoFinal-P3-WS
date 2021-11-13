@@ -7,9 +7,11 @@ package cr.ac.una.wsrestuna.service;
 
 import cr.ac.una.wsrestuna.dto.ElementodeseccionDto;
 import cr.ac.una.wsrestuna.dto.EmpleadoDto;
+import cr.ac.una.wsrestuna.dto.OrdenDto;
 import cr.ac.una.wsrestuna.dto.SeccionDto;
 import cr.ac.una.wsrestuna.model.Elementodeseccion;
 import cr.ac.una.wsrestuna.model.Empleado;
+import cr.ac.una.wsrestuna.model.Orden;
 import cr.ac.una.wsrestuna.model.Seccion;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
 import cr.ac.una.wsrestuna.util.Respuesta;
@@ -131,22 +133,28 @@ public class SeccionService {
             Query qrySeccion = em.createNamedQuery("Seccion.findAll", Seccion.class);
 
             List<Seccion> secciones = (List<Seccion>) qrySeccion.getResultList();
-            List<SeccionDto> SeccionesDto = new ArrayList<>();
+            List<SeccionDto> seccionesDto = new ArrayList<>();
 
             secciones.forEach(seccion -> {
+                
                 SeccionDto seccionDto = new SeccionDto(seccion);
-
                 for (Elementodeseccion ele : seccion.getElementodeseccionList()) {
-                    seccionDto.getElementosdeseccionDto().add(new ElementodeseccionDto(ele));
+                    
+                    ElementodeseccionDto ElDto = new ElementodeseccionDto(ele);
+                    for (Orden o : ele.getOrdenList()) {
+                        
+                        ElDto.getOrdenesDtoList().add(new OrdenDto(o));
+                    }
+                    seccionDto.getElementosdeseccionDto().add(ElDto);
                 }
-                SeccionesDto.add(seccionDto);
+                seccionesDto.add(seccionDto);
             });
 
             return new Respuesta(true,
                     CodigoRespuesta.CORRECTO,
                     "Secciones encontradas",
                     "Secciones encontradas correctamente",
-                    "SeccionesList", SeccionesDto);
+                    "SeccionesList", seccionesDto);
 
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existen secciones en la base de datos.", "getSecciones NoResultException");

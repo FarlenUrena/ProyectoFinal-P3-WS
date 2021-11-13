@@ -6,7 +6,9 @@
 package cr.ac.una.wsrestuna.service;
 
 import cr.ac.una.wsrestuna.dto.OrdenDto;
+import cr.ac.una.wsrestuna.dto.ProductoporordenDto;
 import cr.ac.una.wsrestuna.model.Orden;
+import cr.ac.una.wsrestuna.model.Productopororden;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
 import cr.ac.una.wsrestuna.util.Respuesta;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -40,8 +42,16 @@ public class OrdenService {
         try {
             Query qryOrden = em.createNamedQuery("Orden.findByIdOrden", Orden.class);
             qryOrden.setParameter("idOrden", id);
+            Orden orden = (Orden) qryOrden.getSingleResult();
+            
+            OrdenDto ordenDto = new OrdenDto(orden);
+            
+            
+            for (Productopororden p : orden.getProductoporordenList()) {
+                ordenDto.getProductosporordenDto().add(new ProductoporordenDto(p));
+            }
 
-            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Orden", new OrdenDto((Orden) qryOrden.getSingleResult()));
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Orden", ordenDto);
 
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existe una orden con el id ingresado.", "getOrden NoResultException");
@@ -64,6 +74,7 @@ public class OrdenService {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró la orden a modificar.", "guardarOrden NoResultException");
                 }
                 orden.actualizarOrden(ordenDto);
+                
                 orden = em.merge(orden);
             } else {
                 orden = new Orden(ordenDto);
@@ -107,17 +118,23 @@ public class OrdenService {
             Query qryOrden = em.createNamedQuery("Orden.findAll", Orden.class);
 
             List<Orden> ordenes = (List<Orden>) qryOrden.getResultList();
-            List<OrdenDto> OrdenDto = new ArrayList<>();
+            List<OrdenDto> ordenesDto = new ArrayList<>();
             ordenes.forEach(orden
                     -> {
-                OrdenDto.add(new OrdenDto(orden));
+                OrdenDto ordenDto = new OrdenDto(orden);
+                
+                for (Productopororden p : orden.getProductoporordenList()) {
+                    ordenDto.getProductosporordenDto().add(new ProductoporordenDto(p));
+                }
+
+                ordenesDto.add(ordenDto);
             });
 
             return new Respuesta(true,
                     CodigoRespuesta.CORRECTO,
                     "Ordenes encontradas",
                     "Ordenes encontradas correctamente",
-                    "OrdenesList", OrdenDto);
+                    "OrdenesList", ordenesDto);
 
         } catch (NoResultException ex) {
             return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No existen ordenes en la base de datos.", "getOrdenes NoResultException");

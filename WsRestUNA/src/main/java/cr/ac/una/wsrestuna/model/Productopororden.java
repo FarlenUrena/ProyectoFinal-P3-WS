@@ -35,6 +35,7 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "Productopororden.findAll", query = "SELECT p FROM Productopororden p"),
     @NamedQuery(name = "Productopororden.findByIdProductoPorOrden", query = "SELECT p FROM Productopororden p WHERE p.idProductoPorOrden = :idProductoPorOrden"),
     @NamedQuery(name = "Productopororden.findByProductoYOrden", query = "SELECT p FROM Productopororden p WHERE p.idProducto = :idProducto and p.idOrden = :idOrden"),
+    @NamedQuery(name = "Productopororden.findByOrden", query = "SELECT p FROM Productopororden p WHERE p.idOrden = :idOrden"),
     @NamedQuery(name = "Productopororden.findByCantidad", query = "SELECT p FROM Productopororden p WHERE p.cantidad = :cantidad"),
     @NamedQuery(name = "Productopororden.findByPrecioProducto", query = "SELECT p FROM Productopororden p WHERE p.precioProducto = :precioProducto"),
     @NamedQuery(name = "Productopororden.findBySubtotal", query = "SELECT p FROM Productopororden p WHERE p.subtotal = :subtotal")})
@@ -43,7 +44,7 @@ public class Productopororden implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
-    @SequenceGenerator(name = "PRODUCTOPORORDEN_ID_GENERATOR", sequenceName = "RESTUNA.SEQ_ID_PRODUCTOPORORDEN", allocationSize = 1)
+    @SequenceGenerator(name = "PRODUCTOPORORDEN_ID_GENERATOR", sequenceName = "RESTUNA.SEQ_ID_PRODUCTOORDEN", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PRODUCTOPORORDEN_ID_GENERATOR")
     @Basic(optional = false)
 //    @NotNull
