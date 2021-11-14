@@ -33,8 +33,6 @@ import javax.persistence.Query;
 @Stateless
 public class ProductoporordenService {
 
-    
-
     private static final Logger LOG = Logger.getLogger(ProductoporordenService.class.getName());
     @PersistenceContext(unitName = "WsRestUnaPU")
     private EntityManager em;
@@ -134,19 +132,19 @@ public class ProductoporordenService {
 
     public Respuesta getProductoporordensByOrden(OrdenDto idOrden) {
         try {
-            
-            
+
             Query qryProductopororden = em.createNamedQuery("Productopororden.findByOrden", Productopororden.class);
-            qryProductopororden.setParameter("idOrden", new Orden( idOrden));
+            qryProductopororden.setParameter("idOrden", new Orden(idOrden));
 
             List<Productopororden> productoporordens = (List<Productopororden>) qryProductopororden.getResultList();
             List<ProductoporordenDto> ProductoporordenDto = new ArrayList<>();
-
-            productoporordens.forEach(productopororden -> {
+            if (!productoporordens.isEmpty() && productoporordens != null) {
                 
-                ProductoporordenDto.add(new ProductoporordenDto(productopororden));
-            });
+                productoporordens.forEach(productopororden -> {
 
+                    ProductoporordenDto.add(new ProductoporordenDto(productopororden));
+                });
+            }
             return new Respuesta(true,
                     CodigoRespuesta.CORRECTO,
                     "elementos de seccion encontrados",
