@@ -138,6 +138,7 @@ public class ProductoService {
             List<Producto> productos = (List<Producto>) qryProducto.getResultList();
             List<ProductoDto> productosDto = new ArrayList<>();
             productos.forEach(producto -> {
+                 em.refresh(producto);
                 ProductoDto productoDto = new ProductoDto(producto);
 
 //                for (Productopororden pxo : producto.getProductoporordenList()) {

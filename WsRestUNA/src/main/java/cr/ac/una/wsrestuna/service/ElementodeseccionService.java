@@ -129,7 +129,7 @@ public class ElementodeseccionService {
                     elementodeseccion = em.merge(elementodeseccion);
                 } else {
                     elementodeseccion = new Elementodeseccion(elementodeseccionDto);
-                    elementodeseccion.setIdSeccion(new Seccion(elementodeseccionDto.getIdSeccionDto()));
+//                    elementodeseccion.setIdSeccion(new Seccion(elementodeseccionDto.getIdSeccionDto()));
                     em.persist(elementodeseccion);
                 }
                 em.flush();

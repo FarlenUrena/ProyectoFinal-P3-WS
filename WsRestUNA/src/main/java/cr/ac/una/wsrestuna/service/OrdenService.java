@@ -119,11 +119,12 @@ public class OrdenService {
 
             List<Orden> ordenes = (List<Orden>) qryOrden.getResultList();
             List<OrdenDto> ordenesDto = new ArrayList<>();
-            ordenes.forEach(orden
-                    -> {
+            ordenes.forEach(orden-> {
+                em.refresh(orden); 
                 OrdenDto ordenDto = new OrdenDto(orden);
                 
                 for (Productopororden p : orden.getProductoporordenList()) {
+                     em.refresh(p); 
                     ordenDto.getProductosporordenDto().add(new ProductoporordenDto(p));
                 }
 

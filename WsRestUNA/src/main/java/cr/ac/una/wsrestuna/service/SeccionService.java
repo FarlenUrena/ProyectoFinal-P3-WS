@@ -52,7 +52,7 @@ public class SeccionService {
             for (Elementodeseccion ele : seccion.getElementodeseccionList()) {
                 seccionDto.getElementosdeseccionDto().add(new ElementodeseccionDto(ele));
             }
-
+            em.flush();
             return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "", "Seccion", seccionDto);
 
         } catch (NoResultException ex) {
@@ -136,20 +136,20 @@ public class SeccionService {
             List<SeccionDto> seccionesDto = new ArrayList<>();
 
             secciones.forEach(seccion -> {
-                
+                em.refresh(seccion);
                 SeccionDto seccionDto = new SeccionDto(seccion);
                 for (Elementodeseccion ele : seccion.getElementodeseccionList()) {
-                    
+                    em.refresh(ele);
                     ElementodeseccionDto ElDto = new ElementodeseccionDto(ele);
                     for (Orden o : ele.getOrdenList()) {
-                        
+                        em.refresh(o);
                         ElDto.getOrdenesDtoList().add(new OrdenDto(o));
                     }
                     seccionDto.getElementosdeseccionDto().add(ElDto);
                 }
                 seccionesDto.add(seccionDto);
             });
-
+            em.flush();
             return new Respuesta(true,
                     CodigoRespuesta.CORRECTO,
                     "Secciones encontradas",

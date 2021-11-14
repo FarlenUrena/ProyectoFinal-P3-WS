@@ -7,6 +7,7 @@ package cr.ac.una.wsrestuna.model;
 
 import cr.ac.una.wsrestuna.dto.OrdenDto;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -75,6 +76,7 @@ public class Orden implements Serializable {
     private List<Factura> facturaList;
 
     public Orden() {
+        this.facturaList = new ArrayList<>();
     }
 
     public Orden(Long idOrden) {
@@ -91,6 +93,7 @@ public class Orden implements Serializable {
         this.fechaCreacion = ordenDto.getFechaCreacion();
         this.nombreCliente = ordenDto.getNombreCliente();
         this.esEstado = ordenDto.getEsEstado();
+        
         if (ordenDto.getIdElementodeseccionDto() != null) {
             this.idElemento = new Elementodeseccion(ordenDto.getIdElementodeseccionDto());
         }
