@@ -42,10 +42,12 @@ public class CajaDto {
         this.saldoTarjeta = caja.getSaldoTarjeta();
         this.saldoEfectivoCierre = caja.getSaldoEfectivoCierre();
         this.saldoTarjetaCierre = caja.getSaldoTarjetaCierre();
-        //this.fechaApertura = caja.getFechaApertura();
+        this.fechaApertura = caja.getFechaApertura();
         this.fechaCierre = caja.getFechaCierre();
         this.esActiva = caja.getEsActiva();
+        if (caja.getIdEmpleado()!= null) {
         this.idEmpleadoDto = new EmpleadoDto(caja.getIdEmpleado());
+        }
     }
 
     public Long getIdCaja() {

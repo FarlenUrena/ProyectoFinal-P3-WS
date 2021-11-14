@@ -7,6 +7,7 @@ package cr.ac.una.wsrestuna.model;
 
 import cr.ac.una.wsrestuna.dto.EmpleadoDto;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -86,6 +87,8 @@ public class Empleado implements Serializable {
     private List<Caja> cajaList;
 
     public Empleado() {
+        this.cajaList = new ArrayList<>();
+        this.ordenList = new ArrayList<>();
     }
 
     public Empleado(Long idEmpleado) {
@@ -104,7 +107,7 @@ public class Empleado implements Serializable {
         this.nombreUsuario = empleadoDto.getNombreUsuario();
         this.password = empleadoDto.getPassword();
         this.rol = empleadoDto.getRol();
-
+        
     }
 
     public Empleado(Long idEmpleado, String nombre, String apellido, String cedula, String nombreUsuario, String password, Long rol) {

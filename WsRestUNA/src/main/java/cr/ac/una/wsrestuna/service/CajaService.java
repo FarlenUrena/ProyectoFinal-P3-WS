@@ -75,22 +75,24 @@ public class CajaService {
                 }
                 caja.actualizarCaja(cajaDto);
 
-                for (FacturaDto f : cajaDto.getFacturasEliminadasDto()) {
-                    caja.getFacturaList().remove(new Factura(f.getIdFactura()));
-                }
+//                for (FacturaDto f : cajaDto.getFacturasEliminadasDto()) {
+//                    caja.getFacturaList().remove(new Factura(f.getIdFactura()));
+//                }
 
-                if (!cajaDto.getFacturasDto().isEmpty()) {
-                    for (FacturaDto f : cajaDto.getFacturasDto()) {
-                        if (f.getModificado()) {//si es nueva
-                            Factura factura = em.find(Factura.class, f.getIdFactura());
-                            factura.setIdCaja(caja);
-                            caja.getFacturaList().add(factura);
-                        }
-                    }
-                }
+//                if (!cajaDto.getFacturasDto().isEmpty()) {
+//                    for (FacturaDto f : cajaDto.getFacturasDto()) {
+//                        if (f.getModificado()) {//si es nueva
+//                            Factura factura = em.find(Factura.class, f.getIdFactura());
+//                            factura.setIdCaja(caja);
+//                            caja.getFacturaList().add(factura);
+//                        }
+//                    }
+//                }
                 caja = em.merge(caja);
             } else {
                 caja = new Caja(cajaDto);
+                Empleado emp = new Empleado(cajaDto.getIdEmpleadoDto());
+                caja.setIdEmpleado(emp);
                 em.persist(caja);
             }
             em.flush();
@@ -133,18 +135,29 @@ public class CajaService {
             List<Caja> cajas = (List<Caja>) qryCaja.getResultList();
             List<CajaDto> cajasDto = new ArrayList<>();
 
-            cajas.forEach(caja -> {
+            for (Caja caja : cajas) {
                 CajaDto cajaDto = new CajaDto(caja);
-                List<Factura> facturas = new ArrayList<>();
+//                List<Factura> facturas = new ArrayList<>();
 
                 for (Factura factura : caja.getFacturaList()) {
                     cajaDto.getFacturasDto().add(new FacturaDto(factura));
                 }
-                cajaDto.setIdEmpleadoDto(new EmpleadoDto(caja.getIdEmpleado()));
+//                cajaDto.setIdEmpleadoDto(new EmpleadoDto(caja.getIdEmpleado()));
 
                 cajasDto.add(cajaDto);
-            });
+            }
 
+//            cajas.forEach(caja -> {
+////                CajaDto cajaDto = new CajaDto(caja);
+//////                List<Factura> facturas = new ArrayList<>();
+////
+////                for (Factura factura : caja.getFacturaList()) {
+////                    cajaDto.getFacturasDto().add(new FacturaDto(factura));
+////                }
+//////                cajaDto.setIdEmpleadoDto(new EmpleadoDto(caja.getIdEmpleado()));
+////
+////                cajasDto.add(cajaDto);
+//            });
             return new Respuesta(true,
                     CodigoRespuesta.CORRECTO,
                     "Cajas encontradas",

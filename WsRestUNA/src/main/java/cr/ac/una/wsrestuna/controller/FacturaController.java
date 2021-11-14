@@ -76,7 +76,7 @@ public class FacturaController {
 
     //Falta probar desde el cliente si funciona
     @POST
-    @Path("/factura/{factura}")
+    @Path("/factura")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response guardarFactura(FacturaDto factura) {

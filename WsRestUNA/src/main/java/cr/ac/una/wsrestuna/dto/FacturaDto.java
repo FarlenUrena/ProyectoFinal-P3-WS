@@ -5,9 +5,7 @@
  */
 package cr.ac.una.wsrestuna.dto;
 
-import cr.ac.una.wsrestuna.model.Caja;
 import cr.ac.una.wsrestuna.model.Factura;
-import cr.ac.una.wsrestuna.model.Orden;
 import java.util.Date;
 
 /**
@@ -44,8 +42,13 @@ public class FacturaDto {
         this.descuento = factura.getDescuento();
         this.impuestoVenta = factura.getImpuestoVenta();
         this.impuestoServicio = factura.getImpuestoServicio();
+        
+        if (factura.getIdCaja()!= null) {
         this.idCajaDto = new CajaDto(factura.getIdCaja());
+        } 
+        if (factura.getIdOrden()!= null) {
         this.idOrdenDto = new OrdenDto(factura.getIdOrden());
+        }
     }
 
     public Long getIdFactura() {

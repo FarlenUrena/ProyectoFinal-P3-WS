@@ -96,7 +96,7 @@ public class Caja implements Serializable {
         this.idCaja = idCaja;
     }
 
-    public Caja(Long idCaja, double saldoEfectivo, double saldoTarjeta, double saldoEfectivoCierre, double saldoTarjetaCierre, Date fechaApertura,Date fechaCierre, Long esActiva) {
+    public Caja(Long idCaja, double saldoEfectivo, double saldoTarjeta, double saldoEfectivoCierre, double saldoTarjetaCierre, Date fechaApertura, Date fechaCierre, Long esActiva) {
         this.idCaja = idCaja;
         this.saldoEfectivo = saldoEfectivo;
         this.saldoTarjeta = saldoTarjeta;
@@ -120,7 +120,9 @@ public class Caja implements Serializable {
         this.fechaApertura = caja.getFechaApertura();
         this.fechaCierre = caja.getFechaCierre();
         this.esActiva = caja.getEsActiva();
-//        this.idEmpleado = new Empleado(caja.getIdEmpleadoDto());
+//        if (caja.getIdEmpleadoDto() != null) {
+//            this.idEmpleado = new Empleado(caja.getIdEmpleadoDto());
+//        }
     }
 
     public Long getIdCaja() {
@@ -170,7 +172,7 @@ public class Caja implements Serializable {
     public void setFechaApertura(Date fechaApertura) {
         this.fechaApertura = fechaApertura;
     }
-    
+
     public Date getFechaCierre() {
         return fechaCierre;
     }

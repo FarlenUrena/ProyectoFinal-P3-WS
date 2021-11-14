@@ -75,7 +75,7 @@ public class CajaController {
 
     //Falta probar desde el cliente si funciona
     @POST
-    @Path("/caja/{caja}")
+    @Path("/caja")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response guardarCaja(CajaDto caja) {

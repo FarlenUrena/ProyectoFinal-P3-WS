@@ -38,6 +38,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Factura.findByMetodoDePago", query = "SELECT f FROM Factura f WHERE f.metodoDePago = :metodoDePago"),
     @NamedQuery(name = "Factura.findByMontoPagado", query = "SELECT f FROM Factura f WHERE f.montoPagado = :montoPagado"),
     @NamedQuery(name = "Factura.findByTotal", query = "SELECT f FROM Factura f WHERE f.total = :total"),
+    @NamedQuery(name = "Factura.findByVuelto", query = "SELECT f FROM Factura f WHERE f.vuelto = :vuelto"),
     @NamedQuery(name = "Factura.findByDescuento", query = "SELECT f FROM Factura f WHERE f.descuento = :descuento"),
     @NamedQuery(name = "Factura.findByImpuestoVenta", query = "SELECT f FROM Factura f WHERE f.impuestoVenta = :impuestoVenta"),
     @NamedQuery(name = "Factura.findByImpuestoServicio", query = "SELECT f FROM Factura f WHERE f.impuestoServicio = :impuestoServicio")})
@@ -123,6 +124,11 @@ public class Factura implements Serializable {
         this.descuento = facturaDto.getDescuento();
         this.impuestoVenta = facturaDto.getImpuestoVenta();
         this.impuestoServicio = facturaDto.getImpuestoServicio();
+        if(facturaDto.getIdCajaDto()!=null){
+            this.idCaja = new Caja((facturaDto.getIdCajaDto()));
+        }if(facturaDto.getIdOrdenDto()!=null){
+            this.idOrden = new Orden((facturaDto.getIdOrdenDto()));
+        }
 //        this.idCaja = new Caja(facturaDto.getIdCajaDto());
 //        this.idOrden = new Orden(facturaDto.getIdOrdenDto());
     }
