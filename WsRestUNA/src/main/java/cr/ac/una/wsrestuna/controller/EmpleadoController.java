@@ -6,12 +6,17 @@
 package cr.ac.una.wsrestuna.controller;
 
 import cr.ac.una.wsrestuna.dto.EmpleadoDto;
+import cr.ac.una.wsrestuna.dto.ReporteDto;
 import cr.ac.una.wsrestuna.service.EmpleadoService;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
 import cr.ac.una.wsrestuna.util.JwTokenHelper;
 import cr.ac.una.wsrestuna.util.Respuesta;
 import cr.ac.una.wsrestuna.util.Secure;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -27,6 +32,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import net.sf.jasperreports.engine.JasperPrint;
 
 /**
  *
@@ -150,6 +156,41 @@ public class EmpleadoController {
             return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error renovando el token.").build();
 
         }
+    }
+
+    @POST
+    @Path("/reporte")/*"/{tipo}/{NombreEmpresa}/{DateInicio}/{DateFinal}/{FechaCierreCaja}/{IdEmpleado}")*/
+
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getReporte(ReporteDto r /*@PathParam("tipo") int tipo, @PathParam("NombreEmpresa") String NombreEmpresa, @PathParam("DateInicio") Date DateInicio, @PathParam("DateFinal") Date DateFinal,
+                                     @PathParam("FechaCierreCaja") Date FechaCierreCaja,@PathParam("IdEmpleado") Long IdEmpleado*/) {
+        try {
+            Map<String,Object> datos = new HashMap<>();
+            
+        datos.put("tipo",r.getTipo());
+        datos.put("NombreEmpresa",r.getNombreEmpresa());
+//        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy"); 
+//        Date fecha = formato.parse(r.getDateInicio());
+//        Date fecha2 = formato.parse("23/11/2021");
+//        Date fecha3 = formato.parse("15/11/2021");
+        datos.put("DateInicio",r.getDateInicio());
+        datos.put("DateFinal",r.getDateFinal());
+        datos.put("FechaCierreCaja",r.getFechaCierreCaja());
+        datos.put("IdEmpleado",r.getIdEmpleado());
+            
+            Respuesta res = empleadoService.generarReporteJasper(datos);
+            if (!res.getEstado()) {
+                return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
+            }
+            return Response.ok((ReporteDto) res.getResultado("Reporte")).build();
+
+        }catch (Exception ex) {
+            Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(CodigoRespuesta.ERROR_INTERNO.getValue()).entity("Error generando el reporte.").build();
+
+        }
+
     }
 
 }

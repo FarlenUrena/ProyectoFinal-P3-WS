@@ -8,23 +8,32 @@ package cr.ac.una.wsrestuna.service;
 import cr.ac.una.wsrestuna.dto.CajaDto;
 import cr.ac.una.wsrestuna.dto.EmpleadoDto;
 import cr.ac.una.wsrestuna.dto.OrdenDto;
+import cr.ac.una.wsrestuna.dto.ReporteDto;
 import cr.ac.una.wsrestuna.model.Caja;
 import cr.ac.una.wsrestuna.model.Empleado;
 import cr.ac.una.wsrestuna.model.Orden;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
+import cr.ac.una.wsrestuna.util.Reporte;
 import cr.ac.una.wsrestuna.util.Respuesta;
+import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperPrint;
 
 /**
  *
@@ -190,4 +199,42 @@ public class EmpleadoService {
         }
     }
 
+        public Respuesta generarReporteJasper( Map<String,Object> datos){
+    try {        
+        int tpReporte = 0;
+        tpReporte = (int) datos.get("tipo");
+        System.out.println(tpReporte);
+        switch(tpReporte){// tipos de reportes disponibles.
+            case 1:
+                datos.put("url", "FacturaFechas");
+                break;
+            case 2:
+                datos.put("url", "CajasByEmpleadoAndDay");
+                break;
+            case 3:
+                datos.put("url", "CantidadVendidaProductos");
+                break;
+            case 4:
+                datos.put("url", "Factura");
+                break;
+        }
+        
+        Reporte r = new Reporte();       
+        
+        ReporteDto reporteDto = r.generarReportes((HashMap<String, Object>) datos);
+//        reporteDto.setPrintReport());
+        
+        return new Respuesta(true,
+                    CodigoRespuesta.CORRECTO,
+                    "Reporte generado",
+                    "Reporte generado correctamente",
+                    "Reporte", reporteDto);
+        
+        } catch 
+                (FileNotFoundException | SQLException | JRException | NamingException ex) {
+            Logger.getLogger(EmpleadoService.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
 }

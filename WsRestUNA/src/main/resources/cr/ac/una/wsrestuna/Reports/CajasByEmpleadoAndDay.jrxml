@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CajasByEmpleadoAndDay" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="836e6fc6-6851-491c-949a-560c10aba43e">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="restUNA.xml"/>
+	<parameter name="IdEmpleado" class="java.lang.Long"/>
+	<parameter name="FechaCierreCaja" class="java.util.Date"/>
+	<parameter name="NombreEmpresa" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT c."ID_CAJA",
+	c."SALDO_EFECTIVO",
+	c."SALDO_TARJETA",
+	c."SALDO_EFECTIVO_CIERRE",
+	c."SALDO_TARJETA_CIERRE",
+	c."FECHA_APERTURA",
+	c."FECHA_CIERRE",
+	e."NOMBRE"
+FROM "CAJA" c
+	join "EMPLEADO" e ON 
+	 c."ID_EMPLEADO" = e."ID_EMPLEADO"
+ WHERE  
+	c."FECHA_CIERRE" =  $P{FechaCierreCaja}
+	and 
+	e."ID_EMPLEADO" =  $P{IdEmpleado} ]]>
+	</queryString>
+	<field name="ID_CAJA" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ID_CAJA"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID_CAJA"/>
+	</field>
+	<field name="SALDO_EFECTIVO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="SALDO_EFECTIVO"/>
+		<property name="com.jaspersoft.studio.field.label" value="SALDO_EFECTIVO"/>
+	</field>
+	<field name="SALDO_TARJETA" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="SALDO_TARJETA"/>
+		<property name="com.jaspersoft.studio.field.label" value="SALDO_TARJETA"/>
+	</field>
+	<field name="SALDO_EFECTIVO_CIERRE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="SALDO_EFECTIVO_CIERRE"/>
+		<property name="com.jaspersoft.studio.field.label" value="SALDO_EFECTIVO_CIERRE"/>
+	</field>
+	<field name="SALDO_TARJETA_CIERRE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="SALDO_TARJETA_CIERRE"/>
+		<property name="com.jaspersoft.studio.field.label" value="SALDO_TARJETA_CIERRE"/>
+	</field>
+	<field name="FECHA_APERTURA" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="FECHA_APERTURA"/>
+		<property name="com.jaspersoft.studio.field.label" value="FECHA_APERTURA"/>
+	</field>
+	<field name="FECHA_CIERRE" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="FECHA_CIERRE"/>
+		<property name="com.jaspersoft.studio.field.label" value="FECHA_CIERRE"/>
+	</field>
+	<field name="NOMBRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMBRE"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE"/>
+	</field>
+	<group name="ID_CAJA">
+		<groupExpression><![CDATA[$F{ID_CAJA}]]></groupExpression>
+	</group>
+	<group name="SALDO_EFECTIVO">
+		<groupExpression><![CDATA[$F{SALDO_EFECTIVO}]]></groupExpression>
+	</group>
+	<group name="SALDO_TARJETA">
+		<groupExpression><![CDATA[$F{SALDO_TARJETA}]]></groupExpression>
+	</group>
+	<group name="SALDO_EFECTIVO_CIERRE">
+		<groupExpression><![CDATA[$F{SALDO_EFECTIVO_CIERRE}]]></groupExpression>
+	</group>
+	<group name="SALDO_TARJETA_CIERRE">
+		<groupExpression><![CDATA[$F{SALDO_TARJETA_CIERRE}]]></groupExpression>
+	</group>
+	<group name="FECHA_APERTURA">
+		<groupExpression><![CDATA[$F{FECHA_APERTURA}]]></groupExpression>
+	</group>
+	<group name="FECHA_CIERRE">
+		<groupExpression><![CDATA[$F{FECHA_CIERRE}]]></groupExpression>
+	</group>
+	<group name="NOMBRE">
+		<groupExpression><![CDATA[$F{NOMBRE}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="194" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="800" height="194" forecolor="#F2F2F2" backcolor="#BAB0AD" uuid="2fcbd3f4-f488-411c-9a80-cd5f79477f17"/>
+			</rectangle>
+			<rectangle radius="20">
+				<reportElement x="10" y="10" width="410" height="176" backcolor="#750201" uuid="689fc10b-90e3-4300-b430-6331d931c5e9"/>
+			</rectangle>
+			<textField>
+				<reportElement x="43" y="30" width="356" height="79" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="75f9729c-31ac-410f-b831-efb24a2ddfbe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="37"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NombreEmpresa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="50" y="120" width="98" height="56" forecolor="#F5E1E7" uuid="0e0b13ed-b4fd-4e29-9593-b974488a13f8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="29"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="150" y="120" width="249" height="56" forecolor="#F5E1E7" uuid="b2ba1b31-adde-4736-9cf5-542bd06583ef"/>
+				<textElement verticalAlignment="Middle">
+					<font size="25" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<rectangle radius="20">
+				<reportElement x="440" y="10" width="351" height="176" backcolor="#735751" uuid="4e804644-6d2c-42ad-869b-6d83848dc967"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="460" y="20" width="309" height="50" forecolor="#FFFFFF" uuid="79b9451d-08f9-4028-83da-9e6674241b39"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="37" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CAJA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="120" width="170" height="56" forecolor="#F5E1E7" uuid="c90f7202-ad6a-4bb0-99fc-c319562bb085">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="25" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Día:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="650" y="120" width="119" height="56" forecolor="#F5E1E7" uuid="860dc805-0a2d-4af0-b05f-55d6acbbc9c3">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="27" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($P{FechaCierreCaja})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="460" y="70" width="170" height="46" forecolor="#F5E1E7" uuid="5a9897b9-3928-4b31-926d-ff5abc4673c7">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="25" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Empleado id:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="650" y="70" width="119" height="45" forecolor="#F5E1E7" uuid="1283a961-58e1-489f-984d-3ce6abb84400">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="27" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{IdEmpleado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="50" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="800" height="50" backcolor="#735751" uuid="1bda9bf7-dcba-4830-b753-0dc21533431b"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="10" width="105" height="30" forecolor="#F5E1E7" uuid="202862da-e16e-4044-b569-0ee12169375c">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE EMPLEADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="106" y="10" width="64" height="30" forecolor="#F5E1E7" uuid="241b65a7-b2a4-40d9-9dc7-167ed7f2f6c8">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID CAJA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="10" width="105" height="30" forecolor="#F5E1E7" uuid="437e65e6-a3a0-4474-9916-a0d3850b36ec">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA APERTURA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="10" width="105" height="30" forecolor="#F5E1E7" uuid="b798b442-fd97-4caa-bb66-0a577a1d14b7">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALDO EFECTIVO INICIAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="485" y="10" width="105" height="30" forecolor="#F5E1E7" uuid="19f8cf30-1680-4a3a-ba98-5fc8f91ae2e5">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALDO EFECTIVO CIERRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="590" y="10" width="105" height="30" forecolor="#F5E1E7" uuid="3db07d18-0d8a-4bed-a404-90a6abdd1f3e">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALDO TARJETA INICIAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="10" width="105" height="30" forecolor="#F5E1E7" uuid="ae2e600d-0ead-46a4-985e-c511d9a19f37">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA CIERRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="695" y="10" width="105" height="30" forecolor="#F5E1E7" uuid="5cbf8ed6-cf14-4e8a-ab84-025d182acc9e">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALDO TARJETA CIERRE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="99" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="0" width="105" height="99" uuid="c7be625e-bba8-4bfa-b375-7018e82d325f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="38c48a67-1009-4d18-a919-47de5bbc905a"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="19" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="107" y="0" width="64" height="99" uuid="edb02eab-491c-4642-9a3c-a03b117c954d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0ae844dc-cb28-47a5-b5e0-36847dc9fd51"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="19" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ID_CAJA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="171" y="0" width="105" height="99" uuid="44b54976-19fb-4456-b5f6-7a3da59e7480">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a9e6d842-ebc9-4911-a1a5-31874c0e76e9"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="19" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{FECHA_APERTURA})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="381" y="0" width="105" height="99" uuid="efa5c8d8-9d0f-49e9-b542-f7491033eed5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="68363bf0-0708-4342-80ec-cf0715777b6b"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="19" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SALDO_EFECTIVO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="486" y="0" width="105" height="99" uuid="2b854010-715a-46a0-8ec7-a790bf175bfc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3d94ffdb-e59b-4dd8-b795-3f084849aa1d"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="19" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SALDO_EFECTIVO_CIERRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="0" width="105" height="99" uuid="cb58d300-eb24-4804-b6d8-0aa95318191a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="12b0e4dc-fcb0-4b63-8b6b-1ff9a54f8734"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="19" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{FECHA_CIERRE})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="591" y="0" width="105" height="99" uuid="449c3e2c-a76f-49c6-af7a-d3f324a10eaf">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ff2f1646-4869-4efb-b482-66847efcd400"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="19" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SALDO_TARJETA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="696" y="0" width="104" height="99" uuid="bdbe63e2-a660-495d-9330-4a64a11f2060">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7ae448b7-c615-4ae8-b014-12f22d433c03"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="19" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SALDO_TARJETA_CIERRE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="43" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="0" width="800" height="43" backcolor="#750201" uuid="9fc0e535-df1e-446b-a1ad-9ffd6fcfb100"/>
+			</rectangle>
+			<textField>
+				<reportElement x="560" y="10" width="240" height="22" forecolor="#F6E2E8" uuid="c4b841a0-e268-4724-afec-27d57159e0eb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="19" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pág. " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
