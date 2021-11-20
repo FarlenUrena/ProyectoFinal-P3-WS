@@ -21,12 +21,13 @@ public class ParametroDto {
     private byte[] logoRestaurante;
 
     public ParametroDto(Parametro parametro) {
-        //TODO:
-        //ARREGLAR ENTIDAD
-//        this.idParametro = parametro.getIdParametro();
-//        this.nombreRestaurante = parametro.getNombre();
-//        this.impuestoServicio = parametro.getValorNumerico();
-//        this.logoRestaurante = (byte[]) parametro.getImagen();
+        this.idParametro = parametro.getIdParametro();
+        this.nombreRestaurante = parametro.getNombreRestaurante();
+        this.correoRestaurante = parametro.getCorreoResturante();//ARREGLAR EN EL SCRIPT Y MODEL NOMBRE MAL ESCRITO
+        this.impuestoServicio = parametro.getImpuestoServicio();
+        this.impuestoVenta = parametro.getImpuestoVenta();
+        this.descuentoMaximo = parametro.getDescuentoMaximo();
+        this.logoRestaurante = parametro.getLogoRestaurante();
     }
 
     public ParametroDto() {
@@ -86,7 +87,7 @@ public class ParametroDto {
 
     public void setLogoRestaurante(byte[] logoRestaurante) {
         this.logoRestaurante = logoRestaurante;
-    }  
+    }
 
     @Override
     public String toString() {

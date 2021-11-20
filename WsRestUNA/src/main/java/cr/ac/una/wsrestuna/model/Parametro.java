@@ -5,6 +5,7 @@
  */
 package cr.ac.una.wsrestuna.model;
 
+import cr.ac.una.wsrestuna.dto.ParametroDto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Basic;
@@ -39,7 +40,7 @@ public class Parametro implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_PARAMETRO")
-    private BigDecimal idParametro;
+    private Long idParametro;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -49,44 +50,59 @@ public class Parametro implements Serializable {
     @NotNull
     @Size(min = 1, max = 30)
     @Column(name = "CORREO_RESTURANTE")
-    private String correoResturante;
+    private String correoResturante;//ARREGLAR EN EL SCRIPT Y MODEL NOMBRE MAL ESCRITO
     @Basic(optional = false)
     @NotNull
     @Column(name = "IMPUESTO_SERVICIO")
-    private BigDecimal impuestoServicio;
+    private Double impuestoServicio;
     @Basic(optional = false)
     @NotNull
     @Column(name = "IMPUESTO_VENTA")
-    private BigDecimal impuestoVenta;
+    private Double impuestoVenta;
     @Basic(optional = false)
     @NotNull
     @Column(name = "DESCUENTO_MAXIMO")
-    private BigDecimal descuentoMaximo;
+    private Double descuentoMaximo;
     @Lob
     @Column(name = "LOGO_RESTAURANTE")
-    private Serializable logoRestaurante;
+    private byte[] logoRestaurante;
 
     public Parametro() {
     }
 
-    public Parametro(BigDecimal idParametro) {
+    public Parametro(Long idParametro) {
         this.idParametro = idParametro;
     }
 
-    public Parametro(BigDecimal idParametro, String nombreRestaurante, String correoResturante, BigDecimal impuestoServicio, BigDecimal impuestoVenta, BigDecimal descuentoMaximo) {
+    public Parametro(ParametroDto parametroDto) {
+        this.idParametro = parametroDto.getIdParametro();
+        actualizarParametro(parametroDto);
+    }
+
+    public void actualizarParametro(ParametroDto parametroDto) {
+        this.nombreRestaurante = parametroDto.getNombreRestaurante();
+        this.correoResturante = parametroDto.getCorreoRestaurante();//ARREGLAR EN EL SCRIPT Y MODEL NOMBRE MAL ESCRITO
+        this.impuestoServicio = parametroDto.getImpuestoServicio();
+        this.impuestoVenta = parametroDto.getImpuestoVenta();
+        this.descuentoMaximo = parametroDto.getDescuentoMaximo();
+        this.logoRestaurante = parametroDto.getLogoRestaurante();
+    }
+
+    public Parametro(Long idParametro, String nombreRestaurante, String correoResturante, Double impuestoServicio, Double impuestoVenta, Double descuentoMaximo) {
         this.idParametro = idParametro;
         this.nombreRestaurante = nombreRestaurante;
-        this.correoResturante = correoResturante;
+        this.correoResturante = correoResturante;//ARREGLAR EN EL SCRIPT Y MODEL NOMBRE MAL ESCRITO
         this.impuestoServicio = impuestoServicio;
         this.impuestoVenta = impuestoVenta;
         this.descuentoMaximo = descuentoMaximo;
+//        this.logoRestaurante = logoRestaurante;
     }
 
-    public BigDecimal getIdParametro() {
+    public Long getIdParametro() {
         return idParametro;
     }
 
-    public void setIdParametro(BigDecimal idParametro) {
+    public void setIdParametro(Long idParametro) {
         this.idParametro = idParametro;
     }
 
@@ -99,42 +115,42 @@ public class Parametro implements Serializable {
     }
 
     public String getCorreoResturante() {
-        return correoResturante;
+        return correoResturante;//ARREGLAR EN EL SCRIPT Y MODEL NOMBRE MAL ESCRITO
     }
 
     public void setCorreoResturante(String correoResturante) {
-        this.correoResturante = correoResturante;
+        this.correoResturante = correoResturante;//ARREGLAR EN EL SCRIPT Y MODEL NOMBRE MAL ESCRITO
     }
 
-    public BigDecimal getImpuestoServicio() {
+    public Double getImpuestoServicio() {
         return impuestoServicio;
     }
 
-    public void setImpuestoServicio(BigDecimal impuestoServicio) {
+    public void setImpuestoServicio(Double impuestoServicio) {
         this.impuestoServicio = impuestoServicio;
     }
 
-    public BigDecimal getImpuestoVenta() {
+    public Double getImpuestoVenta() {
         return impuestoVenta;
     }
 
-    public void setImpuestoVenta(BigDecimal impuestoVenta) {
+    public void setImpuestoVenta(Double impuestoVenta) {
         this.impuestoVenta = impuestoVenta;
     }
 
-    public BigDecimal getDescuentoMaximo() {
+    public Double getDescuentoMaximo() {
         return descuentoMaximo;
     }
 
-    public void setDescuentoMaximo(BigDecimal descuentoMaximo) {
+    public void setDescuentoMaximo(Double descuentoMaximo) {
         this.descuentoMaximo = descuentoMaximo;
     }
 
-    public Serializable getLogoRestaurante() {
+    public byte[] getLogoRestaurante() {
         return logoRestaurante;
     }
 
-    public void setLogoRestaurante(Serializable logoRestaurante) {
+    public void setLogoRestaurante(byte[] logoRestaurante) {
         this.logoRestaurante = logoRestaurante;
     }
 
@@ -162,5 +178,5 @@ public class Parametro implements Serializable {
     public String toString() {
         return "cr.ac.una.wsrestuna.model.Parametro[ idParametro=" + idParametro + " ]";
     }
-    
+
 }
