@@ -5,131 +5,137 @@
  */
 package cr.ac.una.wsrestuna.model;
 
-import cr.ac.una.wsrestuna.dto.ParametroDto;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- * @author Farlen
+/*
+ * @author Kendall
  */
 @Entity
-@Table(name = "PARAMETRO", schema = "RESTUNA")
+@Table(name = "PARAMETRO")
 @NamedQueries({
     @NamedQuery(name = "Parametro.findAll", query = "SELECT p FROM Parametro p"),
     @NamedQuery(name = "Parametro.findByIdParametro", query = "SELECT p FROM Parametro p WHERE p.idParametro = :idParametro"),
-    @NamedQuery(name = "Parametro.findByNombre", query = "SELECT p FROM Parametro p WHERE p.nombre = :nombre"),
-    @NamedQuery(name = "Parametro.findByValorNumerico", query = "SELECT p FROM Parametro p WHERE p.valorNumerico = :valorNumerico"),
-    @NamedQuery(name = "Parametro.findByValorTexto", query = "SELECT p FROM Parametro p WHERE p.valorTexto = :valorTexto"),
-    @NamedQuery(name = "Parametro.findByDescripcion", query = "SELECT p FROM Parametro p WHERE p.descripcion = :descripcion")})
+    @NamedQuery(name = "Parametro.findByNombreRestaurante", query = "SELECT p FROM Parametro p WHERE p.nombreRestaurante = :nombreRestaurante"),
+    @NamedQuery(name = "Parametro.findByCorreoResturante", query = "SELECT p FROM Parametro p WHERE p.correoResturante = :correoResturante"),
+    @NamedQuery(name = "Parametro.findByImpuestoServicio", query = "SELECT p FROM Parametro p WHERE p.impuestoServicio = :impuestoServicio"),
+    @NamedQuery(name = "Parametro.findByImpuestoVenta", query = "SELECT p FROM Parametro p WHERE p.impuestoVenta = :impuestoVenta"),
+    @NamedQuery(name = "Parametro.findByDescuentoMaximo", query = "SELECT p FROM Parametro p WHERE p.descuentoMaximo = :descuentoMaximo")})
 public class Parametro implements Serializable {
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
-    @SequenceGenerator(name = "PARAMETRO_ID_GENERATOR", sequenceName = "RESTUNA.SEQ_ID_PARAMETRO", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PARAMETRO_ID_GENERATOR")
     @Basic(optional = false)
-//    @NotNull
+    @NotNull
     @Column(name = "ID_PARAMETRO")
-    private Long idParametro;
+    private BigDecimal idParametro;
     @Basic(optional = false)
-//    @NotNull
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "NOMBRE_RESTAURANTE")
+    private String nombreRestaurante;
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "NOMBRE")
-    private String nombre;
-    @Column(name = "VALOR_NUMERICO")
-    private double valorNumerico;
-    @Size(max = 30)
-    @Column(name = "VALOR_TEXTO")
-    private String valorTexto;
-    @Size(max = 60)
-    @Column(name = "DESCRIPCION")
-    private String descripcion;
+    @Column(name = "CORREO_RESTURANTE")
+    private String correoResturante;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "IMPUESTO_SERVICIO")
+    private BigDecimal impuestoServicio;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "IMPUESTO_VENTA")
+    private BigDecimal impuestoVenta;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "DESCUENTO_MAXIMO")
+    private BigDecimal descuentoMaximo;
     @Lob
-    @Column(name = "IMAGEN")
-    private byte[] imagen;
+    @Column(name = "LOGO_RESTAURANTE")
+    private Serializable logoRestaurante;
 
     public Parametro() {
     }
 
-    public Parametro(Long idParametro) {
+    public Parametro(BigDecimal idParametro) {
         this.idParametro = idParametro;
     }
 
-    public Parametro(Long idParametro, String nombre) {
+    public Parametro(BigDecimal idParametro, String nombreRestaurante, String correoResturante, BigDecimal impuestoServicio, BigDecimal impuestoVenta, BigDecimal descuentoMaximo) {
         this.idParametro = idParametro;
-        this.nombre = nombre;
+        this.nombreRestaurante = nombreRestaurante;
+        this.correoResturante = correoResturante;
+        this.impuestoServicio = impuestoServicio;
+        this.impuestoVenta = impuestoVenta;
+        this.descuentoMaximo = descuentoMaximo;
     }
 
-    public Parametro(ParametroDto parametroDto) {
-        this.idParametro = parametroDto.getIdParametro();
-        actualizarParametro(parametroDto);
-    }
-
-    public void actualizarParametro(ParametroDto parametroDto) {
-        this.nombre = parametroDto.getNombre();
-        this.valorNumerico = parametroDto.getValorNumerico();
-        this.valorTexto = parametroDto.getValorTexto();
-        this.descripcion = parametroDto.getDescripcion();
-    }
-
-    public Long getIdParametro() {
+    public BigDecimal getIdParametro() {
         return idParametro;
     }
 
-    public void setIdParametro(Long idParametro) {
+    public void setIdParametro(BigDecimal idParametro) {
         this.idParametro = idParametro;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreRestaurante() {
+        return nombreRestaurante;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreRestaurante(String nombreRestaurante) {
+        this.nombreRestaurante = nombreRestaurante;
     }
 
-    public double getValorNumerico() {
-        return valorNumerico;
+    public String getCorreoResturante() {
+        return correoResturante;
     }
 
-    public void setValorNumerico(double valorNumerico) {
-        this.valorNumerico = valorNumerico;
+    public void setCorreoResturante(String correoResturante) {
+        this.correoResturante = correoResturante;
     }
 
-    public String getValorTexto() {
-        return valorTexto;
+    public BigDecimal getImpuestoServicio() {
+        return impuestoServicio;
     }
 
-    public void setValorTexto(String valorTexto) {
-        this.valorTexto = valorTexto;
+    public void setImpuestoServicio(BigDecimal impuestoServicio) {
+        this.impuestoServicio = impuestoServicio;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public BigDecimal getImpuestoVenta() {
+        return impuestoVenta;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setImpuestoVenta(BigDecimal impuestoVenta) {
+        this.impuestoVenta = impuestoVenta;
     }
 
-    public byte[] getImagen() {
-        return imagen;
+    public BigDecimal getDescuentoMaximo() {
+        return descuentoMaximo;
     }
 
-    public void setImagen(byte[] imagen) {
-        this.imagen = imagen;
+    public void setDescuentoMaximo(BigDecimal descuentoMaximo) {
+        this.descuentoMaximo = descuentoMaximo;
+    }
+
+    public Serializable getLogoRestaurante() {
+        return logoRestaurante;
+    }
+
+    public void setLogoRestaurante(Serializable logoRestaurante) {
+        this.logoRestaurante = logoRestaurante;
     }
 
     @Override
@@ -156,5 +162,5 @@ public class Parametro implements Serializable {
     public String toString() {
         return "cr.ac.una.wsrestuna.model.Parametro[ idParametro=" + idParametro + " ]";
     }
-
+    
 }
