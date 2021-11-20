@@ -13,30 +13,23 @@ import java.util.Arrays;
 public class ParametroDto {
 
     private Long idParametro;
-    private String nombre;
-    private double valorNumerico;
-    private String valorTexto;
-    private String descripcion;
-    private byte[] imagen;
+    private String nombreRestaurante;
+    private String correoRestaurante;
+    private double impuestoServicio;
+    private double impuestoVenta;
+    private double descuentoMaximo;
+    private byte[] logoRestaurante;
 
     public ParametroDto(Parametro parametro) {
-        this.idParametro = parametro.getIdParametro();
-        this.nombre = parametro.getNombre();
-        this.valorNumerico = parametro.getValorNumerico();
-        this.valorTexto = parametro.getValorTexto();
-        this.descripcion = parametro.getDescripcion();
-        this.imagen = (byte[]) parametro.getImagen();
+        //TODO:
+        //ARREGLAR ENTIDAD
+//        this.idParametro = parametro.getIdParametro();
+//        this.nombreRestaurante = parametro.getNombre();
+//        this.impuestoServicio = parametro.getValorNumerico();
+//        this.logoRestaurante = (byte[]) parametro.getImagen();
     }
 
     public ParametroDto() {
-    }
-
-    public byte[] getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(byte[] imagen) {
-        this.imagen = imagen;
     }
 
     public Long getIdParametro() {
@@ -47,41 +40,57 @@ public class ParametroDto {
         this.idParametro = idParametro;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreRestaurante() {
+        return nombreRestaurante;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreRestaurante(String nombreRestaurante) {
+        this.nombreRestaurante = nombreRestaurante;
     }
 
-    public double getValorNumerico() {
-        return valorNumerico;
+    public String getCorreoRestaurante() {
+        return correoRestaurante;
     }
 
-    public void setValorNumerico(double valorNumerico) {
-        this.valorNumerico = valorNumerico;
+    public void setCorreoRestaurante(String correoRestaurante) {
+        this.correoRestaurante = correoRestaurante;
     }
 
-    public String getValorTexto() {
-        return valorTexto;
+    public double getImpuestoServicio() {
+        return impuestoServicio;
     }
 
-    public void setValorTexto(String valorTexto) {
-        this.valorTexto = valorTexto;
+    public void setImpuestoServicio(double impuestoServicio) {
+        this.impuestoServicio = impuestoServicio;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public double getImpuestoVenta() {
+        return impuestoVenta;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setImpuestoVenta(double impuestoVenta) {
+        this.impuestoVenta = impuestoVenta;
     }
+
+    public double getDescuentoMaximo() {
+        return descuentoMaximo;
+    }
+
+    public void setDescuentoMaximo(double descuentoMaximo) {
+        this.descuentoMaximo = descuentoMaximo;
+    }
+
+    public byte[] getLogoRestaurante() {
+        return logoRestaurante;
+    }
+
+    public void setLogoRestaurante(byte[] logoRestaurante) {
+        this.logoRestaurante = logoRestaurante;
+    }  
 
     @Override
     public String toString() {
-        return "ParametroDto{" + "idParametro=" + idParametro + ", nombre=" + nombre + ", valorNumerico=" + valorNumerico + ", valorTexto=" + valorTexto + ", descripcion=" + descripcion + ", imagen=" + Arrays.toString(imagen) + '}';
+        return "ParametroDto{" + "idParametro=" + idParametro + ", nombreRestaurante=" + nombreRestaurante + ", correoRestaurante=" + correoRestaurante + ", impuestoServicio=" + impuestoServicio + ", impuestoVenta=" + impuestoVenta + ", descuentoMaximo=" + descuentoMaximo + ", logoRestaurante=" + logoRestaurante + '}';
     }
 
 }
