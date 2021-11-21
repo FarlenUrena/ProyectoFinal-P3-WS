@@ -45,8 +45,9 @@ public class ElementodeseccionService {
             qryElementodeseccion.setParameter("idElemento", id);
             Elementodeseccion elementodeseccion = (Elementodeseccion) qryElementodeseccion.getSingleResult();
             ElementodeseccionDto elementodeseccionDto = new ElementodeseccionDto(elementodeseccion);
-
-            elementodeseccionDto.setIdSeccionDto(new SeccionDto(elementodeseccion.getIdSeccion()));
+            if (elementodeseccion.getIdSeccion() != null) {
+                elementodeseccionDto.setIdSeccionDto(new SeccionDto(elementodeseccion.getIdSeccion()));
+            }
             for (Orden ordenE : elementodeseccion.getOrdenList()) {
                 elementodeseccionDto.getOrdenesDtoList().add(new OrdenDto(ordenE));
             }
@@ -103,9 +104,9 @@ public class ElementodeseccionService {
     public Respuesta guardarElementosdeseccion(List<ElementodeseccionDto> elementosdeseccionDto) {
         List<ElementodeseccionDto> elementosSend = new ArrayList<>();
         try {
-           
+
             for (ElementodeseccionDto elementodeseccionDto : elementosdeseccionDto) {
-               Elementodeseccion elementodeseccion;
+                Elementodeseccion elementodeseccion;
                 if (elementodeseccionDto.getIdElemento() != null && elementodeseccionDto.getIdElemento() > 0) {
                     elementodeseccion = em.find(Elementodeseccion.class, elementodeseccionDto.getIdElemento());
                     if (elementodeseccion == null) {
@@ -193,6 +194,39 @@ public class ElementodeseccionService {
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Ocurrio un error al consultar los elementos de seccion.", ex);
             return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al consultar los elementos de seccion.", "getElementodeseccions " + ex.getMessage());
+        }
+    }
+
+    public Respuesta eliminarElementosdeseccion(Long id) {
+        try {
+            Seccion seccion;
+            if (id != null && id > 0) {
+                seccion = em.find(Seccion.class, id);
+                if (seccion == null) {
+                    return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró la seccion a eliminar.", "eliminarSeccion NoResultException");
+                }
+                Query qryElementodeseccion = em.createNamedQuery("Elementodeseccion.findAll", Elementodeseccion.class);
+                List<Elementodeseccion> elementosdeseccion = (List<Elementodeseccion>) qryElementodeseccion.getResultList();
+
+                for (Elementodeseccion elementodeseccion : elementosdeseccion) {
+                    if (!elementodeseccion.getIdElemento().equals(11L)) {
+                        if (elementodeseccion.getIdSeccion().getIdSeccion().equals(id)) {
+                            em.remove(elementodeseccion);
+                        }
+                    }
+                }
+
+            } else {
+                return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "Debe cargar el elemento de seccion a eliminar.", "eliminarElementodeseccion NoResultException");
+            }
+            em.flush();
+            return new Respuesta(true, CodigoRespuesta.CORRECTO, "", "");
+        } catch (Exception ex) {
+            if (ex.getCause() != null && ex.getCause().getCause().getClass() == SQLIntegrityConstraintViolationException.class) {
+                return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "No se puede eliminar el elemento de seccion porque tiene relaciones con otros registros.", "eliminarElementodeseccion " + ex.getMessage());
+            }
+            LOG.log(Level.SEVERE, "Ocurrio un error al guardar el elementodeseccion.", ex);
+            return new Respuesta(false, CodigoRespuesta.ERROR_INTERNO, "Ocurrio un error al eliminar el elemento de seccion.", "eliminarElementodeseccion " + ex.getMessage());
         }
     }
 }

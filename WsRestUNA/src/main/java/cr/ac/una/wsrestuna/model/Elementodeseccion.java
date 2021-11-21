@@ -39,7 +39,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Elementodeseccion.findByEsOcupada", query = "SELECT e FROM Elementodeseccion e WHERE e.esOcupada = :esOcupada"),
     @NamedQuery(name = "Elementodeseccion.findByPosicionX", query = "SELECT e FROM Elementodeseccion e WHERE e.posicionX = :posicionX"),
     @NamedQuery(name = "Elementodeseccion.findByPosicionY", query = "SELECT e FROM Elementodeseccion e WHERE e.posicionY = :posicionY"),
-    @NamedQuery(name = "Elementodeseccion.findByImpuestoPorServicio", query = "SELECT e FROM Elementodeseccion e WHERE e.impuestoPorServicio = :impuestoPorServicio")})
+    @NamedQuery(name = "Elementodeseccion.findByImpuestoPorServicio", query = "SELECT e FROM Elementodeseccion e WHERE e.impuestoPorServicio = :impuestoPorServicio"),
+    @NamedQuery(name = "Elementodeseccion.deleteAll", query = "DELETE FROM Elementodeseccion e WHERE e.idSeccion.idSeccion = :idSeccion")})
 public class Elementodeseccion implements Serializable {
 
     private static final long serialVersionUID = 1L;

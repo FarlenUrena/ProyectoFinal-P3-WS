@@ -6,6 +6,7 @@
 package cr.ac.una.wsrestuna.controller;
 
 import cr.ac.una.wsrestuna.dto.SeccionDto;
+import cr.ac.una.wsrestuna.service.ElementodeseccionService;
 import cr.ac.una.wsrestuna.service.SeccionService;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
 import cr.ac.una.wsrestuna.util.Respuesta;
@@ -35,6 +36,8 @@ public class SeccionController {
 
     @EJB
     SeccionService seccionService;
+    @EJB
+    ElementodeseccionService elementodeseccionService;
 
     @GET
     @Path("/seccion/{id}")
@@ -97,9 +100,13 @@ public class SeccionController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response eliminarSeccion(@PathParam("id") Long id) {
         try {
-            Respuesta res = seccionService.eliminarSeccion(id);
-            if (!res.getEstado()) {
-                return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
+
+            Respuesta resE = elementodeseccionService.eliminarElementosdeseccion(id);
+            if (resE.getEstado()) {
+                Respuesta res = seccionService.eliminarSeccion(id);
+                if (!res.getEstado()) {
+                    return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
+                }
             }
             return Response.ok().build();
         } catch (Exception ex) {

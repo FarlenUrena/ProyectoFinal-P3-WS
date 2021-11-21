@@ -112,6 +112,7 @@ public class SeccionService {
                 if (seccion == null) {
                     return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "No se encrontró la seccion a eliminar.", "eliminarSeccion NoResultException");
                 }
+                
                 em.remove(seccion);
             } else {
                 return new Respuesta(false, CodigoRespuesta.ERROR_NOENCONTRADO, "Debe cargar la seccion a eliminar.", "eliminarSeccion NoResultException");
