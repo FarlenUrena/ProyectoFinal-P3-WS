@@ -24,6 +24,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -76,6 +77,9 @@ public class Factura implements Serializable {
     private double vuelto;
     @Basic(optional = false)
 //    @NotNull
+    @Size(max = 40)
+    @Column(name = "NOMBRE_CLIENTE")
+    private String nombreCliente;
     @Column(name = "DESCUENTO")
     private double descuento;
     @Basic(optional = false)
@@ -98,7 +102,7 @@ public class Factura implements Serializable {
         this.idFactura = idFactura;
     }
 
-    public Factura(Long idFactura, Date fechaFacturacion, Long metodoDePago, float montoPagado, float total, float vuelto, float descuento,float impuestoVenta,float impuestoServicio) {
+    public Factura(Long idFactura, Date fechaFacturacion, Long metodoDePago, float montoPagado, float total, float vuelto, float descuento,float impuestoVenta,String nombreCliente,float impuestoServicio) {
         this.idFactura = idFactura;
         this.fechaFacturacion = fechaFacturacion;
         this.metodoDePago = metodoDePago;
@@ -106,6 +110,7 @@ public class Factura implements Serializable {
         this.total = total;
         this.vuelto = vuelto;
         this.descuento = descuento;
+        this.nombreCliente = nombreCliente;
         this.impuestoVenta = impuestoVenta;
         this.impuestoServicio = impuestoServicio;
     }
@@ -124,6 +129,7 @@ public class Factura implements Serializable {
         this.descuento = facturaDto.getDescuento();
         this.impuestoVenta = facturaDto.getImpuestoVenta();
         this.impuestoServicio = facturaDto.getImpuestoServicio();
+        this.nombreCliente = facturaDto.getNombreCliente();
         if(facturaDto.getIdCajaDto()!=null){
             this.idCaja = new Caja((facturaDto.getIdCajaDto()));
         }if(facturaDto.getIdOrdenDto()!=null){
@@ -203,6 +209,14 @@ public class Factura implements Serializable {
 
     public void setImpuestoServicio(double impuestoServicio) {
         this.impuestoServicio = impuestoServicio;
+    }
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
     }
     
     public Caja getIdCaja() {

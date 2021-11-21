@@ -159,27 +159,23 @@ public class EmpleadoController {
     }
 
     @POST
-    @Path("/reporte")/*"/{tipo}/{NombreEmpresa}/{DateInicio}/{DateFinal}/{FechaCierreCaja}/{IdEmpleado}")*/
-
+    @Path("/reporte")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getReporte(ReporteDto r /*@PathParam("tipo") int tipo, @PathParam("NombreEmpresa") String NombreEmpresa, @PathParam("DateInicio") Date DateInicio, @PathParam("DateFinal") Date DateFinal,
-                                     @PathParam("FechaCierreCaja") Date FechaCierreCaja,@PathParam("IdEmpleado") Long IdEmpleado*/) {
+    public Response getReporte(ReporteDto reporte) {
         try {
             Map<String,Object> datos = new HashMap<>();
             
-        datos.put("tipo",r.getTipo());
-        datos.put("NombreEmpresa",r.getNombreEmpresa());
-//        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy"); 
-//        Date fecha = formato.parse(r.getDateInicio());
-//        Date fecha2 = formato.parse("23/11/2021");
-//        Date fecha3 = formato.parse("15/11/2021");
-        datos.put("DateInicio",r.getDateInicio());
-        datos.put("DateFinal",r.getDateFinal());
-        datos.put("FechaCierreCaja",r.getFechaCierreCaja());
-        datos.put("IdEmpleado",r.getIdEmpleado());
+        datos.put("tipo",reporte.getTipo());
+        datos.put("NombreEmpresa",reporte.getNombreEmpresa());
+        datos.put("DateInicio",reporte.getDateInicio());
+        datos.put("DateFinal",reporte.getDateFinal());
+        datos.put("FechaCierreCaja",reporte.getFechaCierreCaja());
+        datos.put("IdEmpleado",reporte.getIdEmpleado());
+        datos.put("FacturaId",reporte.getIdFactura());
+        datos.put("telefono", reporte.getTelefono());
             
-            Respuesta res = empleadoService.generarReporteJasper(datos);
+            Respuesta res = empleadoService.generarReporteJasper(reporte,datos);
             if (!res.getEstado()) {
                 return Response.status(res.getCodigoRespuesta().getValue()).entity(res.getMensaje()).build();
             }

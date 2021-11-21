@@ -11,7 +11,6 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -28,8 +27,8 @@ import net.sf.jasperreports.engine.JasperReport;
  * @author Farlen
  */
 public class Reporte {
-    public ReporteDto generarReportes(Map<String,Object> datos) throws FileNotFoundException, /*JRException,*/ SQLException,   JRException,   NamingException{
-    
+    public ReporteDto generarReportes(ReporteDto reporte,Map<String,Object> datos) throws FileNotFoundException, SQLException,   JRException,   NamingException{
+        
     String url = (String) datos.get("url");
     
     InputStream x = wsrestuna.class.getClassLoader().getResourceAsStream("cr/ac/una/wsrestuna/Reports/"+url+".jrxml");
@@ -38,48 +37,11 @@ public class Reporte {
     DataSource datasource = (DataSource) context.lookup("jdbc/RestUNA");
     Connection c =   datasource.getConnection();
     System.out.println();
-    JasperReport compileReport = JasperCompileManager.compileReport(x);
-    
-    
-    
-    
-//    InputStream x = relojunaws.class.getClassLoader().getResourceAsStream("url");
-//    /* TODO
-//    Conexion a base de datos
-//      ...
-//            */
-//    JasperReport compileReport = JasperCompileManager.compileReport(x);
-    
-    
-    
-    
-    
-    
-    
-    
-//    HashMap<String,Object> map = new HashMap<>();    
-    JasperPrint report = JasperFillManager.fillReport(compileReport, datos,/*new JREmptyDataSource()*/c);
-//    JasperExportManager.exportReportToPdfFile(report,"prueba.pdf");
-//        byte[] xd = JasperExportManager.exportReportToPdf(report);
-    
-//        JasperExportManager.
-//     StringBuffer sbuffer = new StringBuffer();
-//  JRXmlExporter exporter = new JRXmlExporter();
-//  
-//  exporter..setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-//  exporter.setParameter(JRExporterParameter.OUTPUT_STRING_BUFFER, sbuffer);
-//  
-//  exporter.exportReport();
-  
-//  return xd;
-    
-//    byte [] data = JasperExportManager.exportReportToPdf(report);
+    JasperReport compileReport = JasperCompileManager.compileReport(x);      
+    JasperPrint report = JasperFillManager.fillReport(compileReport, datos,c);
 
-//      em.getTransaction().commit();
-        byte[] xd = JasperExportManager.exportReportToPdf(report);
-ReporteDto rep = new ReporteDto();
-     rep.setPrintReport(xd);
-     return rep;
-//    report;
+    byte[] pdfBytes = JasperExportManager.exportReportToPdf(report);
+    reporte.setPrintReport(pdfBytes);
+    return reporte;
     }
 }

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FacturaSBR" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="742" leftMargin="20" rightMargin="30" topMargin="20" bottomMargin="20" uuid="c4f84462-a538-4208-ab99-a98f6a848c66">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="restUNA.xml"/>
+	<parameter name="idFactura" class="java.math.BigDecimal"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT pp.*,
+	p."NOMBRE",P."NOMBRE_CORTO"
+FROM "PRODUCTOPORORDEN" pp
+	join "PRODUCTO" p ON 
+	 pp."ID_PRODUCTO" = p."ID_PRODUCTO" 
+	join "ORDEN" o ON 
+	 o."ID_ORDEN" = pp."ID_ORDEN" 
+	join "FACTURA" f ON 
+	 f."ID_ORDEN" = o."ID_ORDEN"
+	 where f."ID_FACTURA" =  $P{idFactura} ]]>
+	</queryString>
+	<field name="ID_PRODUCTO_POR_ORDEN" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ID_PRODUCTO_POR_ORDEN"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID_PRODUCTO_POR_ORDEN"/>
+	</field>
+	<field name="CANTIDAD" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="CANTIDAD"/>
+		<property name="com.jaspersoft.studio.field.label" value="CANTIDAD"/>
+	</field>
+	<field name="PRECIO_PRODUCTO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="PRECIO_PRODUCTO"/>
+		<property name="com.jaspersoft.studio.field.label" value="PRECIO_PRODUCTO"/>
+	</field>
+	<field name="SUBTOTAL" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="SUBTOTAL"/>
+		<property name="com.jaspersoft.studio.field.label" value="SUBTOTAL"/>
+	</field>
+	<field name="ID_PRODUCTO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ID_PRODUCTO"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID_PRODUCTO"/>
+	</field>
+	<field name="ID_ORDEN" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ID_ORDEN"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID_ORDEN"/>
+	</field>
+	<field name="NOMBRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMBRE"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE"/>
+	</field>
+	<field name="NOMBRE_CORTO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMBRE_CORTO"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE_CORTO"/>
+	</field>
+	<group name="ID_PRODUCTO_POR_ORDEN">
+		<groupExpression><![CDATA[$F{ID_PRODUCTO_POR_ORDEN}]]></groupExpression>
+	</group>
+	<group name="CANTIDAD">
+		<groupExpression><![CDATA[$F{CANTIDAD}]]></groupExpression>
+	</group>
+	<group name="PRECIO_PRODUCTO">
+		<groupExpression><![CDATA[$F{PRECIO_PRODUCTO}]]></groupExpression>
+	</group>
+	<group name="SUBTOTAL">
+		<groupExpression><![CDATA[$F{SUBTOTAL}]]></groupExpression>
+	</group>
+	<group name="ID_PRODUCTO">
+		<groupExpression><![CDATA[$F{ID_PRODUCTO}]]></groupExpression>
+	</group>
+	<group name="ID_ORDEN">
+		<groupExpression><![CDATA[$F{ID_ORDEN}]]></groupExpression>
+	</group>
+	<group name="NOMBRE">
+		<groupExpression><![CDATA[$F{NOMBRE}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="130" height="34" uuid="67f94a62-fb87-46a9-b4b4-bf3ca1845aa5">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE_CORTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="145" y="0" width="258" height="34" uuid="3069d677-07ec-4be3-a5ef-e15a47b2fb93">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="403" y="0" width="121" height="34" uuid="c8f173de-f1bf-4cc0-b79b-aaed76f6f918">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRECIO_PRODUCTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="524" y="0" width="121" height="34" uuid="79b94d4f-4cc9-4668-8747-4966426830df">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="645" y="0" width="97" height="34" uuid="fa307dc1-076e-4bfb-93c3-a6d66305f1b9">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUBTOTAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

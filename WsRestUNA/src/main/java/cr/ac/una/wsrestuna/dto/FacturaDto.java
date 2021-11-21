@@ -23,6 +23,7 @@ public class FacturaDto {
     private double descuento;
     private double impuestoVenta;
     private double impuestoServicio;
+    private String nombreCliente;
     private Boolean modificado;
     private CajaDto idCajaDto;
     private OrdenDto idOrdenDto;
@@ -42,6 +43,7 @@ public class FacturaDto {
         this.descuento = factura.getDescuento();
         this.impuestoVenta = factura.getImpuestoVenta();
         this.impuestoServicio = factura.getImpuestoServicio();
+        this.nombreCliente = factura.getNombreCliente();
         
         if (factura.getIdCaja()!= null) {
         this.idCajaDto = new CajaDto(factura.getIdCaja());
@@ -122,6 +124,16 @@ public class FacturaDto {
     public void setImpuestoServicio(double impuestoServicio) {
         this.impuestoServicio = impuestoServicio;
     }
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+    
+    
     
     public Boolean getModificado() {
         return modificado;

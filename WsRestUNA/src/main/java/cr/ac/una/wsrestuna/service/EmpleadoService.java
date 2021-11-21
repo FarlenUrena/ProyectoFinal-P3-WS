@@ -15,6 +15,7 @@ import cr.ac.una.wsrestuna.model.Orden;
 import cr.ac.una.wsrestuna.util.CodigoRespuesta;
 import cr.ac.una.wsrestuna.util.Reporte;
 import cr.ac.una.wsrestuna.util.Respuesta;
+import cr.ac.una.wsrestuna.wsrestuna;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -199,7 +200,7 @@ public class EmpleadoService {
         }
     }
 
-        public Respuesta generarReporteJasper( Map<String,Object> datos){
+        public Respuesta generarReporteJasper(ReporteDto reporteDto, Map<String,Object> datos){
     try {        
         int tpReporte = 0;
         tpReporte = (int) datos.get("tipo");
@@ -216,13 +217,13 @@ public class EmpleadoService {
                 break;
             case 4:
                 datos.put("url", "Factura");
+                datos.put("subReport","cr/ac/una/wsrestuna/Reports/FacturaSBR.jasper");
+//                datos.put("subReport", "C:\\Users\\User\\JaspersoftWorkspace\\RESTUNAPROJECT\\FacturaSBR.jasper");
+                
                 break;
         }
-        
-        Reporte r = new Reporte();       
-        
-        ReporteDto reporteDto = r.generarReportes((HashMap<String, Object>) datos);
-//        reporteDto.setPrintReport());
+        Reporte reporte = new Reporte();
+        reporteDto = reporte.generarReportes(reporteDto,(HashMap<String, Object>) datos);
         
         return new Respuesta(true,
                     CodigoRespuesta.CORRECTO,
