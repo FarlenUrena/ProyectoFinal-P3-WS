@@ -218,7 +218,6 @@ public class EmpleadoService {
             case 4:
                 datos.put("url", "Factura");
                 datos.put("subReport","cr/ac/una/wsrestuna/Reports/FacturaSBR.jasper");
-//                datos.put("subReport", "C:\\Users\\User\\JaspersoftWorkspace\\RESTUNAPROJECT\\FacturaSBR.jasper");
                 
                 break;
         }
