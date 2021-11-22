@@ -33,9 +33,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Parametro.findByImpuestoVenta", query = "SELECT p FROM Parametro p WHERE p.impuestoVenta = :impuestoVenta"),
     @NamedQuery(name = "Parametro.findByDescuentoMaximo", query = "SELECT p FROM Parametro p WHERE p.descuentoMaximo = :descuentoMaximo")})
 public class Parametro implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    
     @Id
     @Basic(optional = false)
     @NotNull
@@ -46,11 +44,13 @@ public class Parametro implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "NOMBRE_RESTAURANTE")
     private String nombreRestaurante;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
-    @NotNull
+    @NotNull()
     @Size(min = 1, max = 30)
     @Column(name = "CORREO_RESTURANTE")
-    private String correoResturante;//ARREGLAR EN EL SCRIPT Y MODEL NOMBRE MAL ESCRITO
+    private String correoResturante;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "IMPUESTO_SERVICIO")
@@ -58,14 +58,24 @@ public class Parametro implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "IMPUESTO_VENTA")
-    private Double impuestoVenta;
+    private Double impuestoVenta;//ARREGLAR EN EL SCRIPT Y MODEL NOMBRE MAL ESCRITO
     @Basic(optional = false)
     @NotNull
     @Column(name = "DESCUENTO_MAXIMO")
     private Double descuentoMaximo;
-    @Lob
+    @Lob()
     @Column(name = "LOGO_RESTAURANTE")
     private byte[] logoRestaurante;
+    @Size(max = 10)
+    @Column(name = "TELEFONO_RESTAURANTE")
+    private String telefonoRestaurante;
+    @Size(max = 11)
+    @Column(name = "PSSWRD_CORREO")
+    private String psswrdCorreo;
+    @Column(name = "EFECTIVO_INICIAL")
+    private Double efectivoInicial;
+    private static final long serialVersionUID = 1L;
+    
 
     public Parametro() {
     }
@@ -86,6 +96,9 @@ public class Parametro implements Serializable {
         this.impuestoVenta = parametroDto.getImpuestoVenta();
         this.descuentoMaximo = parametroDto.getDescuentoMaximo();
         this.logoRestaurante = parametroDto.getLogoRestaurante();
+        this.efectivoInicial = parametroDto.getEfectivoInicial();
+        this.psswrdCorreo = parametroDto.getPsswrdCorreo();
+        this.telefonoRestaurante = parametroDto.getTelefonoRestaurante();
     }
 
     public Parametro(Long idParametro, String nombreRestaurante, String correoResturante, Double impuestoServicio, Double impuestoVenta, Double descuentoMaximo) {
@@ -147,7 +160,7 @@ public class Parametro implements Serializable {
     }
 
     public byte[] getLogoRestaurante() {
-        return logoRestaurante;
+        return (byte[]) logoRestaurante;
     }
 
     public void setLogoRestaurante(byte[] logoRestaurante) {
@@ -177,6 +190,31 @@ public class Parametro implements Serializable {
     @Override
     public String toString() {
         return "cr.ac.una.wsrestuna.model.Parametro[ idParametro=" + idParametro + " ]";
+    }
+
+   
+    public String getTelefonoRestaurante() {
+        return telefonoRestaurante;
+    }
+
+    public void setTelefonoRestaurante(String telefonoRestaurante) {
+        this.telefonoRestaurante = telefonoRestaurante;
+    }
+
+    public String getPsswrdCorreo() {
+        return psswrdCorreo;
+    }
+
+    public void setPsswrdCorreo(String psswrdCorreo) {
+        this.psswrdCorreo = psswrdCorreo;
+    }
+
+    public Double getEfectivoInicial() {
+        return efectivoInicial;
+    }
+
+    public void setEfectivoInicial(Double efectivoInicial) {
+        this.efectivoInicial = efectivoInicial;
     }
 
 }

@@ -5,7 +5,6 @@
 package cr.ac.una.wsrestuna.dto;
 
 import cr.ac.una.wsrestuna.model.Parametro;
-import java.util.Arrays;
 
 /**
  * @author Farlen
@@ -19,6 +18,10 @@ public class ParametroDto {
     private double impuestoVenta;
     private double descuentoMaximo;
     private byte[] logoRestaurante;
+    
+    public String psswrdCorreo;
+    public String telefonoRestaurante;
+    public Double efectivoInicial;
 
     public ParametroDto(Parametro parametro) {
         this.idParametro = parametro.getIdParametro();
@@ -28,8 +31,38 @@ public class ParametroDto {
         this.impuestoVenta = parametro.getImpuestoVenta();
         this.descuentoMaximo = parametro.getDescuentoMaximo();
         this.logoRestaurante = parametro.getLogoRestaurante();
+        
+        this.efectivoInicial = parametro.getEfectivoInicial();
+        this.psswrdCorreo = parametro.getPsswrdCorreo();
+        this.telefonoRestaurante = parametro.getTelefonoRestaurante();
     }
 
+    public String getPsswrdCorreo() {
+        return psswrdCorreo;
+    }
+
+    public void setPsswrdCorreo(String psswrdCorreo) {
+        this.psswrdCorreo = psswrdCorreo;
+    }
+
+    public String getTelefonoRestaurante() {
+        return telefonoRestaurante;
+    }
+
+    public void setTelefonoRestaurante(String telefonoRestaurante) {
+        this.telefonoRestaurante = telefonoRestaurante;
+    }
+
+    public Double getEfectivoInicial() {
+        return efectivoInicial;
+    }
+
+    public void setEfectivoInicial(Double efectivoInicial) {
+        this.efectivoInicial = efectivoInicial;
+    }
+
+    
+    
     public ParametroDto() {
     }
 

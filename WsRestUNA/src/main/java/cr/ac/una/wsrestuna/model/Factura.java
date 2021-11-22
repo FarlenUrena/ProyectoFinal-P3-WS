@@ -26,9 +26,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
-/**
- *
- * @author Farlen
+/** @author Farlen
  */
 @Entity
 @Table(name = "FACTURA", schema = "RESTUNA")
