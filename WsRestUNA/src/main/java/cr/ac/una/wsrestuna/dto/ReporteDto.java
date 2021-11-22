@@ -24,12 +24,13 @@ public class ReporteDto implements Serializable{
     private Date FechaCierreCaja;
     private Long IdEmpleado;
     private Long IdFactura;
+    private Long IdCaja;
     private String telefono;
     private byte[] printReport;
 
     public ReporteDto(){}
     
-    public ReporteDto(int tipo, String NombreEmpresa, Date DateInicio, Date DateFinal, Date FechaCierreCaja, Long IdEmpleado, Long IdFactura,String telefono, byte[] jp) {
+    public ReporteDto(int tipo, String NombreEmpresa, Date DateInicio, Date DateFinal, Date FechaCierreCaja, Long IdEmpleado, Long IdFactura,Long IdCaja,String telefono, byte[] jp) {
         this.tipo = tipo;
         this.NombreEmpresa = NombreEmpresa;
         this.DateInicio = DateInicio;
@@ -37,6 +38,7 @@ public class ReporteDto implements Serializable{
         this.FechaCierreCaja = FechaCierreCaja;
         this.IdEmpleado = IdEmpleado;
         this.IdFactura = IdFactura;
+        this.IdCaja = IdCaja;
         this.telefono = telefono;
         this.printReport = jp;
     }
@@ -97,6 +99,14 @@ public class ReporteDto implements Serializable{
         this.IdFactura = IdFactura;
     }
 
+    public Long getIdCaja() {
+        return IdCaja;
+    }
+
+    public void setIdCaja(Long IdCaja) {
+        this.IdCaja = IdCaja;
+    }
+    
     public String getTelefono() {
         return telefono;
     }

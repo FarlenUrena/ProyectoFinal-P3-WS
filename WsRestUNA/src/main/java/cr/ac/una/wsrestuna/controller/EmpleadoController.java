@@ -174,6 +174,7 @@ public class EmpleadoController {
         datos.put("IdEmpleado",reporte.getIdEmpleado());
         datos.put("FacturaId",reporte.getIdFactura());
         datos.put("telefono", reporte.getTelefono());
+        datos.put("CajaId", reporte.getIdCaja());
             
             Respuesta res = empleadoService.generarReporteJasper(reporte,datos);
             if (!res.getEstado()) {

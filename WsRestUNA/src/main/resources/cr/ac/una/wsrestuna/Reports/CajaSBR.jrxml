@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CajaSBR" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="efcdd162-5fc5-4944-a64e-55f60ae532d1">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="restUNA.xml"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="idCaja" class="java.math.BigDecimal"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT "FACTURA"."FECHA_FACTURACION",
+	"FACTURA"."TOTAL",
+	"FACTURA"."VUELTO",
+	"FACTURA"."ID_FACTURA"
+FROM "FACTURA"
+	INNER JOIN "CAJA" ON 
+	 "FACTURA"."ID_CAJA" = "CAJA"."ID_CAJA"
+	 WHERE "FACTURA"."ID_CAJA" =   $P{idCaja} ]]>
+	</queryString>
+	<field name="FECHA_FACTURACION" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="FECHA_FACTURACION"/>
+		<property name="com.jaspersoft.studio.field.label" value="FECHA_FACTURACION"/>
+	</field>
+	<field name="TOTAL" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TOTAL"/>
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL"/>
+	</field>
+	<field name="VUELTO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="VUELTO"/>
+		<property name="com.jaspersoft.studio.field.label" value="VUELTO"/>
+	</field>
+	<field name="ID_FACTURA" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ID_FACTURA"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID_FACTURA"/>
+	</field>
+	<group name="FECHA_FACTURACION">
+		<groupExpression><![CDATA[$F{FECHA_FACTURACION}]]></groupExpression>
+	</group>
+	<group name="TOTAL">
+		<groupExpression><![CDATA[$F{TOTAL}]]></groupExpression>
+	</group>
+	<group name="VUELTO">
+		<groupExpression><![CDATA[$F{VUELTO}]]></groupExpression>
+	</group>
+	<group name="ID_FACTURA">
+		<groupExpression><![CDATA[$F{ID_FACTURA}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="46" splitType="Stretch">
+			<textField>
+				<reportElement x="-5" y="0" width="145" height="46" uuid="90a8a921-c5ff-4f1b-8417-034bb855f675"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ID_FACTURA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="0" width="258" height="46" uuid="59146a37-2772-4531-80af-0e05df45291d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA_FACTURACION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="398" y="0" width="147" height="46" uuid="0eb450fe-c04f-48f3-9657-0ff5e37fc420"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="545" y="0" width="202" height="46" uuid="675c0f0a-7f71-4bb1-8794-afa23aa2bcc4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VUELTO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

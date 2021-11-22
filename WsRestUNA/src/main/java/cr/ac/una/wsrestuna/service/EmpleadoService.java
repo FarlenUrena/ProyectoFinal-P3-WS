@@ -220,6 +220,10 @@ public class EmpleadoService {
                 datos.put("subReport","cr/ac/una/wsrestuna/Reports/FacturaSBR.jasper");
                 
                 break;
+            case 5:
+                datos.put("url", "Caja");
+                datos.put("subReport","cr/ac/una/wsrestuna/Reports/CajaSBR.jasper");
+                break;
         }
         Reporte reporte = new Reporte();
         reporteDto = reporte.generarReportes(reporteDto,(HashMap<String, Object>) datos);

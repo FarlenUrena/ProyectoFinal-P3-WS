@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Factura" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d202ef5a-fa39-48a8-bc2e-db9ec2c3d566">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="restUNA.xml"/>
+	<parameter name="NombreEmpresa" class="java.lang.String"/>
+	<parameter name="telefono" class="java.lang.String"/>
+	<parameter name="CajaId" class="java.lang.Long"/>
+	<parameter name="subReport" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT e."NOMBRE",
+	c."SALDO_EFECTIVO",
+	c."SALDO_TARJETA",
+	c."SALDO_EFECTIVO_CIERRE",
+	c."SALDO_TARJETA_CIERRE",
+	c."FECHA_APERTURA",
+	c."FECHA_CIERRE",
+	c."ID_CAJA",
+	e."APELLIDO"
+FROM "CAJA" c
+	INNER JOIN "EMPLEADO" e ON 
+	 c."ID_EMPLEADO" = e."ID_EMPLEADO"
+	 		WHERE c."ID_CAJA" =  $P{CajaId}]]>
+	</queryString>
+	<field name="NOMBRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMBRE"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE"/>
+	</field>
+	<field name="SALDO_EFECTIVO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="SALDO_EFECTIVO"/>
+		<property name="com.jaspersoft.studio.field.label" value="SALDO_EFECTIVO"/>
+	</field>
+	<field name="SALDO_TARJETA" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="SALDO_TARJETA"/>
+		<property name="com.jaspersoft.studio.field.label" value="SALDO_TARJETA"/>
+	</field>
+	<field name="SALDO_EFECTIVO_CIERRE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="SALDO_EFECTIVO_CIERRE"/>
+		<property name="com.jaspersoft.studio.field.label" value="SALDO_EFECTIVO_CIERRE"/>
+	</field>
+	<field name="SALDO_TARJETA_CIERRE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="SALDO_TARJETA_CIERRE"/>
+		<property name="com.jaspersoft.studio.field.label" value="SALDO_TARJETA_CIERRE"/>
+	</field>
+	<field name="FECHA_APERTURA" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="FECHA_APERTURA"/>
+		<property name="com.jaspersoft.studio.field.label" value="FECHA_APERTURA"/>
+	</field>
+	<field name="FECHA_CIERRE" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="FECHA_CIERRE"/>
+		<property name="com.jaspersoft.studio.field.label" value="FECHA_CIERRE"/>
+	</field>
+	<field name="ID_CAJA" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ID_CAJA"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID_CAJA"/>
+	</field>
+	<field name="APELLIDO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="APELLIDO"/>
+		<property name="com.jaspersoft.studio.field.label" value="APELLIDO"/>
+	</field>
+	<variable name="V_CURRENT_PAGE_NUMBER" class="java.lang.Integer" resetType="Page" incrementType="Page" calculation="Count">
+		<variableExpression><![CDATA[1]]></variableExpression>
+		<initialValueExpression><![CDATA[$V{PAGE_NUMBER}]]></initialValueExpression>
+	</variable>
+	<title>
+		<band height="234" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="1" width="752" height="233" backcolor="#BAB0AD" uuid="e0ea03c4-47ba-4cfa-934d-1e5ba5be9b7e">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</rectangle>
+			<rectangle radius="20">
+				<reportElement x="10" y="10" width="410" height="130" backcolor="#750201" uuid="16f83cd1-2e10-48f6-956b-6f87f6cfcfc6"/>
+			</rectangle>
+			<rectangle radius="20">
+				<reportElement x="450" y="10" width="290" height="130" backcolor="#735751" uuid="ddadb578-c966-4ccf-8933-1c62b8cb0835"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="10" y="150" width="410" height="40" backcolor="#735751" uuid="fe67bbfa-0404-4a8a-94ed-98feba431633"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="450" y="150" width="290" height="80" backcolor="#750201" uuid="348ef39c-f7c2-4b50-a30a-a2716c7d5b37"/>
+			</rectangle>
+			<textField>
+				<reportElement x="33" y="20" width="354" height="69" forecolor="#FFFFFF" uuid="e57c6472-df21-458a-9343-769449ca7d33"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NombreEmpresa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="92" width="247" height="38" forecolor="#FFFFFF" uuid="5d077b05-eca4-4880-80b9-edc467ceb0dd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{telefono}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="150" width="280" height="40" forecolor="#FFFFFF" uuid="cc49a388-29da-475c-913d-6a2f3ebb476e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{FECHA_CIERRE})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="33" y="92" width="107" height="38" forecolor="#FFFFFF" uuid="54976475-32cc-45b1-9236-a396fc56907c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teléfono:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="150" width="130" height="40" forecolor="#FFFFFF" uuid="d4931be1-3202-4eaa-b1f2-17c8cb15a3f7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de cierre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="470" y="161" width="260" height="60" forecolor="#FFFFFF" uuid="6428b597-8956-4523-a4d0-cd2ff3da1fbc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="21" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CERRADA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="470" y="10" width="260" height="79" forecolor="#FFFFFF" uuid="d94f7803-80ca-41bd-a3f5-dede10014e8e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° CAJA]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="10" y="190" width="410" height="40" backcolor="#735751" uuid="01d4f21e-ee5e-4e06-839c-41b6034a7ef3"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="10" y="190" width="130" height="40" forecolor="#FFFFFF" uuid="5bcba3ab-bee1-485f-a70f-432b726629ff"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre del empleado:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="510" y="92" width="183" height="38" forecolor="#FFFFFF" uuid="47b57c0c-a6f6-46fc-b25d-ebc5e4945f08"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CajaId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="195" width="122" height="30" forecolor="#FFFFFF" uuid="a228bb97-3e46-4818-a5ed-2ee477659299"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="195" width="140" height="30" forecolor="#FFFFFF" uuid="d2ebbc2f-f22b-4634-aa2a-3aafa0a2e348"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{APELLIDO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="38" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="145" height="34" backcolor="#BDBDBD" uuid="c2df5931-3883-4b5f-a98a-c61541632654"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="145" y="0" width="258" height="34" backcolor="#BDBDBD" uuid="4f518a48-67ae-443a-a01e-b04a163ebd4c"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="403" y="0" width="147" height="34" backcolor="#BDBDBD" uuid="09d33f57-e89c-4e08-bc5f-f800e0a60ecf"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="403" y="0" width="147" height="34" uuid="5ca2ec64-8e03-40cb-8a54-c0666b81039c">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MONTO PAGADO]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="550" y="0" width="202" height="34" backcolor="#BDBDBD" uuid="85d818ad-3dcd-431d-a35b-9289f5af811e"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="550" y="0" width="202" height="34" uuid="c3547b0d-76a6-493b-b9e0-b65a29d6bbc3">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CAMBIO REGRESADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="145" y="0" width="258" height="34" uuid="d5a55a74-0be5-4d1d-ba71-872cb6c25c24">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA / HORA FACTURA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="145" height="34" uuid="099c9854-5ab6-43fa-a94d-1bcab6e76467">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID FACTURA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="93" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<subreport>
+				<reportElement x="0" y="0" width="200" height="93" uuid="2cb4113f-cfea-41b6-836e-a4f50ea65b09"/>
+				<subreportParameter name="idCaja">
+					<subreportParameterExpression><![CDATA[$F{ID_CAJA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subReport}]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20">
+			<rectangle>
+				<reportElement x="0" y="0" width="752" height="20" backcolor="#750201" uuid="eb8eb662-e80a-446c-a078-398753bc911f"/>
+			</rectangle>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="125" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="90" width="752" height="30" backcolor="#FFFFFF" uuid="947a4674-6392-4d30-8600-956f8e541c52"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="0" width="360" height="30" backcolor="#BDBDBD" uuid="d4838687-0dc8-4849-99d8-759fe96a46e1"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="403" y="30" width="177" height="30" backcolor="#BDBDBD" uuid="c688538e-7162-4552-86f5-1a6a0cac86fd">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="580" y="30" width="172" height="30" backcolor="#BDBDBD" uuid="ea3bd199-b0bc-4e28-a32a-0f947545b0c4">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="403" y="60" width="177" height="30" backcolor="#BDBDBD" uuid="bffe8a3d-3fa8-4641-9dd7-8699daca1203">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="580" y="60" width="172" height="30" backcolor="#BDBDBD" uuid="5a3fe3bd-ad3f-4c79-8ede-a00b36dc5840">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="1" width="360" height="28" uuid="9e2aaf45-d39c-4fd1-82f0-c2cf58da081e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="19" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Montos digitados por el cajero ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="403" y="31" width="177" height="28" uuid="37f6991f-6e4d-4e41-9f52-fcaf0e8563a3">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Total en efectivo al cierre:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="403" y="60" width="177" height="29" uuid="dbcaba3d-56fa-485a-af4e-351ab7dab091">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Total en tarjeta al cierre:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="30" width="168" height="30" uuid="9c3f8751-5eaf-4abf-bbb4-388d925373f9"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="60" width="170" height="30" uuid="deb67b51-3001-47f8-9cd7-11032e4b309a"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="60" width="170" height="30" backcolor="#BDBDBD" uuid="81ca8d87-748e-470b-b8d4-755ff676886b">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="30" width="170" height="30" backcolor="#BDBDBD" uuid="91ea9ba2-53ae-4b44-8c64-0c87ffa60215">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="170" y="60" width="190" height="30" backcolor="#BDBDBD" uuid="fb08e92c-6bc6-41ad-bc27-4d8fb9ea6738">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="170" y="30" width="190" height="30" backcolor="#BDBDBD" uuid="13474e80-43dd-4cfa-9401-8e133cf36087">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="31" width="169" height="28" uuid="34eb6440-805e-4168-8292-c8c2d3245554">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Saldo en efectivo al cierre:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="61" width="169" height="28" uuid="06be22a1-bc52-4b11-aea9-6d957b85e9a6">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Saldo en tarjeta al cierre:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="403" y="0" width="349" height="30" backcolor="#BDBDBD" uuid="0f49ba1b-ff8a-4b2c-a8f9-9130ce3cffcf"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="403" y="1" width="349" height="28" uuid="10e5b516-3c37-4356-beb1-b610833b235c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="19" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Montos registrados por el sistema]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="170" y="30" width="190" height="30" uuid="abf1ef19-a466-444e-861e-695e4ee5b430"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SALDO_EFECTIVO_CIERRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="60" width="190" height="30" uuid="0adadc04-4320-460b-8195-94d77b186245"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SALDO_TARJETA_CIERRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="580" y="30" width="172" height="30" uuid="2c5d6166-e68e-47b1-86c3-a84bd0cc6a7c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SALDO_EFECTIVO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="580" y="60" width="172" height="30" uuid="950fbd43-dc06-410a-b755-4046edfde315"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SALDO_TARJETA}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="360" y="1" width="43" height="89" backcolor="#FFFFFF" uuid="f4db4e10-15c8-4ea2-a2bf-da446ef7a509"/>
+			</rectangle>
+		</band>
+	</summary>
+</jasperReport>
