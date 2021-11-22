@@ -209,7 +209,7 @@ public class ElementodeseccionService {
                 List<Elementodeseccion> elementosdeseccion = (List<Elementodeseccion>) qryElementodeseccion.getResultList();
 
                 for (Elementodeseccion elementodeseccion : elementosdeseccion) {
-                    if (!elementodeseccion.getIdElemento().equals(11L)) {
+                    if (!elementodeseccion.getTipo().equals(3L)) {
                         if (elementodeseccion.getIdSeccion().getIdSeccion().equals(id)) {
                             em.remove(elementodeseccion);
                         }
