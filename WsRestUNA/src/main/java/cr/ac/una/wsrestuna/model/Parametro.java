@@ -11,10 +11,13 @@ import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -23,7 +26,7 @@ import javax.validation.constraints.Size;
  * @author Kendall
  */
 @Entity
-@Table(name = "PARAMETRO")
+@Table(name = "PARAMETRO", schema = "RESTUNA")
 @NamedQueries({
     @NamedQuery(name = "Parametro.findAll", query = "SELECT p FROM Parametro p"),
     @NamedQuery(name = "Parametro.findByIdParametro", query = "SELECT p FROM Parametro p WHERE p.idParametro = :idParametro"),
@@ -35,6 +38,8 @@ import javax.validation.constraints.Size;
 public class Parametro implements Serializable {
     
     @Id
+    @SequenceGenerator(name = "PARAMETRO_ID_GENERATOR", sequenceName = "RESTUNA.SEQ_ID_PARAMETRO", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PARAMETRO_ID_GENERATOR")
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_PARAMETRO")
@@ -58,7 +63,7 @@ public class Parametro implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "IMPUESTO_VENTA")
-    private Double impuestoVenta;//ARREGLAR EN EL SCRIPT Y MODEL NOMBRE MAL ESCRITO
+    private Double impuestoVenta;
     @Basic(optional = false)
     @NotNull
     @Column(name = "DESCUENTO_MAXIMO")
@@ -67,13 +72,14 @@ public class Parametro implements Serializable {
     @Column(name = "LOGO_RESTAURANTE")
     private byte[] logoRestaurante;
     @Size(max = 10)
-    @Column(name = "TELEFONO_RESTAURANTE")
+    @Column(name = "TELEFONORESTAURANTE")
     private String telefonoRestaurante;
     @Size(max = 11)
-    @Column(name = "PSSWRD_CORREO")
+    @Column(name = "PSSWRDCORREO")
     private String psswrdCorreo;
-    @Column(name = "EFECTIVO_INICIAL")
+    @Column(name = "EFECTIVOINICIAL")
     private Double efectivoInicial;
+    
     private static final long serialVersionUID = 1L;
     
 
